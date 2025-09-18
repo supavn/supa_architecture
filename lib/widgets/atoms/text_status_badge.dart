@@ -101,12 +101,6 @@ class TextStatusBadge extends StatelessWidget {
         getTextColorBasedOnBackground(effectiveBackgroundColor);
     final Color effectiveBorderColor =
         borderColor ?? resolvedBorderColor ?? Colors.transparent;
-
-    print('bgColor $bgKey');
-    print('textColor $textKey');
-    print('borderColor $borderKey');
-    print('---------------------\n\n');
-
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 8,
