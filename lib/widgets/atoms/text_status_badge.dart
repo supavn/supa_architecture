@@ -21,6 +21,9 @@ class TextStatusBadge extends StatelessWidget {
   /// Token key or hex for text color (e.g., 'warning' or '#FFFFFF').
   final String? textColorKey;
 
+  /// Token key or hex for background color (preferred over deprecated [backgroundColor]).
+  final String? backgroundColorKey;
+
   /// Either provide explicit [backgroundColor] or a [backgroundColorKey] (token key or hex '#xxxxxx').
   @Deprecated(
       'Use backgroundColorKey or theme tokens; this prop will be removed in a future release.')
@@ -28,6 +31,9 @@ class TextStatusBadge extends StatelessWidget {
 
   /// Optional explicit border color. Prefer [borderColorKey] for tokens/hex.
   final Color? borderColor;
+
+  /// Token key or hex for border color.
+  final String? borderColorKey;
 
   const TextStatusBadge({
     super.key,
@@ -37,7 +43,9 @@ class TextStatusBadge extends StatelessWidget {
     this.backgroundColor = const Color(0xFFFDDC69), // Default background color
     this.color = const Color(0xFF000000), // Default text color
     this.textColorKey,
+    this.backgroundColorKey,
     this.borderColor,
+    this.borderColorKey,
   });
 
   @override
@@ -51,14 +59,16 @@ class TextStatusBadge extends StatelessWidget {
 
     bool isHex(String? v) => v != null && v.trim().startsWith('#');
 
-    final String? textKey =
-        (textColorKey == null || textColorKey!.trim().isEmpty)
-            ? null
-            : textColorKey!.trim().toLowerCase();
+    String? normalizeKey(String? key) {
+      if (key == null) return null;
+      final trimmed = key.trim();
+      if (trimmed.isEmpty) return null;
+      return trimmed.toLowerCase();
+    }
 
-    final String? bgKey = (isHex(textKey) ? null : textKey);
-
-    final String? borderKey = (isHex(textKey) ? null : textKey);
+    final String? textKey = normalizeKey(textColorKey);
+    final String? bgKey = normalizeKey(backgroundColorKey);
+    final String? borderKey = normalizeKey(borderColorKey);
 
     if (bgKey != null) {
       if (isHex(bgKey)) {

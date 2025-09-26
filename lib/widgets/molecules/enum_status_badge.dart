@@ -22,6 +22,8 @@ class EnumStatusBadge extends StatelessWidget {
     return TextStatusBadge(
       status: status.name.rawValue ?? 'Đang tải',
       textColorKey: status.color.rawValue ?? 'default',
+      backgroundColorKey: status.backgroundColor.rawValue,
+      borderColorKey: status.backgroundColor.rawValue,
     );
   }
 }

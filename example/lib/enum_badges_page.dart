@@ -35,10 +35,53 @@ class EnumBadgesPage extends StatelessWidget {
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
-        itemCount: _tokenKeys.length,
+        itemCount: _tokenKeys.length + 1,
         separatorBuilder: (_, __) => const SizedBox(height: 12),
         itemBuilder: (context, index) {
-          final key = _tokenKeys[index];
+          if (index == 0) {
+            // Hex example row
+            final enumModelHex = EnumModel()
+              ..name.rawValue = 'Hex (#RRGGBB)'
+              ..color.rawValue = '#0000FF' // blue text
+              ..backgroundColor.rawValue = '#E0FFE0'; // light green bg
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hex examples',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                const Wrap(
+                  spacing: 12,
+                  runSpacing: 12,
+                  children: [
+                    // Direct TextStatusBadge with hex keys
+                    TextStatusBadge(
+                      status: 'Hex tokens',
+                      textColorKey: '#0000FF',
+                      backgroundColorKey: '#E0FFE0',
+                      borderColorKey: '#00AA00',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'EnumStatusBadge hex',
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    EnumStatusBadge(status: enumModelHex),
+                  ],
+                ),
+              ],
+            );
+          }
+
+          final key = _tokenKeys[index - 1];
           final enumModel = EnumModel()
             ..name.rawValue = key
             ..color.rawValue = key
