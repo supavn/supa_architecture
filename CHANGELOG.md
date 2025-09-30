@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0-rc.6
+
+### Fixed
+
+- EnumStatusBadge color
+
 ## 1.9.1+6
 
 ### Added

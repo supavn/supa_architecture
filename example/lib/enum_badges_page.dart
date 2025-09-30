@@ -84,8 +84,7 @@ class EnumBadgesPage extends StatelessWidget {
           final key = _tokenKeys[index - 1];
           final enumModel = EnumModel()
             ..name.rawValue = key
-            ..color.rawValue = key
-            ..backgroundColor.rawValue = key; // legacy path still supported
+            ..color.rawValue = key; // legacy path still supported
 
           final token = extended?.getTokenGroup(key);
 

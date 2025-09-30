@@ -19,11 +19,23 @@ class EnumStatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? colorKey = status.color.rawValue?.trim();
+    final String? bgRaw = status.backgroundColor.rawValue?.trim();
+    final bool hasBg = bgRaw != null && bgRaw.isNotEmpty;
+    final bool colorIsHex = colorKey != null && colorKey.startsWith('#');
+
+    // If backgroundColor missing and color is a token (not hex), reuse color for background
+    final String? effectiveBgKey = hasBg
+        ? bgRaw
+        : (colorKey != null && colorKey.isNotEmpty && !colorIsHex
+            ? colorKey
+            : null);
+
     return TextStatusBadge(
       status: status.name.rawValue ?? 'Đang tải',
-      textColorKey: status.color.rawValue ?? 'default',
-      backgroundColorKey: status.backgroundColor.rawValue,
-      borderColorKey: status.backgroundColor.rawValue,
+      textColorKey: colorKey ?? 'default',
+      backgroundColorKey: effectiveBgKey,
+      borderColorKey: effectiveBgKey,
     );
   }
 }
