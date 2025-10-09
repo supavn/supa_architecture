@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.10.0-rc.7
+
+### Added
+
+- PushNotificationBloc: added DidMountedCheckInitialMessage
+
+### Removed
+
+- Deprecation annotation for backgroundColor of @TextStatusBadge and @EnumModel
+
 ## 1.10.0-rc.6
 
 ### Fixed

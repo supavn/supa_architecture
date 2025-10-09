@@ -29,7 +29,7 @@ class EnumModel extends JsonModel {
 
   /// Deprecated: use consolidated color extension with token/background keys.
   /// This field will be removed in a future release.
-  @Deprecated(
-      'Use consolidated color extension with token/background keys; this field will be removed in a future release.')
+  // @Deprecated(
+  //     'Use consolidated color extension with token/background keys; this field will be removed in a future release.')
   JsonString backgroundColor = JsonString("backgroundColor");
 }
