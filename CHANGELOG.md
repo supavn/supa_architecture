@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.10.0-rc.8
+
+### Fixed
+
+- Using utsname on iOS
+- Using manufacturer name on Android
+
 ## 1.10.0-rc.7
 
 ### Added

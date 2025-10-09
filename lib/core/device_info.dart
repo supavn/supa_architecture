@@ -49,7 +49,7 @@ class DeviceInfo {
     } else if (Platform.isAndroid) {
       final androidInfo = await deviceInfoPlugin.androidInfo;
       return DeviceInfo(
-        deviceName: androidInfo.device,
+        deviceName: androidInfo.manufacturer,
         deviceModel: androidInfo.model,
         operatingSystem: "Android",
         systemVersion: androidInfo.version.release,
@@ -59,7 +59,7 @@ class DeviceInfo {
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfoPlugin.iosInfo;
       return DeviceInfo(
-        deviceName: iosInfo.name,
+        deviceName: iosInfo.utsname.machine,
         deviceModel: iosInfo.model,
         operatingSystem: "iOS",
         systemVersion: iosInfo.systemVersion,
@@ -69,7 +69,7 @@ class DeviceInfo {
     } else if (Platform.isMacOS) {
       final macInfo = await deviceInfoPlugin.macOsInfo;
       return DeviceInfo(
-        deviceName: macInfo.computerName,
+        deviceName: macInfo.modelName,
         deviceModel: "Mac", // macOS does not provide specific model information
         operatingSystem: "macOS",
         systemVersion: macInfo.osRelease,
