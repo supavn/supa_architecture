@@ -37,12 +37,10 @@ class PushNotificationBloc
   ) : super(
           initialMessage != null
               ? PushNotificationOpened.fromFields(
-                  title: initialMessage.notification?.title ?? "",
-                  body: initialMessage.notification?.body ?? "",
-                  payload: PushNotificationPayload.fromJson(
-                    initialMessage.data,
-                  ),
-                  linkMobile: initialMessage.data["linkMobile"],
+                  title: initialMessage.title,
+                  body: initialMessage.body,
+                  payload: initialMessage.payload,
+                  linkMobile: initialMessage.linkMobile,
                 )
               : const PushNotificationInitial(),
         ) {
@@ -53,6 +51,7 @@ class PushNotificationBloc
     on<DidReceivedNotificationEvent>(_onDidNotificationReceived);
     on<DidUserOpenedNotificationEvent>(_onDidUserOpenedNotification);
     on<DidResetNotificationEvent>(_onDidResetNotification);
+    on<DidMountedCheckInitialMessage>(_onDidMountedCheckInitialMessage);
   }
 
   Future<void> onClose() async {
@@ -121,20 +120,20 @@ class PushNotificationBloc
   /// Handle incoming foreground notifications.
   void _handleNotification(RemoteMessage message) {
     add(DidReceivedNotificationEvent(
-      title: message.notification?.title ?? "",
-      body: message.notification?.body ?? "",
-      payload: PushNotificationPayload.fromJson(message.data),
-      linkMobile: message.data["linkMobile"],
+      title: message.title,
+      body: message.body,
+      payload: message.payload,
+      linkMobile: message.linkMobile,
     ));
   }
 
   /// Handle notifications opened from the background.
   void _handleOpenedNotification(RemoteMessage message) {
     add(DidUserOpenedNotificationEvent(
-      title: message.notification?.title ?? "",
-      body: message.notification?.body ?? "",
-      payload: PushNotificationPayload.fromJson(message.data),
-      linkMobile: message.data["linkMobile"],
+      title: message.title,
+      body: message.body,
+      payload: message.payload,
+      linkMobile: message.linkMobile,
     ));
   }
 
@@ -221,4 +220,30 @@ class PushNotificationBloc
   ) {
     emit(const PushNotificationInitial());
   }
+
+  void _onDidMountedCheckInitialMessage(
+    DidMountedCheckInitialMessage event,
+    Emitter<PushNotificationState> emit,
+  ) async {
+    try {
+      final initialMessage = await _firebaseMessaging.getInitialMessage();
+      if (initialMessage != null) {
+        add(DidUserOpenedNotificationEvent(
+          title: initialMessage.title,
+          body: initialMessage.body,
+          payload: initialMessage.payload,
+          linkMobile: initialMessage.linkMobile,
+        ));
+      }
+    } catch (error) {
+      debugPrint("Failed to get initial message: ${error.toString()}");
+    }
+  }
+}
+
+extension RemoteMessageExtension on RemoteMessage {
+  String get title => notification?.title ?? "";
+  String get body => notification?.body ?? "";
+  PushNotificationPayload get payload => PushNotificationPayload.fromJson(data);
+  String? get linkMobile => data["linkMobile"];
 }

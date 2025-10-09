@@ -79,3 +79,14 @@ final class DidResetNotificationEvent extends PushNotificationEvent {
         "DidResetNotificationEvent",
       ];
 }
+
+/// Push notification event to check for initial message when app is mounted
+final class DidMountedCheckInitialMessage extends PushNotificationEvent {
+  @override
+  List<Object?> get props => [
+        "DidMountedCheckInitialMessage",
+      ];
+
+  /// Push notification event to check for initial message when app is mounted
+  DidMountedCheckInitialMessage();
+}
