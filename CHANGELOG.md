@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0-rc.10
+
+### Removed
+
+- Flutter upper bound constraint
+
 ## 1.10.0-rc.9
 
 ### Added
