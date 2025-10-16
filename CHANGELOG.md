@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0-rc.9
+
+### Added
+
+- Secure encryption for persistent data
+
 ## 1.10.0-rc.8
 
 ### Fixed

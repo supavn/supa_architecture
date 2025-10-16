@@ -5,14 +5,26 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:supa_architecture/core/app_token.dart';
 import 'package:supa_architecture/core/cookie_manager/cookie_manager.dart';
+import 'package:supa_architecture/core/encryption/hive_encryption_manager.dart';
 
 class HiveCookieManager implements CookieManager {
   /// Factory method to create and register a [HiveCookieManager] instance.
   static Future<HiveCookieManager> create() async {
-    final box = await Hive.openBox<Map<dynamic, dynamic>>('supa_cookies');
-    final hiveCookieManager = HiveCookieManager(box);
-    GetIt.instance.registerSingleton<CookieManager>(hiveCookieManager);
-    return hiveCookieManager;
+    try {
+      final box = await HiveEncryptionManager.openBoxWithMigration<
+          Map<dynamic, dynamic>>(
+        'supa_cookies',
+        'hive_cookies_encryption_key',
+      );
+      final hiveCookieManager = HiveCookieManager(box);
+      GetIt.instance.registerSingleton<CookieManager>(hiveCookieManager);
+      return hiveCookieManager;
+    } catch (e) {
+      final box = await Hive.openBox<Map<dynamic, dynamic>>('supa_cookies');
+      final hiveCookieManager = HiveCookieManager(box);
+      GetIt.instance.registerSingleton<CookieManager>(hiveCookieManager);
+      return hiveCookieManager;
+    }
   }
 
   final Box<Map<dynamic, dynamic>> _cookieBox;

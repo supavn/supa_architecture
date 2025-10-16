@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:supa_architecture/core/encryption/hive_encryption_manager.dart';
 import 'package:supa_architecture/core/persistent_storage/persistent_storage.dart';
 import 'package:supa_architecture/models/models.dart';
 import 'package:supa_architecture/supa_architecture_platform_interface.dart';
@@ -27,8 +28,24 @@ class HivePersistentStorage extends PersistentStorage {
 
     try {
       await Hive.initFlutter();
-      _defaultBox = await Hive.openBox<dynamic>(_boxName);
-      _authBox = await Hive.openBox<dynamic>(_authBoxName);
+
+      // Try to open encrypted boxes with migration
+      try {
+        _defaultBox = await HiveEncryptionManager.openBoxWithMigration<dynamic>(
+          _boxName,
+          'hive_storage_encryption_key',
+        );
+        _authBox = await HiveEncryptionManager.openBoxWithMigration<dynamic>(
+          _authBoxName,
+          'hive_auth_encryption_key',
+        );
+      } catch (encryptionError) {
+        // Fallback to unencrypted if encryption fails
+        debugPrint(
+            'Encryption failed, falling back to unencrypted storage: $encryptionError');
+        _defaultBox = await Hive.openBox<dynamic>(_boxName);
+        _authBox = await Hive.openBox<dynamic>(_authBoxName);
+      }
 
       // Register this instance in GetIt.
       GetIt.instance.registerSingleton<PersistentStorage>(this);
