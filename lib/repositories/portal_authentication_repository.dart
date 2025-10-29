@@ -289,28 +289,28 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - `appUser`: The authenticated user.
   /// - `tenant`: The authenticated tenant.
   Future<void> saveAuthentication(AppUser appUser, CurrentTenant tenant) async {
-    if (!kIsWeb) {
-      persistentStorage.tenant = tenant;
-      persistentStorage.appUser = appUser;
+    // Persist tenant and appUser across all platforms (web and native)
+    persistentStorage.tenant = tenant;
+    persistentStorage.appUser = appUser;
 
-      final cookies = cookieStorage.loadCookies(authenticationUri);
+    // Try to capture tokens from cookies (available on both web and native if set)
+    final cookies = cookieStorage.loadCookies(authenticationUri);
 
-      final accessToken = cookies.firstWhere(
-        (cookie) => cookie.name == AppToken.accessTokenKey,
-        orElse: () => Cookie(AppToken.accessTokenKey, ''),
-      );
-      final refreshToken = cookies.firstWhere(
-        (cookie) => cookie.name == AppToken.refreshTokenKey,
-        orElse: () => Cookie(AppToken.refreshTokenKey, ''),
-      );
+    final accessToken = cookies.firstWhere(
+      (cookie) => cookie.name == AppToken.accessTokenKey,
+      orElse: () => Cookie(AppToken.accessTokenKey, ''),
+    );
+    final refreshToken = cookies.firstWhere(
+      (cookie) => cookie.name == AppToken.refreshTokenKey,
+      orElse: () => Cookie(AppToken.refreshTokenKey, ''),
+    );
 
-      final SecureAuthenticationInfo authInfo = SecureAuthenticationInfo(
-        refreshToken: refreshToken.value,
-        accessToken: accessToken.value,
-        tenantId: tenant.id.value,
-      );
-      secureStorage.saveAuthenticationInfo(authInfo);
-    }
+    final SecureAuthenticationInfo authInfo = SecureAuthenticationInfo(
+      refreshToken: refreshToken.value,
+      accessToken: accessToken.value.isEmpty ? null : accessToken.value,
+      tenantId: tenant.id.value,
+    );
+    await secureStorage.saveAuthenticationInfo(authInfo);
   }
 
   /// Removes the authentication information.

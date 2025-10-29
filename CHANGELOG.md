@@ -5,6 +5,7 @@
 ### Fixed
 
 - File uploading on web
+- Fix Authentication on web
 
 ## 1.10.0-rc.10
 
