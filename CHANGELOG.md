@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0-rc.11
+
+### Fixed
+
+- File uploading on web
+
 ## 1.10.0-rc.10
 
 ### Removed

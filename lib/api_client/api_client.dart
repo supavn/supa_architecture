@@ -68,6 +68,113 @@ abstract class ApiClient {
       ..add(this.refreshInterceptor);
   }
 
+  /// Builds a [MultipartFile] that works across web and native.
+  Future<MultipartFile> _buildMultipartFile({
+    String? filePath,
+    Uint8List? bytes,
+    String? filename,
+  }) async {
+    if (kIsWeb) {
+      if (bytes == null) {
+        throw ArgumentError(
+          "On web, 'bytes' and 'filename' are required for file upload.",
+        );
+      }
+      return MultipartFile.fromBytes(
+        bytes,
+        filename: filename ?? "upload.bin",
+      );
+    }
+
+    if (filePath != null) {
+      return MultipartFile.fromFile(
+        filePath,
+        filename: filename ?? basename(filePath),
+      );
+    }
+
+    if (bytes != null) {
+      return MultipartFile.fromBytes(
+        bytes,
+        filename: filename ?? "upload.bin",
+      );
+    }
+
+    throw ArgumentError(
+      "Provide either 'filePath' or 'bytes' to build a MultipartFile.",
+    );
+  }
+
+  /// Builds [FormData] for a single file field.
+  Future<FormData> _buildSingleFileFormData({
+    String? filePath,
+    Uint8List? bytes,
+    String? filename,
+    String fieldName = "file",
+  }) async {
+    final multipart = await _buildMultipartFile(
+      filePath: filePath,
+      bytes: bytes,
+      filename: filename,
+    );
+    return FormData.fromMap({fieldName: multipart});
+  }
+
+  /// Builds [FormData] for multiple files under the same field.
+  Future<FormData> _buildMultiFilesFormData({
+    List<String>? filePaths,
+    List<Uint8List>? filesBytes,
+    List<String>? filenames,
+    String fieldName = "files",
+  }) async {
+    final formData = FormData();
+
+    if (kIsWeb) {
+      if (filesBytes == null || filesBytes.isEmpty) {
+        throw ArgumentError(
+          "On web, 'filesBytes' (and optional 'filenames') are required.",
+        );
+      }
+      for (int i = 0; i < filesBytes.length; i++) {
+        final data = filesBytes[i];
+        final name = filenames != null && i < filenames.length
+            ? filenames[i]
+            : "upload_$i.bin";
+        formData.files.add(
+          MapEntry(fieldName, MultipartFile.fromBytes(data, filename: name)),
+        );
+      }
+      return formData;
+    }
+
+    if (filePaths != null && filePaths.isNotEmpty) {
+      for (final path in filePaths) {
+        formData.files.add(MapEntry(
+          fieldName,
+          await MultipartFile.fromFile(path, filename: basename(path)),
+        ));
+      }
+      return formData;
+    }
+
+    if (filesBytes != null && filesBytes.isNotEmpty) {
+      for (int i = 0; i < filesBytes.length; i++) {
+        final data = filesBytes[i];
+        final name = filenames != null && i < filenames.length
+            ? filenames[i]
+            : "upload_$i.bin";
+        formData.files.add(
+          MapEntry(fieldName, MultipartFile.fromBytes(data, filename: name)),
+        );
+      }
+      return formData;
+    }
+
+    throw ArgumentError(
+      "Provide either 'filePaths' or 'filesBytes' to build multi-files FormData.",
+    );
+  }
+
   /// The base URL for API requests.
   String get baseUrl;
 
@@ -100,18 +207,21 @@ abstract class ApiClient {
   }
 
   /// Uploads a single file.
+  ///
+  /// On web, provide [bytes] and [filename]. On native, you can provide either
+  /// a [filePath] or [bytes] (with optional [filename]).
   Future<File> uploadFile({
-    required String filePath,
+    String? filePath,
+    Uint8List? bytes,
     String uploadUrl = "/upload-file",
     String? filename,
   }) async {
     try {
-      final formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(
-          filePath,
-          filename: filename ?? basename(filePath),
-        ),
-      });
+      final formData = await _buildSingleFileFormData(
+        filePath: filePath,
+        bytes: bytes,
+        filename: filename,
+      );
       final response = await dio.post(uploadUrl, data: formData);
       return response.body<File>();
     } catch (e) {
@@ -120,18 +230,21 @@ abstract class ApiClient {
   }
 
   /// Uploads multiple files.
+  ///
+  /// On web, provide [filesBytes] and optional [filenames]. On native, you can
+  /// provide either [filePaths] or [filesBytes].
   Future<List<File>> uploadFiles({
-    required List<String> filePaths,
+    List<String>? filePaths,
+    List<Uint8List>? filesBytes,
+    List<String>? filenames,
     String uploadUrl = "/multi-upload-file",
   }) async {
     try {
-      final formData = FormData();
-      for (final path in filePaths) {
-        formData.files.add(MapEntry(
-          "files",
-          await MultipartFile.fromFile(path, filename: basename(path)),
-        ));
-      }
+      final formData = await _buildMultiFilesFormData(
+        filePaths: filePaths,
+        filesBytes: filesBytes,
+        filenames: filenames,
+      );
       final response = await dio.post(uploadUrl, data: formData);
       return response.bodyAsList<File>();
     } catch (e) {
@@ -145,14 +258,11 @@ abstract class ApiClient {
     String uploadUrl = "/upload-file",
   }) async {
     try {
-      final formData = FormData.fromMap({
-        "file": kIsWeb
-            ? MultipartFile.fromBytes(
-                await file.readAsBytes(),
-                filename: file.name,
-              )
-            : await MultipartFile.fromFile(file.path),
-      });
+      final formData = await _buildSingleFileFormData(
+        bytes: kIsWeb ? await file.readAsBytes() : null,
+        filePath: kIsWeb ? null : file.path,
+        filename: file.name,
+      );
       final response = await dio.post(uploadUrl, data: formData);
       return response.body<File>();
     } catch (e) {
@@ -165,19 +275,26 @@ abstract class ApiClient {
     List<XFile> files, {
     String uploadUrl = "/multi-upload-file",
   }) async {
-    if (kIsWeb) {
-      return Future.wait(files.map((file) => uploadFileFromImagePicker(file)));
-    }
     try {
-      final formData = FormData();
-      for (final file in files) {
-        formData.files.add(MapEntry(
-          "files",
-          await MultipartFile.fromFile(file.path),
-        ));
+      if (kIsWeb) {
+        final bytesList = await Future.wait(files.map((f) => f.readAsBytes()));
+        final names = files.map((f) => f.name).toList();
+        final formData = await _buildMultiFilesFormData(
+          filesBytes: bytesList,
+          filenames: names,
+        );
+        final response = await dio.post(uploadUrl, data: formData);
+        return response.bodyAsList<File>();
+      } else {
+        final paths = files.map((f) => f.path).toList();
+        final names = files.map((f) => f.name).toList();
+        final formData = await _buildMultiFilesFormData(
+          filePaths: paths,
+          filenames: names,
+        );
+        final response = await dio.post(uploadUrl, data: formData);
+        return response.bodyAsList<File>();
       }
-      final response = await dio.post(uploadUrl, data: formData);
-      return response.bodyAsList<File>();
     } catch (e) {
       rethrow;
     }
@@ -189,11 +306,11 @@ abstract class ApiClient {
     String uploadUrl = "/upload-file",
   }) async {
     try {
-      final formData = FormData.fromMap({
-        "file": kIsWeb && file.bytes != null
-            ? MultipartFile.fromBytes(file.bytes!, filename: file.name)
-            : await MultipartFile.fromFile(file.path!, filename: file.name),
-      });
+      final formData = await _buildSingleFileFormData(
+        bytes: kIsWeb ? file.bytes : null,
+        filePath: kIsWeb ? null : file.path,
+        filename: file.name,
+      );
       final response = await dio.post(uploadUrl, data: formData);
       return response.body<File>();
     } catch (e) {
@@ -206,19 +323,27 @@ abstract class ApiClient {
     List<PlatformFile> files, {
     String uploadUrl = "/multi-upload-file",
   }) async {
-    if (kIsWeb) {
-      return Future.wait(files.map((file) => uploadFileFromFilePicker(file)));
-    }
     try {
-      final formData = FormData();
-      for (final file in files) {
-        formData.files.add(MapEntry(
-          "files",
-          await MultipartFile.fromFile(file.path!, filename: file.name),
-        ));
+      if (kIsWeb) {
+        final bytesList =
+            files.map((f) => f.bytes).whereType<Uint8List>().toList();
+        final names = files.map((f) => f.name).toList();
+        final formData = await _buildMultiFilesFormData(
+          filesBytes: bytesList,
+          filenames: names,
+        );
+        final response = await dio.post(uploadUrl, data: formData);
+        return response.bodyAsList<File>();
+      } else {
+        final paths = files.map((f) => f.path!).toList();
+        final names = files.map((f) => f.name).toList();
+        final formData = await _buildMultiFilesFormData(
+          filePaths: paths,
+          filenames: names,
+        );
+        final response = await dio.post(uploadUrl, data: formData);
+        return response.bodyAsList<File>();
       }
-      final response = await dio.post(uploadUrl, data: formData);
-      return response.bodyAsList<File>();
     } catch (e) {
       rethrow;
     }
