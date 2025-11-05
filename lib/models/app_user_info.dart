@@ -21,6 +21,7 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
         tenants,
         currentTenant,
         ...preferenceFields,
+        globalUserId,
       ];
 
   JsonInteger appUserAccountId = JsonInteger("appUserAccountId");
@@ -56,6 +57,9 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
   JsonObject<CurrentTenant> currentTenant =
       JsonObject<CurrentTenant>("currentTenant");
 
+  /// The global user ID.
+  JsonInteger globalUserId = JsonInteger("globalUserId");
+
   AppUser toAppUser() {
     return AppUser()
       ..id.value = appUserId.value
@@ -81,6 +85,7 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
       ..adminType.value = adminType.value
       ..adminTypeId.value = adminTypeId.value
       ..appUserSubSystemMappings.value =
-          currentTenant.value.appUser.value.appUserSubSystemMappings.value;
+          currentTenant.value.appUser.value.appUserSubSystemMappings.value
+      ..globalUserId.value = globalUserId.value;
   }
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.10.0-rc.12
+
+### Added
+
+- globalUserId
+
 ## 1.10.0-rc.11
 
 ### Fixed
