@@ -116,4 +116,64 @@ class PortalProfileRepository extends ApiClient {
           (response) => response.body<AppUser>(),
         );
   }
+
+  Future<AppUser> linkGoogleAccount(String idToken) async {
+    return dio.post(
+      "/link-google-account",
+      data: {
+        "idToken": idToken,
+      },
+    ).then(
+      (response) => response.body<AppUser>(),
+    );
+  }
+
+  Future<AppUser> linkMicrosoftAccount(String idToken) async {
+    return dio.post(
+      "/link-microsoft-account",
+      data: {
+        "idToken": idToken,
+      },
+    ).then(
+      (response) => response.body<AppUser>(),
+    );
+  }
+
+  Future<AppUser> linkAppleAccount(String idToken) async {
+    return dio.post(
+      "/link-apple-account",
+      data: {
+        "idToken": idToken,
+      },
+    ).then(
+      (response) => response.body<AppUser>(),
+    );
+  }
+
+  Future<AppUser> unlinkGoogleAccount() async {
+    return dio.post(
+      "/unlink-google-account",
+      data: {},
+    ).then(
+      (response) => response.body<AppUser>(),
+    );
+  }
+
+  Future<AppUser> unlinkMicrosoftAccount() async {
+    return dio.post(
+      "/unlink-microsoft-account",
+      data: {},
+    ).then(
+      (response) => response.body<AppUser>(),
+    );
+  }
+
+  Future<AppUser> unlinkAppleAccount() async {
+    return dio.post(
+      "/unlink-apple-account",
+      data: {},
+    ).then(
+      (response) => response.body<AppUser>(),
+    );
+  }
 }

@@ -25,22 +25,13 @@ class AppUser extends JsonModel with AppUserPreferences {
         address,
         dateOfBirth,
         avatar,
-        adminType,
-        adminTypeId,
-        gender,
-        genderId,
         isAlreadyGettingStarted,
-        language,
-        languageId,
-        receivingSystemEmail,
-        receivingSystemNotification,
-        timezone,
-        timezoneId,
         identityCode,
         tenants,
         name,
         appUserSubSystemMappings,
         currentTenant,
+        ...preferenceFields,
       ];
 
   /// The user ID.

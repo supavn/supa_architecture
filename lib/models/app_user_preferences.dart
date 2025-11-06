@@ -13,6 +13,9 @@ mixin AppUserPreferences {
         receivingSystemNotification,
         timezone,
         timezoneId,
+        googleAccount,
+        microsoftAccount,
+        appleAccount,
       ];
 
   /// The user's admin type as an [EnumModel].
@@ -45,4 +48,10 @@ mixin AppUserPreferences {
 
   /// The ID of the user's timezone.
   JsonInteger timezoneId = JsonInteger("timezoneId");
+
+  JsonString googleAccount = JsonString("googleAccount");
+
+  JsonString microsoftAccount = JsonString("microsoftAccount");
+
+  JsonString appleAccount = JsonString("appleAccount");
 }
