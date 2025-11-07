@@ -239,6 +239,25 @@ class PushNotificationBloc
       debugPrint("Failed to get initial message: ${error.toString()}");
     }
   }
+
+  Future<UserNotification?> getInitialNotification() async {
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      final title = initialMessage.notification?.title ?? '';
+      final body = initialMessage.notification?.body ?? '';
+      final linkMobile = initialMessage.data['linkMobile'];
+      final userNotification = UserNotification()
+        ..title.value = title
+        ..titleMobile.value = title
+        ..content.value = body
+        ..contentMobile.value = body
+        ..link.value = linkMobile
+        ..linkWeb.value = linkMobile
+        ..linkMobile.value = linkMobile;
+      return userNotification;
+    }
+    return null;
+  }
 }
 
 extension RemoteMessageExtension on RemoteMessage {

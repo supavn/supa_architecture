@@ -1,10 +1,11 @@
 # Changelog
 
-## 1.10.0-rc.12
+## 1.10.0-rc.13
 
 ### Added
 
 - globalUserId
+- handleInitialNotification
 
 ## 1.10.0-rc.11
 

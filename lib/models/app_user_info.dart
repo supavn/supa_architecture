@@ -86,6 +86,9 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
       ..adminTypeId.value = adminTypeId.value
       ..appUserSubSystemMappings.value =
           currentTenant.value.appUser.value.appUserSubSystemMappings.value
-      ..globalUserId.value = globalUserId.value;
+      ..globalUserId.value = globalUserId.value
+      ..googleAccount.value = googleAccount.value
+      ..appleAccount.value = appleAccount.value
+      ..microsoftAccount.value = microsoftAccount.value;
   }
 }
