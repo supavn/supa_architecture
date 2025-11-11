@@ -9,6 +9,7 @@ import 'supa_architecture_platform_interface.dart';
 export 'api_client/api_client.dart';
 export 'blocs/blocs.dart';
 export 'constants/constants.dart';
+export 'core/sub_app.dart';
 export 'exceptions/exceptions.dart';
 export 'extensions/extensions.dart';
 export 'filters/filters.dart';
