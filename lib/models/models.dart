@@ -24,6 +24,9 @@ export 'image.dart';
 export 'image_filter.dart';
 export 'language.dart';
 export 'language_filter.dart';
+export 'period.dart';
+export 'period_filter.dart';
+export 'request_history.dart';
 export 'tenant.dart';
 export 'tenant_filter.dart';
 export 'timezone.dart';
@@ -47,6 +50,8 @@ void registerModels() {
   getIt.registerFactory<GlobalUser>(GlobalUser.new);
   getIt.registerFactory<Image>(Image.new);
   getIt.registerFactory<Language>(Language.new);
+  getIt.registerFactory<Period>(Period.new);
+  getIt.registerFactory<RequestHistory>(RequestHistory.new);
   getIt.registerFactory<SubSystem>(SubSystem.new);
   getIt.registerFactory<Tenant>(Tenant.new);
   getIt.registerFactory<TenantSubSystemMapping>(TenantSubSystemMapping.new);
