@@ -83,6 +83,10 @@ extension DateTimeComparison on DateTime {
   }) {
     return DateFormat(dateFormat).format(toLocal());
   }
+
+  bool get isOverdue {
+    return isBefore(DateTime.now());
+  }
 }
 
 extension TimeOfDayExtension on TimeOfDay {

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.11.0
+
+### Added
+
+- Period, RequestHistory
+- isOverdue getter check for DateTime
+
 ## 1.10.0-rc.13
 
 ### Added

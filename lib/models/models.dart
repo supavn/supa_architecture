@@ -27,6 +27,7 @@ export 'language_filter.dart';
 export 'period.dart';
 export 'period_filter.dart';
 export 'request_history.dart';
+export 'request_history_filter.dart';
 export 'tenant.dart';
 export 'tenant_filter.dart';
 export 'timezone.dart';
