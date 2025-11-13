@@ -1,13 +1,10 @@
 import "dart:async";
 
 import "package:dio/dio.dart";
-import "package:flutter/foundation.dart";
 import "package:get_it/get_it.dart";
+import "package:supa_architecture/api_client/dio_interceptor.dart";
 import "package:supa_architecture/blocs/blocs.dart";
-import "package:supa_architecture/core/cookie_manager/cookie_manager.dart";
-import "package:supa_architecture/core/persistent_storage/persistent_storage.dart";
 import "package:supa_architecture/repositories/portal_authentication_repository.dart";
-import "package:supa_architecture/supa_architecture_platform_interface.dart";
 
 /// An interceptor for handling HTTP 401 errors and refreshing tokens.
 ///
@@ -38,14 +35,10 @@ class RefreshInterceptor extends Interceptor {
       // Wait for the refresh operation to complete
       try {
         await _refreshCompleter?.future;
-
         // Retry the failed request
         final dio = Dio();
-        if (!kIsWeb) {
-          dio.interceptors
-              .add(SupaArchitecturePlatform.instance.cookieStorage.interceptor);
-        }
-
+        dio.addCookieStorageInterceptor();
+        dio.addBaseUrlInterceptor();
         // Clone and retry the request
         final response = await dio.fetch(err.requestOptions);
         return handler.resolve(response);
@@ -72,7 +65,5 @@ class RefreshInterceptor extends Interceptor {
   void onRefreshFailed() {
     final getIt = GetIt.instance;
     getIt.get<AuthenticationBloc>().add(UserLogoutEvent());
-    getIt.get<CookieManager>().deleteAllCookies();
-    getIt.get<PersistentStorage>().clear();
   }
 }

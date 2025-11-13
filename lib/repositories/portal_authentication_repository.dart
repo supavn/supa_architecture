@@ -4,12 +4,12 @@ import "package:dio/dio.dart";
 import "package:flutter/foundation.dart";
 import "package:get_it/get_it.dart";
 import "package:supa_architecture/api_client/api_client.dart";
+import "package:supa_architecture/api_client/dio_interceptor.dart";
 import "package:supa_architecture/core/app_token.dart";
 import "package:supa_architecture/core/persistent_storage/persistent_storage.dart";
 import "package:supa_architecture/core/secure_authentication_info.dart";
 import "package:supa_architecture/core/tenant_authentication.dart";
 import "package:supa_architecture/models/models.dart";
-import "package:supa_architecture/supa_architecture_platform_interface.dart";
 import "package:supa_architecture/utils/platform_utils.dart";
 
 /// Repository for managing portal authentication operations.
@@ -196,8 +196,7 @@ class PortalAuthenticationRepository extends ApiClient {
   /// **Returns:**
   /// - A [Future] that resolves to a list of [Tenant].
   Future<List<Tenant>> loginWithBiometric() async {
-    final authInfo = await secureStorage.getSavedAuthenticationInfo();
-    await refreshToken(refreshToken: authInfo?.refreshToken);
+    await refreshToken();
     return listTenant();
   }
 
@@ -239,7 +238,7 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - A [Future] that resolves to a boolean indicating whether the logout was successful.
   Future<dynamic> logout() async {
     try {
-      await _removeAuthentication();
+      await _removePersistentAuthentication();
     } catch (error) {
       if (kDebugMode) {
         print(error);
@@ -260,11 +259,8 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - A [Future] that completes when the token is refreshed.
   Future<void> refreshToken({String? refreshToken}) async {
     final dio = Dio();
-    if (!kIsWeb) {
-      dio.interceptors
-          .add(SupaArchitecturePlatform.instance.cookieStorage.interceptor);
-    }
-    dio.options.baseUrl = persistentStorage.baseApiUrl;
+    dio.addCookieStorageInterceptor();
+    dio.addBaseUrlInterceptor();
 
     final refreshTokenUrl = Uri.parse(persistentStorage.baseApiUrl)
         .replace(path: "/rpc/portal/authentication/refresh-token")
@@ -314,9 +310,9 @@ class PortalAuthenticationRepository extends ApiClient {
   }
 
   /// Removes the authentication information.
-  Future<void> _removeAuthentication() async {
-    cookieStorage.deleteAllCookies();
-    persistentStorage.clear();
+  Future<void> _removePersistentAuthentication() async {
+    persistentStorage.removeAppUser();
+    persistentStorage.removeTenant();
   }
 
   /// Initiates the forgot password process.

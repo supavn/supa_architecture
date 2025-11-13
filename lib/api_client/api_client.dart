@@ -7,10 +7,10 @@ import "package:flutter/foundation.dart";
 import "package:get_it/get_it.dart";
 import "package:image_picker/image_picker.dart";
 import "package:path/path.dart";
+import "package:supa_architecture/api_client/dio_interceptor.dart";
 import "package:supa_architecture/api_client/interceptors/device_info_interceptor.dart";
 import "package:supa_architecture/api_client/interceptors/general_error_log_interceptor.dart";
 import "package:supa_architecture/api_client/interceptors/language_interceptor.dart";
-import "package:supa_architecture/api_client/interceptors/persistent_url_interceptor.dart";
 import "package:supa_architecture/api_client/interceptors/refresh_interceptor.dart";
 import "package:supa_architecture/api_client/interceptors/timezone_interceptor.dart";
 import "package:supa_architecture/core/cookie_manager/cookie_manager.dart";
@@ -18,7 +18,6 @@ import "package:supa_architecture/core/persistent_storage/persistent_storage.dar
 import "package:supa_architecture/core/secure_storage/secure_storage.dart";
 import "package:supa_architecture/json/json.dart";
 import "package:supa_architecture/models/models.dart";
-import "package:supa_architecture/supa_architecture_platform_interface.dart";
 
 part "dio_exception.dart";
 part "http_response.dart";
@@ -54,13 +53,8 @@ abstract class ApiClient {
       dio.interceptors.add(LanguageInterceptor());
     }
 
-    if (!kIsWeb) {
-      dio.interceptors
-          .add(SupaArchitecturePlatform.instance.cookieStorage.interceptor);
-      if (shouldUsePersistentUrl) {
-        dio.interceptors.add(PersistentUrlInterceptor());
-      }
-    }
+    dio.addCookieStorageInterceptor();
+    dio.addBaseUrlInterceptor();
 
     dio.interceptors
       ..add(TimezoneInterceptor())

@@ -1,6 +1,5 @@
 export "../utils/password_field_mixin.dart";
 export "atoms/app_image.dart";
-export "atoms/biometric_login_button.dart";
 export "atoms/carbon_button.dart";
 export "atoms/field_label.dart";
 export "atoms/go_back_button.dart";

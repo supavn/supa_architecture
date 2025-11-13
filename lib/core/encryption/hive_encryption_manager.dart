@@ -41,7 +41,7 @@ class HiveEncryptionManager {
     }
 
     final cipher = await _getCipher(encryptionKeyName);
-    return await Hive.openBox<T>(boxName, encryptionCipher: cipher);
+    return Hive.openBox<T>(boxName, encryptionCipher: cipher);
   }
 
   static Future<bool> _checkMigrationStatus(String boxName) async {
