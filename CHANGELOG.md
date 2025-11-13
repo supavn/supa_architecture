@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.12.0-rc1
+
+### Added
+
+- TimezoneService
+
 ## 1.11.0
 
 ### Added

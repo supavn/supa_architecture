@@ -1,15 +1,29 @@
-// ignore_for_file: avoid_web_libraries_in_flutter
-import 'dart:js_util' as jsu;
+import 'dart:js_interop';
+
+@JS('Intl.DateTimeFormat')
+@staticInterop
+class _IntlDateTimeFormat {
+  external factory _IntlDateTimeFormat();
+}
+
+extension _IntlDateTimeFormatExtension on _IntlDateTimeFormat {
+  external _ResolvedOptions resolvedOptions();
+}
+
+@JS()
+@staticInterop
+class _ResolvedOptions {}
+
+extension _ResolvedOptionsExtension on _ResolvedOptions {
+  external JSString? get timeZone;
+}
 
 String _getTimezoneViaIntl() {
   try {
-    final intl = jsu.getProperty(jsu.globalThis, 'Intl');
-    if (intl == null) return 'UTC';
-    final dtfCtor = jsu.getProperty(intl, 'DateTimeFormat');
-    final dtf = jsu.callConstructor(dtfCtor, const []);
-    final opts = jsu.callMethod(dtf, 'resolvedOptions', const []);
-    final tz = jsu.getProperty(opts, 'timeZone');
-    if (tz is String && tz.isNotEmpty) return tz;
+    final formatter = _IntlDateTimeFormat();
+    final options = formatter.resolvedOptions();
+    final tz = options.timeZone?.toDart;
+    if (tz != null && tz.isNotEmpty) return tz;
   } catch (_) {}
   return 'UTC';
 }

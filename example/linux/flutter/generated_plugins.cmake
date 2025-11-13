@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_linux
   flutter_secure_storage_linux
+  flutter_timezone
   open_file_linux
   supa_architecture
   url_launcher_linux
