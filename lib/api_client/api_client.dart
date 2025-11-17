@@ -54,7 +54,9 @@ abstract class ApiClient {
     }
 
     dio.addCookieStorageInterceptor();
-    dio.addBaseUrlInterceptor();
+    if (shouldUsePersistentUrl) {
+      dio.addBaseUrlInterceptor();
+    }
 
     dio.interceptors
       ..add(TimezoneInterceptor())
