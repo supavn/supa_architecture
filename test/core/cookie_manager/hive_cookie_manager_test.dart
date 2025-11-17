@@ -220,14 +220,14 @@ void main() {
 
         // Get single cookie
         final singleCookie = cookieManager.getSingleCookie(testUri, 'cookie2');
-        expect(singleCookie.name, equals('cookie2'));
-        expect(singleCookie.value, equals('value2'));
+        expect(singleCookie?.name, equals('cookie2'));
+        expect(singleCookie?.value, equals('value2'));
 
         // Get non-existent cookie
         final nonExistentCookie =
             cookieManager.getSingleCookie(testUri, 'nonexistent');
-        expect(nonExistentCookie.name, equals('nonexistent'));
-        expect(nonExistentCookie.value, equals(''));
+        expect(nonExistentCookie?.name, equals('nonexistent'));
+        expect(nonExistentCookie?.value, equals(''));
       });
 
       test('should delete cookies for specific domain', () async {
