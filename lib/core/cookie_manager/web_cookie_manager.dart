@@ -5,7 +5,13 @@ import 'package:supa_architecture/core/cookie_manager/cookie_manager.dart';
 import 'package:web/web.dart' hide Response;
 
 /// A [CookieManager] implementation for web browsers using `document.cookie`.
+///
+/// This implementation leverages the browser's native cookie handling and does not
+/// support token-in-URL functionality, relying instead on automatic cookie transmission.
 class WebCookieManager implements CookieManager {
+  @override
+  bool get supportsTokenInUrl => false;
+
   /// Returns a Dio interceptor for handling cookies.
   @override
   Interceptor get interceptor => InterceptorsWrapper(
@@ -77,26 +83,38 @@ class WebCookieManager implements CookieManager {
   }
 
   /// Retrieves a single cookie by its name for a specific URI.
+  /// Returns null if the cookie is not found.
   @override
-  Cookie getSingleCookie(Uri uri, String name) {
+  Cookie? getSingleCookie(Uri uri, String name) {
     final rawCookies = document.cookie;
     if (rawCookies.isEmpty) {
-      throw Exception('Cookie not found: $name');
+      return null;
     }
-    final cookieString = rawCookies
-        .split('; ')
-        .firstWhere((cookie) => cookie.startsWith('$name='), orElse: () => '');
-    if (cookieString.isEmpty) {
-      throw Exception('Cookie not found: $name');
+
+    try {
+      final cookieString = rawCookies
+          .split('; ')
+          .where((cookie) => cookie.startsWith('$name='))
+          .firstOrNull;
+
+      if (cookieString == null || cookieString.isEmpty) {
+        return null;
+      }
+
+      final value = cookieString.split('=').skip(1).join('=');
+      return Cookie(name, value);
+    } catch (e) {
+      return null;
     }
-    final value = cookieString.split('=').skip(1).join('=');
-    return Cookie(name, value);
   }
 
   /// Builds a URL with the token included as a query parameter.
+  ///
+  /// On web platforms, this returns the original URL unchanged as the browser
+  /// handles cookie authentication automatically.
   @override
   String buildUrlWithToken(String url) {
-    // No implementation needed as tokens are usually passed via cookies.
+    // Web implementation relies on browser's native cookie handling
     return url;
   }
 }
