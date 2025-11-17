@@ -54,11 +54,16 @@ class WebCookieManager implements CookieManager {
   }
 
   /// Saves cookies to the browser for a specific URI.
+  ///
+  /// Handles duplicate cookie names by keeping the last occurrence.
   @override
   void saveCookies(Uri uri, List<Cookie> cookies) {
+    // Process cookies in order to ensure last occurrence wins
     for (final cookie in cookies) {
-      document.cookie =
-          '${cookie.name}=${cookie.value}; path=/; domain=${uri.host};';
+      if (cookie.name.isNotEmpty) {
+        document.cookie =
+            '${cookie.name}=${cookie.value}; path=/; domain=${uri.host};';
+      }
     }
   }
 

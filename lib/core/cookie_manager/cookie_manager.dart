@@ -50,6 +50,10 @@ abstract class CookieManager {
   /// - **Web**: Saves to browser's cookie store
   /// - **Mobile**: Saves to local encrypted storage
   ///
+  /// **Duplicate handling:**
+  /// When multiple cookies have the same name, the last occurrence takes precedence.
+  /// This follows standard HTTP cookie behavior.
+  ///
   /// **Parameters:**
   /// - `uri`: The URI to associate cookies with
   /// - `cookies`: List of cookies to save
