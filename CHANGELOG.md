@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.12.0-rc2
+
+### Fixed
+
+- EnumStatusBadge
+
 ## 1.12.0-rc1
 
 ### Added
