@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:supa_architecture/extensions/extensions.dart';
 import 'package:supa_architecture/models/models.dart';
 import 'package:supa_architecture/widgets/atoms/text_status_badge.dart';
 
@@ -24,6 +25,15 @@ class EnumStatusBadge extends StatelessWidget {
     final bool hasBg = bgRaw != null && bgRaw.isNotEmpty;
     final bool colorIsHex = colorKey != null && colorKey.startsWith('#');
 
+    Color? calculatedBgColor;
+    Color? calculatedBorderColor;
+
+    if (!hasBg && colorIsHex) {
+      final Color baseColor = HexColor.fromHex(colorKey);
+      calculatedBgColor = baseColor.withAlpha(26);
+      calculatedBorderColor = baseColor.withAlpha(26);
+    }
+
     // If backgroundColor missing and color is a token (not hex), reuse color for background
     final String? effectiveBgKey = hasBg
         ? bgRaw
@@ -36,6 +46,8 @@ class EnumStatusBadge extends StatelessWidget {
       textColorKey: colorKey ?? 'default',
       backgroundColorKey: effectiveBgKey,
       borderColorKey: effectiveBgKey,
+      backgroundColor: calculatedBgColor,
+      borderColor: calculatedBorderColor,
     );
   }
 }

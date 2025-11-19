@@ -27,7 +27,7 @@ class TextStatusBadge extends StatelessWidget {
   /// Either provide explicit [backgroundColor] or a [backgroundColorKey] (token key or hex '#xxxxxx').
   // @Deprecated(
   //     'Use backgroundColorKey or theme tokens; this prop will be removed in a future release.')
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// Optional explicit border color. Prefer [borderColorKey] for tokens/hex.
   final Color? borderColor;
@@ -40,7 +40,7 @@ class TextStatusBadge extends StatelessWidget {
     required this.status,
     // @Deprecated(
     //     'Use backgroundColorKey or theme tokens; this prop will be removed in a future release.')
-    this.backgroundColor = const Color(0xFFFDDC69), // Default background color
+    this.backgroundColor, // Default background color
     this.color = const Color(0xFF000000), // Default text color
     this.textColorKey,
     this.backgroundColorKey,
@@ -105,7 +105,7 @@ class TextStatusBadge extends StatelessWidget {
     }
 
     final Color effectiveBackgroundColor =
-        resolvedBackgroundColor ?? backgroundColor;
+        resolvedBackgroundColor ?? backgroundColor ?? const Color(0xFFFDDC69);
     final Color effectiveTextColor = resolvedTextColor ??
         color ??
         getTextColorBasedOnBackground(effectiveBackgroundColor);
