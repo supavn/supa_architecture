@@ -14,5 +14,4 @@ export "organisms/forbidden_component.dart";
 export "organisms/searchable_appbar_title.dart";
 export "organisms/section_title.dart";
 export "pages/page_forbidden.dart";
-export "templates/bottom_sheet_container.dart";
 export "templates/infinite_list_state.dart";
