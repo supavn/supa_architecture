@@ -7,6 +7,8 @@ export 'admin_type.dart';
 export 'admin_type_filter.dart';
 export 'app_user.dart';
 export 'app_user_filter.dart';
+export 'app_user_group.dart';
+export 'app_user_group_filter.dart';
 export 'app_user_info.dart';
 export 'app_user_sub_system_mapping.dart';
 export 'attachment.dart';
@@ -40,6 +42,7 @@ void registerModels() {
 
   getIt.registerFactory<AdminType>(AdminType.new);
   getIt.registerFactory<AppUser>(AppUser.new);
+  getIt.registerFactory<AppUserGroup>(AppUserGroup.new);
   getIt.registerFactory<AppUserInfo>(AppUserInfo.new);
   getIt.registerFactory<AppUserSubSystemMapping>(AppUserSubSystemMapping.new);
   getIt.registerFactory<CurrentTenant>(CurrentTenant.new);
