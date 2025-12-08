@@ -1,3 +1,4 @@
+import 'package:get_it/get_it.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:supa_architecture/core/cookie_manager/cookie_manager.dart';
 import 'package:supa_architecture/core/device_info.dart';
@@ -48,6 +49,11 @@ abstract class SupaArchitecturePlatform extends PlatformInterface {
     bool useFirebase = false,
   }) async {
     this.useFirebase = useFirebase;
+
+    GetIt.instance.registerSingleton<PersistentStorage>(persistentStorage);
+    GetIt.instance.registerSingleton<CookieManager>(cookieStorage);
+    GetIt.instance.registerSingleton<SecureStorage>(secureStorage);
+
     // We should get the device info before initializing the platform.
     deviceInfo = await DeviceInfo.getDeviceInfo();
   }
