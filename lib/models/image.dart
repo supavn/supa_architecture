@@ -5,7 +5,6 @@ import "package:supa_architecture/models/file.dart";
 ///
 /// This class extends [File] and inherits all its properties and methods,
 /// representing an image file within the application.
-@Deprecated("Replace by Media class")
 class Image extends File {
   /// The thumbnail file of the image.
   JsonObject<File> thumbnailFile = JsonObject<File>("thumbnailFileId");

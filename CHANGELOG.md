@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.0
+
+- Add MediaFile class
+
 ## 1.12.0-rc2
 
 ### Fixed
