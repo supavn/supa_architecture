@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.0
+
+- Remove Image model, replace by File
+
 ## 1.12.0-rc2
 
 ### Fixed

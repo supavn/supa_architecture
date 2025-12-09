@@ -17,6 +17,9 @@ class File extends JsonModel {
         size,
         createdAt,
         updatedAt,
+        thumbnailFile,
+        thumbnailFileId,
+        thumbnailUrl,
       ];
 
   /// The ID of the file.
@@ -42,4 +45,13 @@ class File extends JsonModel {
 
   /// The last update date of the file.
   JsonDate updatedAt = JsonDate("updatedAt");
+
+  /// The thumbnail file of the image.
+  JsonObject<File> thumbnailFile = JsonObject<File>("thumbnailFileId");
+
+  /// The thumbnail file ID of the image.
+  JsonInteger thumbnailFileId = JsonInteger("thumbnailFileId");
+
+  /// The thumbnail URL of the image.
+  JsonString thumbnailUrl = JsonString("thumbnailUrl");
 }

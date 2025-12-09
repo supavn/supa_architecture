@@ -1,6 +1,6 @@
 name: supa_architecture
 description: Architecture library for Supa Flutter applications
-version: 1.12.0-rc2
+version: 1.13.0
 homepage: https://github.supa.vn
 
 environment:

@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:supa_architecture/models/comment_reaction.dart';
 import 'package:supa_architecture/supa_architecture.dart';
 
 @injectable
