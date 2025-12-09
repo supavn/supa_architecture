@@ -30,6 +30,7 @@ export 'image_filter.dart';
 export 'language.dart';
 export 'language_filter.dart';
 export 'latest_comment.dart';
+export 'media_file.dart';
 export 'period.dart';
 export 'period_filter.dart';
 export 'request_history.dart';
@@ -44,17 +45,15 @@ export 'user_notification_filter.dart';
 
 void registerModels() {
   final getIt = GetIt.instance;
-
   getIt.registerFactory<AdminType>(AdminType.new);
   getIt.registerFactory<AppUser>(AppUser.new);
-  getIt.registerFactory<CommentReaction>(CommentReaction.new);
-  getIt.registerFactory<LastestComment>(LastestComment.new);
-  getIt.registerFactory<Discussion>(Discussion.new);
   getIt.registerFactory<AppUserGroup>(AppUserGroup.new);
   getIt.registerFactory<AppUserInfo>(AppUserInfo.new);
   getIt.registerFactory<AppUserSubSystemMapping>(AppUserSubSystemMapping.new);
+  getIt.registerFactory<CommentReaction>(CommentReaction.new);
   getIt.registerFactory<CurrentTenant>(CurrentTenant.new);
   getIt.registerFactory<DateType>(DateType.new);
+  getIt.registerFactory<Discussion>(Discussion.new);
   getIt.registerFactory<EnumModel>(EnumModel.new);
   getIt.registerFactory<File>(File.new);
   getIt.registerFactory<ForgotPasswordDto>(ForgotPasswordDto.new);
@@ -62,6 +61,8 @@ void registerModels() {
   getIt.registerFactory<GlobalUser>(GlobalUser.new);
   getIt.registerFactory<Image>(Image.new);
   getIt.registerFactory<Language>(Language.new);
+  getIt.registerFactory<LastestComment>(LastestComment.new);
+  getIt.registerFactory<MediaFile>(MediaFile.new);
   getIt.registerFactory<Period>(Period.new);
   getIt.registerFactory<RequestHistory>(RequestHistory.new);
   getIt.registerFactory<RequisitionEntity>(RequisitionEntity.new);
