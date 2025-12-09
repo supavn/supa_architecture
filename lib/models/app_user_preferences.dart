@@ -16,6 +16,7 @@ mixin AppUserPreferences {
         googleAccount,
         microsoftAccount,
         appleAccount,
+        isAdmin,
       ];
 
   /// The user's admin type as an [EnumModel].
@@ -54,4 +55,6 @@ mixin AppUserPreferences {
   JsonString microsoftAccount = JsonString("microsoftAccount");
 
   JsonString appleAccount = JsonString("appleAccount");
+
+  JsonBoolean isAdmin = JsonBoolean("isAdmin");
 }

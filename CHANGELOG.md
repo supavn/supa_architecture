@@ -3,6 +3,7 @@
 ## 1.13.0
 
 - Remove Image model, replace by File
+- Add isAdmin to AppUser profile
 
 ## 1.12.0-rc2
 
