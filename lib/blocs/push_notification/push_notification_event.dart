@@ -1,6 +1,6 @@
 part of "push_notification_bloc.dart";
 
-/// Push notification event
+/// Base class for all push notification events.
 sealed class PushNotificationEvent extends Equatable {
   @override
   List<Object?> get props => [
@@ -8,18 +8,21 @@ sealed class PushNotificationEvent extends Equatable {
       ];
 }
 
-/// Push notification event when a notification is received
+/// Event triggered when a push notification is received in the foreground.
+///
+/// This event is fired when the app is open and actively running, and
+/// a notification arrives. It allows the app to display in-app notification UI.
 final class DidReceivedNotificationEvent extends PushNotificationEvent {
-  /// Push notification event when a notification is received
+  /// The notification title text
   final String title;
 
-  /// Push notification event when a notification is received
+  /// The notification body text
   final String body;
 
-  /// Push notification event when a notification is received
+  /// Additional notification data payload
   final PushNotificationPayload payload;
 
-  /// Push notification event when a notification is received
+  /// Optional deep link URL for mobile navigation
   final String? linkMobile;
 
   @override
@@ -31,7 +34,7 @@ final class DidReceivedNotificationEvent extends PushNotificationEvent {
         linkMobile,
       ];
 
-  /// Push notification event when a notification is received
+  /// Creates a notification received event with the given notification data.
   DidReceivedNotificationEvent({
     required this.title,
     required this.body,
@@ -40,18 +43,22 @@ final class DidReceivedNotificationEvent extends PushNotificationEvent {
   });
 }
 
-/// Push notification event when the user opened the app
+/// Event triggered when user taps on a notification.
+///
+/// This event is fired when the user interacts with a notification
+/// (either from the system tray or as a foreground notification banner),
+/// causing the app to open or come to the foreground.
 final class DidUserOpenedNotificationEvent extends PushNotificationEvent {
-  /// Push notification event when a notification is received
+  /// The notification title text
   final String title;
 
-  /// Push notification event when a notification is received
+  /// The notification body text
   final String body;
 
-  /// Push notification event when a notification is received
+  /// Additional notification data payload
   final PushNotificationPayload payload;
 
-  /// Push notification event when a notification is received
+  /// Optional deep link URL for mobile navigation
   final String? linkMobile;
 
   @override
@@ -63,7 +70,7 @@ final class DidUserOpenedNotificationEvent extends PushNotificationEvent {
         linkMobile,
       ];
 
-  /// Push notification event when the user opened the app
+  /// Creates a notification opened event with the given notification data.
   DidUserOpenedNotificationEvent({
     required this.title,
     required this.body,
@@ -72,7 +79,10 @@ final class DidUserOpenedNotificationEvent extends PushNotificationEvent {
   });
 }
 
-/// Push notification event when the user reset the app
+/// Event to reset notification state to initial.
+///
+/// Use this event to clear any displayed notification or reset the
+/// notification state after handling it.
 final class DidResetNotificationEvent extends PushNotificationEvent {
   @override
   List<Object?> get props => [
@@ -80,13 +90,17 @@ final class DidResetNotificationEvent extends PushNotificationEvent {
       ];
 }
 
-/// Push notification event to check for initial message when app is mounted
+/// Event to check for notifications that launched the app.
+///
+/// This event should be triggered when the app finishes mounting its UI.
+/// It checks if the app was launched by tapping a notification while
+/// the app was completely terminated.
 final class DidMountedCheckInitialMessage extends PushNotificationEvent {
   @override
   List<Object?> get props => [
         "DidMountedCheckInitialMessage",
       ];
 
-  /// Push notification event to check for initial message when app is mounted
+  /// Creates a check initial message event.
   DidMountedCheckInitialMessage();
 }

@@ -17,21 +17,48 @@ part "authentication_action.dart";
 part "authentication_event.dart";
 part "authentication_state.dart";
 
+/// Manages user authentication flows and state transitions.
+///
+/// This BLoC handles all authentication operations including:
+/// - Multiple sign-in methods (Google, Apple, Microsoft, password, biometrics)
+/// - Multi-tenant application support with tenant selection
+/// - Session persistence and restoration
+/// - User profile updates and notification preferences
+///
+/// The bloc integrates with OAuth providers and manages the complete
+/// authentication lifecycle from initial login through tenant selection
+/// to logout.
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
+  /// Repository for authentication operations
   final authRepo = PortalAuthenticationRepository();
 
+  /// Repository for user profile operations
   final profileRepo = PortalProfileRepository();
 
+  /// Google Sign-In client for OAuth authentication
   final GoogleSignIn googleSignIn = GoogleSignIn(
     scopes: <String>["email"],
     signInOption: SignInOption.standard,
   );
 
+  /// Azure AD OAuth client instance
   late final AadOAuth oauth;
 
+  /// Azure AD OAuth configuration
   late Config config;
 
+  /// Configures Azure AD OAuth for Microsoft sign-in.
+  ///
+  /// This method sets up the Azure AD OAuth client with the necessary
+  /// configuration including tenant ID, client ID, redirect URI, and UI elements.
+  ///
+  /// **Parameters:**
+  /// - [navigatorKey]: Global navigator key for handling OAuth navigation
+  /// - [redirectUri]: The redirect URI configured in Azure AD app registration
+  ///
+  /// **Returns:**
+  /// The configured [AadOAuth] instance ready for authentication.
   AadOAuth configureAzureAD(
     GlobalKey<NavigatorState> navigatorKey,
     String redirectUri,
@@ -127,6 +154,17 @@ class AuthenticationBloc
     ));
   }
 
+  /// Initializes authentication by checking for saved sessions.
+  ///
+  /// This method should be called when the app starts. It checks local
+  /// storage for a previously saved authentication session and automatically
+  /// restores it if found. If no saved session exists, it transitions to
+  /// the initial login state.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// authBloc.handleInitialize();
+  /// ```
   Future<void> handleInitialize() async {
     add(const AuthenticationProcessingEvent(AuthenticationAction.initialize));
     final authentication = await authRepo.loadAuthentication();
@@ -149,6 +187,16 @@ class AuthenticationBloc
     emit(AuthenticationProcessingState(event.action));
   }
 
+  /// Processes tenant list after successful authentication.
+  ///
+  /// This method handles the post-authentication flow based on the number
+  /// of tenants the user has access to:
+  /// - If exactly one tenant: automatically selects it
+  /// - If multiple tenants: shows tenant selection UI
+  /// - If no tenants: displays an error
+  ///
+  /// **Parameters:**
+  /// - [tenants]: List of tenants the authenticated user has access to
   Future<void> handleLoginWithTenants(List<Tenant> tenants) async {
     if (tenants.isNotEmpty) {
       if (tenants.length == 1) {

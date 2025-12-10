@@ -1,20 +1,23 @@
 part of "push_notification_bloc.dart";
 
-/// Push notification payload
+/// Contains the data payload from a Firebase Cloud Messaging notification.
+///
+/// This class parses and stores custom data sent with push notifications,
+/// including display text, timestamps, and deep linking information.
 class PushNotificationPayload {
-  /// Title mobile
+  /// Mobile-specific notification title
   final String titleMobile;
 
-  /// Created at
+  /// Timestamp when the notification was created on the server
   final String createdAt;
 
-  /// Link mobile
+  /// Deep link URL for navigating to specific app screens on mobile
   final String linkMobile;
 
-  /// Data
+  /// Raw notification data map containing all custom fields
   final Map<String, dynamic>? data;
 
-  /// Push notification payload
+  /// Creates a notification payload with the specified fields.
   PushNotificationPayload({
     required this.titleMobile,
     required this.createdAt,
@@ -22,7 +25,10 @@ class PushNotificationPayload {
     this.data,
   });
 
-  /// Factory method to create an instance of PushNotificationPayload from JSON
+  /// Creates a [PushNotificationPayload] from JSON data.
+  ///
+  /// Handles both JSON maps and JSON strings, returning a payload with
+  /// empty strings as defaults if parsing fails.
   factory PushNotificationPayload.fromJson(dynamic json) {
     Map<String, dynamic> jsonMap;
     if (json is Map<String, dynamic>) {

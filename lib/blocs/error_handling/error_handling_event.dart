@@ -1,16 +1,31 @@
 part of "error_handling_bloc.dart";
 
-/// Abstract base class for all error handling events.
+/// Base class for all error handling events.
 abstract class ErrorHandlingEvent {}
 
-/// Event triggered when the application is initialized.
+/// Initializes error handling and crash reporting systems.
+///
+/// This event sets up automatic error capture for Flutter framework errors
+/// and platform-level errors. It should be called during app initialization.
 class InitializeErrorHandling extends ErrorHandlingEvent {}
 
-/// Event triggered when an exception is captured.
+/// Manually captures and reports an exception.
+///
+/// Use this event to explicitly report errors that are caught in try-catch
+/// blocks but should still be logged to crash reporting services.
+///
+/// **Example:**
+/// ```dart
+/// try {
+///   await riskyOperation();
+/// } catch (error) {
+///   errorHandlingBloc.captureException(error);
+/// }
+/// ```
 class CaptureException extends ErrorHandlingEvent {
-  /// The exception or error to be logged. Only logs instances of [Error] type.
+  /// The exception or error to report to crash analytics services
   final dynamic error;
 
-  /// Constructs a [CaptureException] event with the given [error].
+  /// Creates a [CaptureException] event with the given error.
   CaptureException(this.error);
 }

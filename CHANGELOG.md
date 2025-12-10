@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+### Documentation
+
+- Improved documentation comments across all BLoC files in `lib/blocs/` directory
+- Added comprehensive class-level, method-level, and field-level documentation
+- Enhanced authentication bloc documentation with detailed OAuth flow descriptions
+- Improved error handling bloc documentation with usage examples
+- Expanded push notification bloc documentation with initialization and lifecycle details
+- Clarified tenant bloc documentation with multi-tenant context explanations
+
 ## 1.13.0
 
 - Remove Image model, replace by File
