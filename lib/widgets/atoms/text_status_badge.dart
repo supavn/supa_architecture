@@ -2,39 +2,111 @@ import 'package:flutter/material.dart';
 import 'package:supa_architecture/extensions/extensions.dart';
 import 'package:supa_architecture/theme/supa_extended_color_theme.dart';
 
-/// A badge widget to display status with automatic text color adjustment
-/// based on the background color's luminance.
+/// A customizable badge widget for displaying status text with automatic
+/// text color adjustment based on background luminance.
+///
+/// This widget supports multiple ways to specify colors:
+/// - Direct color values via [color], [backgroundColor], and [borderColor]
+/// - Theme token keys via [textColorKey], [backgroundColorKey], and [borderColorKey]
+/// - Hex color strings (e.g., '#FF0000') via the key parameters
+///
+/// The text color automatically adjusts to black or white based on the
+/// background color's luminance for optimal readability.
+///
+/// **Usage:**
+/// ```dart
+/// // Using theme tokens
+/// TextStatusBadge(
+///   status: 'Active',
+///   backgroundColorKey: 'success',
+///   textColorKey: 'onSuccess',
+/// )
+///
+/// // Using hex colors
+/// TextStatusBadge(
+///   status: 'Pending',
+///   backgroundColorKey: '#FFA500',
+/// )
+///
+/// // Using direct colors
+/// TextStatusBadge(
+///   status: 'Inactive',
+///   backgroundColor: Colors.grey,
+///   color: Colors.white,
+/// )
+/// ```
 class TextStatusBadge extends StatelessWidget {
-  /// Determines whether the text color should be black or white
-  /// based on the luminance of the background color.
+  /// Determines the appropriate text color (black or white) based on the
+  /// background color's luminance for optimal readability.
+  ///
+  /// Returns black if the background luminance is greater than 0.5,
+  /// otherwise returns white.
   static Color getTextColorBasedOnBackground(Color backgroundColor) {
     return backgroundColor.computeLuminance() > 0.5
         ? Colors.black
         : Colors.white;
   }
 
+  /// The status text to display in the badge.
   final String status;
 
-  /// Either provide explicit [color] or a [textColorKey] (token key or hex '#xxxxxx').
+  /// The explicit text color for the status text.
+  ///
+  /// If not provided, the color will be determined from [textColorKey] or
+  /// automatically calculated based on background luminance.
   final Color? color;
 
-  /// Token key or hex for text color (e.g., 'warning' or '#FFFFFF').
+  /// Theme token key or hex color string for the text color.
+  ///
+  /// Examples: 'warning', 'error', '#FFFFFF', '#000000'
+  /// If this is a hex string (starts with '#'), it will be parsed as a hex color.
+  /// Otherwise, it will be resolved from the theme's extended color scheme.
   final String? textColorKey;
 
-  /// Token key or hex for background color (preferred over deprecated [backgroundColor]).
+  /// Theme token key or hex color string for the background color.
+  ///
+  /// This is the preferred way to specify background color over [backgroundColor].
+  /// Examples: 'success', 'warning', '#FF0000'
+  /// If this is a hex string (starts with '#'), it will be parsed as a hex color.
+  /// Otherwise, it will be resolved from the theme's extended color scheme.
   final String? backgroundColorKey;
 
-  /// Either provide explicit [backgroundColor] or a [backgroundColorKey] (token key or hex '#xxxxxx').
+  /// The explicit background color for the badge.
+  ///
+  /// **Deprecated:** Use [backgroundColorKey] or theme tokens instead.
+  /// This property will be removed in a future release.
   // @Deprecated(
   //     'Use backgroundColorKey or theme tokens; this prop will be removed in a future release.')
   final Color? backgroundColor;
 
-  /// Optional explicit border color. Prefer [borderColorKey] for tokens/hex.
+  /// The explicit border color for the badge.
+  ///
+  /// Prefer [borderColorKey] for theme tokens or hex colors.
   final Color? borderColor;
 
-  /// Token key or hex for border color.
+  /// Theme token key or hex color string for the border color.
+  ///
+  /// Examples: 'outline', '#CCCCCC'
+  /// If this is a hex string (starts with '#'), it will be parsed as a hex color.
+  /// Otherwise, it will be resolved from the theme's extended color scheme.
   final String? borderColorKey;
 
+  /// Creates a [TextStatusBadge] widget.
+  ///
+  /// **Parameters:**
+  /// - `status`: The status text to display (required).
+  /// - `color`: Explicit text color (optional, defaults to black).
+  /// - `textColorKey`: Theme token key or hex string for text color (optional).
+  /// - `backgroundColorKey`: Theme token key or hex string for background color (preferred).
+  /// - `backgroundColor`: Explicit background color (deprecated, use backgroundColorKey instead).
+  /// - `borderColor`: Explicit border color (optional).
+  /// - `borderColorKey`: Theme token key or hex string for border color (optional).
+  ///
+  /// **Note:** Color resolution priority:
+  /// 1. Explicit color values ([color], [backgroundColor], [borderColor])
+  /// 2. Theme token keys or hex strings ([textColorKey], [backgroundColorKey], [borderColorKey])
+  /// 3. Default theme tokens ('default' group) if no keys provided
+  /// 4. Automatic text color calculation based on background luminance
   const TextStatusBadge({
     super.key,
     required this.status,
