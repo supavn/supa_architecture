@@ -15,6 +15,11 @@
 - Improved JsonModel documentation with detailed serialization/deserialization behavior
 - Enhanced JsonField documentation with type safety and validation message handling details
 - Expanded field type documentation (JsonString, JsonInteger, JsonDouble, JsonBoolean, JsonDate, JsonNumber, JsonList, JsonObject) with usage examples and key features
+- Rewrote and enhanced documentation comments for all services in `lib/services/` directory
+- Added comprehensive documentation for FileService with detailed method descriptions and parameter documentation
+- Enhanced FileHandler documentation with platform-specific implementation details
+- Improved timezone service documentation with platform-specific behavior explanations
+- Added documentation for EntityDetailNavigator with usage examples and implementation guidance
 
 ## 1.13.0
 
