@@ -20,6 +20,11 @@
 - Enhanced FileHandler documentation with platform-specific implementation details
 - Improved timezone service documentation with platform-specific behavior explanations
 - Added documentation for EntityDetailNavigator with usage examples and implementation guidance
+- Rewrote and enhanced documentation comments for all form classes in `lib/forms/` directory
+- Added comprehensive class-level documentation with usage examples for LoginForm, ForgotPasswordForm, ResetPasswordForm, and ChangePasswordForm
+- Enhanced form control documentation with detailed validation requirements and access patterns
+- Improved ChangePasswordForm documentation with password complexity requirements and regex pattern explanations
+- Expanded ResetPasswordForm documentation with OTP validation parameter details
 
 ## 1.13.0
 

@@ -1,14 +1,25 @@
 import "package:reactive_forms/reactive_forms.dart";
 
-/// A form for user login.
+/// A reactive form for user authentication/login.
 ///
-/// This form is used to validate and submit user login information.
+/// This form manages the validation and submission of user login credentials.
+/// It contains two required fields: username and password.
+///
+/// **Example usage:**
+/// ```dart
+/// final form = LoginForm('user@example.com', '');
+/// if (form.valid) {
+///   // Submit login credentials
+/// }
+/// ```
 class LoginForm extends FormGroup {
-  /// Constructs a [LoginForm] with the specified initial email and password.
+  /// Creates a [LoginForm] with initial values for username and password.
+  ///
+  /// Both fields are required and must be non-empty for the form to be valid.
   ///
   /// **Parameters:**
-  /// - `initialUsername`: The initial username.
-  /// - `initialPassword`: The initial password.
+  /// - `initialUsername`: The initial username value (typically empty or pre-filled).
+  /// - `initialPassword`: The initial password value (typically empty for security).
   LoginForm(String initialUsername, String initialPassword)
       : super({
           "username": FormControl<String>(
@@ -25,11 +36,17 @@ class LoginForm extends FormGroup {
           ),
         });
 
-  /// The email control of the form.
+  /// The username form control.
+  ///
+  /// This control validates that the username field is not empty.
+  /// Access the value via `username.value` and check validity via `username.valid`.
   FormControl<String> get username =>
       control("username") as FormControl<String>;
 
-  /// The password control of the form.
+  /// The password form control.
+  ///
+  /// This control validates that the password field is not empty.
+  /// Access the value via `password.value` and check validity via `password.valid`.
   FormControl<String> get password =>
       control("password") as FormControl<String>;
 }
