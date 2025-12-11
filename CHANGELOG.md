@@ -10,6 +10,11 @@
 - Improved error handling bloc documentation with usage examples
 - Expanded push notification bloc documentation with initialization and lifecycle details
 - Clarified tenant bloc documentation with multi-tenant context explanations
+- Rewrote and enhanced documentation comments for all classes in `lib/json/` directory
+- Added comprehensive class-level, method-level, and field-level documentation for JSON field types
+- Improved JsonModel documentation with detailed serialization/deserialization behavior
+- Enhanced JsonField documentation with type safety and validation message handling details
+- Expanded field type documentation (JsonString, JsonInteger, JsonDouble, JsonBoolean, JsonDate, JsonNumber, JsonList, JsonObject) with usage examples and key features
 
 ## 1.13.0
 

@@ -1,22 +1,65 @@
 part of "json.dart";
 
-/// A class representing a JSON object field.
+/// A specialized JSON field for handling nested [JsonModel] objects.
 ///
-/// This class extends [JsonField] to handle objects of type [T] which extends [JsonModel].
-/// It provides methods for setting and getting values, converting to JSON,
-/// and accessing nested fields within the object.
+/// [JsonObject] extends [JsonField<T>] to provide type-safe handling of
+/// nested model objects in JSON data. It automatically deserializes JSON
+/// objects into model instances and provides convenient access to nested
+/// fields using the `[]` and `[]=` operators.
+///
+/// **Key Features:**
+/// - Automatic deserialization of JSON objects to model instances
+/// - Nested field access using `[]` and `[]=` operators
+/// - Lazy instantiation: creates a new model instance if value is null
+/// - Type-safe operations with generic type parameter
+///
+/// **Type Parameter:**
+/// - `T`: The type of [JsonModel] this field holds (e.g., `UserModel`, `AddressModel`).
+///
+/// **Usage Example:**
+/// ```dart
+/// final address = JsonObject<AddressModel>('address');
+/// address.value = {
+///   'street': '123 Main St',
+///   'city': 'New York'
+/// }; // Automatically deserializes to AddressModel
+///
+/// print(address['city']); // 'New York'
+/// address['zipCode'] = '10001'; // Set nested field
+/// ```
+///
+/// **See also:**
+/// - [JsonField] for the base field implementation
+/// - [JsonModel] for the model base class
+/// - [JsonList] for lists of model objects
 class JsonObject<T extends JsonModel> extends JsonField<T> {
-  /// Constructs an instance of [JsonObject].
+  /// Creates a new [JsonObject] field with the specified field name.
+  ///
+  /// The [fieldName] corresponds to the key in the JSON object that this
+  /// field will map to during serialization and deserialization. Model
+  /// instances are created using dependency injection (`GetIt.instance.get<T>()`).
   ///
   /// **Parameters:**
-  /// - `fieldName`: The name of the field.
-  /// - `type`: The constructor for creating instances of type [T].
+  /// - `fieldName`: The name of the field as it appears in JSON data.
   JsonObject(super.fieldName);
 
-  /// Gets the value of the JSON object field.
+  /// Returns the model object, creating a new instance if needed.
+  ///
+  /// If the underlying [rawValue] is `null`, this getter creates and returns
+  /// a new instance of type `T` using dependency injection. This lazy
+  /// instantiation ensures that you always have a valid model object to work
+  /// with, even if the field hasn't been populated yet.
   ///
   /// **Returns:**
-  /// - An instance of [T], or a new instance if the value is null.
+  /// The model object of type `T`. If [rawValue] is `null`, a new instance
+  /// is created via `GetIt.instance.get<T>()`.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonObject<AddressModel>('address');
+  /// final address = field.value; // Creates new AddressModel instance
+  /// address['city'] = 'New York';
+  /// ```
   @override
   T get value {
     if (rawValue == null) {
@@ -25,10 +68,30 @@ class JsonObject<T extends JsonModel> extends JsonField<T> {
     return rawValue!;
   }
 
-  /// Sets the value of the JSON object field.
+  /// Sets the model object value, accepting both typed models and JSON maps.
+  ///
+  /// This setter provides flexible input handling:
+  /// - **`T` (typed model)**: Assigned directly to [rawValue]
+  /// - **`Map<String, dynamic>`**: A new instance of type `T` is created using
+  ///   dependency injection, then populated with data via `fromJson()`
+  /// - **`null`**: Sets [rawValue] to `null`
   ///
   /// **Parameters:**
-  /// - `value`: The new value of the field.
+  /// - `value`: The value to set, which can be a model instance of type `T`,
+  ///   a JSON map, or `null`.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonObject<AddressModel>('address');
+  /// // From typed model
+  /// field.value = addressModel;
+  ///
+  /// // From JSON map
+  /// field.value = {
+  ///   'street': '123 Main St',
+  ///   'city': 'New York'
+  /// }; // Automatically creates and populates AddressModel
+  /// ```
   @override
   set value(dynamic value) {
     if (value == null) {
@@ -46,25 +109,50 @@ class JsonObject<T extends JsonModel> extends JsonField<T> {
     }
   }
 
-  /// Converts the object to JSON.
+  /// Serializes the nested model object to a JSON map.
+  ///
+  /// Uses the model's `toJson()` method to serialize the nested object.
+  /// Returns `null` if the model is `null`, allowing the field to be omitted
+  /// from JSON output when appropriate.
   ///
   /// **Returns:**
-  /// - A map representing the object in JSON format.
+  /// A JSON map representing the serialized model object, or `null` if
+  /// the model is `null`.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonObject<AddressModel>('address');
+  /// field.value = addressModel;
+  /// print(field.toJson());
+  /// // {'street': '123 Main St', 'city': 'New York'}
+  /// ```
   @override
   Map<String, dynamic>? toJson() {
     return rawValue?.toJson();
   }
 
-  /// Gets the value of a nested field by name.
+  /// Retrieves the value of a nested field within the model object.
+  ///
+  /// Provides convenient access to fields within the nested model using
+  /// bracket notation. This delegates to the model's `[]` operator.
   ///
   /// **Parameters:**
-  /// - `name`: The name of the nested field.
+  /// - `name`: The name of the nested field to retrieve (must match a field's
+  ///   [JsonField.fieldName] in the nested model).
   ///
   /// **Returns:**
-  /// - The value of the nested field.
+  /// The value of the nested field, or `null` if the model object is `null`.
   ///
   /// **Throws:**
-  /// - `Exception` if the field does not exist.
+  /// An [Exception] if the nested model exists but no field with the given
+  /// name exists.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonObject<AddressModel>('address');
+  /// field.value = addressModel;
+  /// print(field['city']); // 'New York'
+  /// ```
   operator [](String name) {
     if (rawValue == null) {
       return null;
@@ -77,14 +165,28 @@ class JsonObject<T extends JsonModel> extends JsonField<T> {
     throw Exception("Field $name does not exist");
   }
 
-  /// Sets the value of a nested field by name.
+  /// Sets the value of a nested field within the model object.
+  ///
+  /// Provides convenient assignment to fields within the nested model using
+  /// bracket notation. This delegates to the model's `[]=` operator. The
+  /// model object must not be `null` (asserted at runtime).
   ///
   /// **Parameters:**
-  /// - `name`: The name of the nested field.
-  /// - `value`: The new value to set.
+  /// - `name`: The name of the nested field to set (must match a field's
+  ///   [JsonField.fieldName] in the nested model).
+  /// - `value`: The new value to assign to the nested field.
   ///
   /// **Throws:**
-  /// - `Exception` if the field does not exist.
+  /// An [Exception] if:
+  /// - The model object is `null`
+  /// - No field with the given name exists in the nested model
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonObject<AddressModel>('address');
+  /// field.value = addressModel;
+  /// field['zipCode'] = '10001'; // Set nested field value
+  /// ```
   operator []=(String name, value) {
     assert(rawValue != null);
     if (rawValue == null) {

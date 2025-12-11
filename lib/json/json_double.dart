@@ -1,58 +1,86 @@
 part of "json.dart";
 
-/// A JSON field that handles double-precision floating-point values.
+/// A specialized JSON field for handling double-precision floating-point numbers.
 ///
-/// The `JsonDouble` class extends `JsonField<double>` and provides
-/// functionality to parse and serialize double values from JSON data.
+/// [JsonDouble] extends [JsonField<double>] to provide type-safe handling of
+/// decimal numbers in JSON data. It supports parsing numeric strings and
+/// converting integers to doubles, ensuring flexible input handling while
+/// maintaining type safety.
 ///
-/// **Example Usage:**
+/// **Key Features:**
+/// - Parses numeric strings to double values
+/// - Converts integers to doubles automatically
+/// - Defaults to `0.0` when value is null
+/// - Handles various input types with graceful fallback
+///
+/// **Usage Example:**
 /// ```dart
-/// // Creating a JsonDouble instance with the field name "price"
-/// JsonDouble priceField = JsonDouble("price");
+/// final price = JsonDouble('price');
+/// price.value = 19.99;        // Direct double
+/// price.value = 25;            // Integer converted to double
+/// price.value = "29.99";       // String parsed to double
+/// print(price.value);          // 29.99
 ///
-/// // Setting the value using a double
-/// priceField.value = 19.99;
-///
-/// // Setting the value using a string that can be parsed to a double
-/// priceField.value = "29.99";
-///
-/// // Getting the double value (returns 29.99)
-/// double price = priceField.value;
+/// price.value = "invalid";     // Sets rawValue to null (parse fails)
+/// print(price.value);          // 0.0 (default)
 /// ```
+///
+/// **See also:**
+/// - [JsonField] for the base field implementation
+/// - [JsonInteger] for integer values
+/// - [JsonNumber] for generic numeric values
 class JsonDouble extends JsonField<double> {
-  /// Creates a new [JsonDouble] with the given [fieldName].
+  /// Creates a new [JsonDouble] field with the specified field name.
   ///
-  /// The [fieldName] represents the key in the JSON object that this field corresponds to.
+  /// The [fieldName] corresponds to the key in the JSON object that this
+  /// field will map to during serialization and deserialization.
+  ///
+  /// **Parameters:**
+  /// - `fieldName`: The name of the field as it appears in JSON data.
   JsonDouble(super.fieldName);
 
-  /// Gets the double value of this field.
+  /// Returns the double value of this field.
   ///
-  /// If the underlying [rawValue] is `null`, this getter returns `0.0` by default.
-  /// This ensures that the field always provides a double value when accessed.
+  /// If the underlying [rawValue] is `null`, this getter returns `0.0` as
+  /// a default value. This ensures that double fields always provide a
+  /// valid numeric value when accessed, which is useful for calculations.
+  ///
+  /// **Returns:**
+  /// The double value, or `0.0` if [rawValue] is `null`.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonDouble('price');
+  /// print(field.value); // 0.0 (default)
+  ///
+  /// field.value = 19.99;
+  /// print(field.value); // 19.99
+  /// ```
   @override
   double get value => rawValue ?? 0;
 
-  /// Sets the value of this field.
+  /// Sets the double value, accepting multiple input types with automatic conversion.
   ///
-  /// The [value] can be a `double`, `String`, or `null`.
+  /// This setter provides flexible input handling:
+  /// - **`double`**: Assigned directly to [rawValue]
+  /// - **`int`**: Converted to `double` using `toDouble()`
+  /// - **`String`**: Parsed using `double.tryParse()`. If parsing fails,
+  ///   [rawValue] is set to `null`
+  /// - **`null`**: Sets [rawValue] to `null`
+  /// - **Other types**: Attempts conversion via `toString()` and parsing.
+  ///   If that fails, [rawValue] is set to `null`
   ///
-  /// - If [value] is a `double` or `null`, it is directly assigned to [rawValue].
-  /// - If [value] is a `String`, it attempts to parse it into a `double` using `double.tryParse`.
-  ///   - If parsing succeeds, the parsed double is assigned to [rawValue].
-  ///   - If parsing fails (e.g., the string is non-numeric), [rawValue] is set to `null`.
+  /// **Parameters:**
+  /// - `value`: The value to set, which can be a `double`, `int`, `String`,
+  ///   `null`, or other types (with fallback conversion).
   ///
-  /// **Examples:**
+  /// **Example:**
   /// ```dart
-  /// JsonDouble priceField = JsonDouble("price");
-  ///
-  /// // Setting with a double
-  /// priceField.value = 19.99; // rawValue is 19.99
-  ///
-  /// // Setting with a numeric string
-  /// priceField.value = "29.99"; // rawValue is 29.99
-  ///
-  /// // Setting with a non-numeric string
-  /// priceField.value = "abc"; // rawValue is null
+  /// final field = JsonDouble('price');
+  /// field.value = 19.99;      // Direct double
+  /// field.value = 25;         // Integer → 25.0
+  /// field.value = "29.99";    // String → 29.99
+  /// field.value = "invalid";  // Sets rawValue to null
   /// ```
   @override
   set value(dynamic value) {
@@ -80,18 +108,25 @@ class JsonDouble extends JsonField<double> {
     }
   }
 
-  /// Converts the double field to a JSON-compatible format.
+  /// Serializes the double value to JSON format.
   ///
-  /// Returns the underlying [rawValue], which can be a `double` or `null`.
+  /// Returns the raw double value, which may be `null` if no value has been
+  /// set. This allows the JSON representation to distinguish between an
+  /// explicitly set `0.0` value and an unset (null) value.
   ///
-  /// This method is used during serialization to include the field in the JSON output.
+  /// **Returns:**
+  /// The double value, or `null` if no value has been set.
   ///
   /// **Example:**
   /// ```dart
-  /// JsonDouble priceField = JsonDouble("price");
-  /// priceField.value = 19.99;
+  /// final field = JsonDouble('price');
+  /// print(field.toJson()); // null
   ///
-  /// Map<String, dynamic> json = {"price": priceField.toJson()}; // {"price": 19.99}
+  /// field.value = 19.99;
+  /// print(field.toJson()); // 19.99
+  ///
+  /// field.value = 0.0;
+  /// print(field.toJson()); // 0.0
   /// ```
   @override
   double? toJson() {

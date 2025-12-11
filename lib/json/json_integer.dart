@@ -1,58 +1,78 @@
 part of "json.dart";
 
-/// A JSON field that handles integer values.
+/// A specialized JSON field for handling integer (whole number) values.
 ///
-/// The `JsonInteger` class extends `JsonField<int>` and provides
-/// functionality to parse and serialize integer values from JSON data.
+/// [JsonInteger] extends [JsonField<int>] to provide type-safe handling of
+/// integer values in JSON data. It supports parsing numeric strings to integers
+/// and ensures that integer fields always return a valid integer value.
 ///
-/// **Example Usage:**
+/// **Key Features:**
+/// - Parses numeric strings to integer values
+/// - Defaults to `0` when value is null
+/// - Type-safe integer operations
+///
+/// **Usage Example:**
 /// ```dart
-/// // Creating a JsonInteger instance with the field name "age"
-/// JsonInteger ageField = JsonInteger("age");
+/// final age = JsonInteger('age');
+/// age.value = 25;        // Direct integer
+/// age.value = "30";      // String parsed to integer
+/// print(age.value);      // 30
 ///
-/// // Setting the value using an integer
-/// ageField.value = 25;
-///
-/// // Setting the value using a string that can be parsed to an integer
-/// ageField.value = "30";
-///
-/// // Getting the integer value (returns 30)
-/// int age = ageField.value;
+/// age.value = "invalid"; // Sets rawValue to null (parse fails)
+/// print(age.value);      // 0 (default)
 /// ```
+///
+/// **See also:**
+/// - [JsonField] for the base field implementation
+/// - [JsonDouble] for decimal numbers
+/// - [JsonNumber] for generic numeric values
 class JsonInteger extends JsonField<int> {
-  /// Creates a new [JsonInteger] with the given [fieldName].
+  /// Creates a new [JsonInteger] field with the specified field name.
   ///
-  /// The [fieldName] represents the key in the JSON object that this field corresponds to.
+  /// The [fieldName] corresponds to the key in the JSON object that this
+  /// field will map to during serialization and deserialization.
+  ///
+  /// **Parameters:**
+  /// - `fieldName`: The name of the field as it appears in JSON data.
   JsonInteger(super.fieldName);
 
-  /// Gets the integer value of this field.
+  /// Returns the integer value of this field.
   ///
-  /// If the underlying [rawValue] is `null`, this getter returns `0` by default.
-  /// This ensures that the field always provides an integer value when accessed.
+  /// If the underlying [rawValue] is `null`, this getter returns `0` as
+  /// a default value. This ensures that integer fields always provide a
+  /// valid integer value when accessed, which is useful for calculations.
+  ///
+  /// **Returns:**
+  /// The integer value, or `0` if [rawValue] is `null`.
+  ///
+  /// **Example:**
+  /// ```dart
+  /// final field = JsonInteger('age');
+  /// print(field.value); // 0 (default)
+  ///
+  /// field.value = 25;
+  /// print(field.value); // 25
+  /// ```
   @override
   int get value => rawValue ?? 0;
 
-  /// Sets the value of this field.
+  /// Sets the integer value, accepting both integers and numeric strings.
   ///
-  /// The [value] can be an `int`, `String`, or `null`.
+  /// This setter provides flexible input handling:
+  /// - **`int` or `null`**: Assigned directly to [rawValue]
+  /// - **`String`**: Parsed using `int.tryParse()`. If parsing fails
+  ///   (e.g., non-numeric string), [rawValue] is set to `null`
   ///
-  /// - If [value] is an `int` or `null`, it is directly assigned to [rawValue].
-  /// - If [value] is a `String`, it attempts to parse it into an `int` using `int.tryParse`.
-  ///   - If parsing succeeds, the parsed integer is assigned to [rawValue].
-  ///   - If parsing fails (e.g., the string is non-numeric), [rawValue] is set to `null`.
+  /// **Parameters:**
+  /// - `value`: The value to set, which can be an `int`, a numeric `String`,
+  ///   or `null`.
   ///
-  /// **Examples:**
+  /// **Example:**
   /// ```dart
-  /// JsonInteger ageField = JsonInteger("age");
-  ///
-  /// // Setting with an integer
-  /// ageField.value = 25; // rawValue is 25
-  ///
-  /// // Setting with a numeric string
-  /// ageField.value = "30"; // rawValue is 30
-  ///
-  /// // Setting with a non-numeric string
-  /// ageField.value = "abc"; // rawValue is null
+  /// final field = JsonInteger('age');
+  /// field.value = 25;      // Direct integer
+  /// field.value = "30";    // String → 30
+  /// field.value = "invalid"; // Sets rawValue to null
   /// ```
   @override
   set value(dynamic value) {
@@ -66,18 +86,25 @@ class JsonInteger extends JsonField<int> {
     }
   }
 
-  /// Converts the integer field to a JSON-compatible format.
+  /// Serializes the integer value to JSON format.
   ///
-  /// Returns the underlying [rawValue], which can be an `int` or `null`.
+  /// Returns the raw integer value, which may be `null` if no value has been
+  /// set. This allows the JSON representation to distinguish between an
+  /// explicitly set `0` value and an unset (null) value.
   ///
-  /// This method is used during serialization to include the field in the JSON output.
+  /// **Returns:**
+  /// The integer value, or `null` if no value has been set.
   ///
   /// **Example:**
   /// ```dart
-  /// JsonInteger ageField = JsonInteger("age");
-  /// ageField.value = 25;
+  /// final field = JsonInteger('age');
+  /// print(field.toJson()); // null
   ///
-  /// Map<String, dynamic> json = {"age": ageField.toJson()}; // {"age": 25}
+  /// field.value = 25;
+  /// print(field.toJson()); // 25
+  ///
+  /// field.value = 0;
+  /// print(field.toJson()); // 0
   /// ```
   @override
   int? toJson() {
