@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'supa_extended_color_token_group.dart';
 
+// Semantic status color token names
 const String _default = 'default';
 const String _warning = 'warning';
 const String _information = 'information';
 const String _success = 'success';
 const String _error = 'error';
+
+// Tag color token names
 const String _blueTag = 'blue';
 const String _cyanTag = 'cyan';
 const String _geekblueTag = 'geekblue';
@@ -19,90 +22,201 @@ const String _purpleTag = 'purple';
 const String _redTag = 'red';
 const String _volcanoTag = 'volcano';
 
-const String _processing = 'processing';
-const String _critical = 'critical';
+// Alias status token names (mapped to semantic colors)
+const String _processing = 'processing'; // Maps to information
+const String _critical = 'critical'; // Maps to error
 
+/// An extended color scheme that provides semantic color tokens for UI components.
+///
+/// This class extends Flutter's [ThemeExtension] to provide a comprehensive set
+/// of color tokens beyond the standard Material Design color scheme. It includes:
+///
+/// **Semantic Status Colors:**
+/// - Warning: For warning messages and alerts
+/// - Information: For informational messages and processing states
+/// - Success: For success messages and positive feedback
+/// - Error: For error messages and critical alerts
+/// - Default: For neutral/default states
+///
+/// **Tag Colors:**
+/// A wide variety of tag colors (blue, cyan, geekblue, gold, green, lime,
+/// magenta, orange, purple, red, volcano) for categorizing and organizing content.
+///
+/// Each color category provides three tokens:
+/// - Text color: For text content
+/// - Background color: For component backgrounds
+/// - Border color: For component borders
+///
+/// This scheme can be integrated into a Flutter [ThemeData] using the
+/// [ThemeData.extensions] property, allowing you to access these colors
+/// throughout your app via `Theme.of(context).extension<SupaExtendedColorScheme>()`.
+///
+/// Example usage:
+/// ```dart
+/// final theme = ThemeData(
+///   extensions: <ThemeExtension<dynamic>>[
+///     SupaExtendedColorScheme(
+///       warningText: Colors.orange.shade900,
+///       warningBackground: Colors.orange.shade50,
+///       warningBorder: Colors.orange.shade300,
+///       // ... other colors
+///     ),
+///   ],
+/// );
+/// ```
 class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
-  // Warning colors
+  // Semantic status colors
+
+  /// Text color for warning states and messages.
   final Color warningText;
+
+  /// Background color for warning components.
   final Color warningBackground;
+
+  /// Border color for warning components.
   final Color warningBorder;
 
-  // Information colors
+  /// Text color for informational states and messages.
   final Color informationText;
+
+  /// Background color for informational components.
   final Color informationBackground;
+
+  /// Border color for informational components.
   final Color informationBorder;
 
-  // Success colors
+  /// Text color for success states and messages.
   final Color successText;
+
+  /// Background color for success components.
   final Color successBackground;
+
+  /// Border color for success components.
   final Color successBorder;
 
-  // Default colors
+  /// Text color for default/neutral states.
   final Color defaultText;
+
+  /// Background color for default components.
   final Color defaultBackground;
+
+  /// Border color for default components.
   final Color defaultBorder;
 
-  // Error colors
+  /// Text color for error states and messages.
   final Color errorText;
+
+  /// Background color for error components.
   final Color errorBackground;
+
+  /// Border color for error components.
   final Color errorBorder;
 
-  // Blue tag colors
+  // Tag color variants
+
+  /// Text color for blue-tagged components.
   final Color blueTagText;
+
+  /// Background color for blue-tagged components.
   final Color blueTagBackground;
+
+  /// Border color for blue-tagged components.
   final Color blueTagBorder;
 
-  // Cyan tag colors
+  /// Text color for cyan-tagged components.
   final Color cyanTagText;
+
+  /// Background color for cyan-tagged components.
   final Color cyanTagBackground;
+
+  /// Border color for cyan-tagged components.
   final Color cyanTagBorder;
 
-  // Geek blue tag colors
+  /// Text color for geekblue-tagged components.
   final Color geekblueTagText;
+
+  /// Background color for geekblue-tagged components.
   final Color geekblueTagBackground;
+
+  /// Border color for geekblue-tagged components.
   final Color geekblueTagBorder;
 
-  // Gold tag colors
+  /// Text color for gold-tagged components.
   final Color goldTagText;
+
+  /// Background color for gold-tagged components.
   final Color goldTagBackground;
+
+  /// Border color for gold-tagged components.
   final Color goldTagBorder;
 
-  // Green tag colors
+  /// Text color for green-tagged components.
   final Color greenTagText;
+
+  /// Background color for green-tagged components.
   final Color greenTagBackground;
+
+  /// Border color for green-tagged components.
   final Color greenTagBorder;
 
-  // Lime tag colors
+  /// Text color for lime-tagged components.
   final Color limeTagText;
+
+  /// Background color for lime-tagged components.
   final Color limeTagBackground;
+
+  /// Border color for lime-tagged components.
   final Color limeTagBorder;
 
-  // Magenta tag colors
+  /// Text color for magenta-tagged components.
   final Color magentaTagText;
+
+  /// Background color for magenta-tagged components.
   final Color magentaTagBackground;
+
+  /// Border color for magenta-tagged components.
   final Color magentaTagBorder;
 
-  // Orange tag colors
+  /// Text color for orange-tagged components.
   final Color orangeTagText;
+
+  /// Background color for orange-tagged components.
   final Color orangeTagBackground;
+
+  /// Border color for orange-tagged components.
   final Color orangeTagBorder;
 
-  // Purple tag colors
+  /// Text color for purple-tagged components.
   final Color purpleTagText;
+
+  /// Background color for purple-tagged components.
   final Color purpleTagBackground;
+
+  /// Border color for purple-tagged components.
   final Color purpleTagBorder;
 
-  // Red tag colors
+  /// Text color for red-tagged components.
   final Color redTagText;
+
+  /// Background color for red-tagged components.
   final Color redTagBackground;
+
+  /// Border color for red-tagged components.
   final Color redTagBorder;
 
-  // Volcano tag colors
+  /// Text color for volcano-tagged components.
   final Color volcanoTagText;
+
+  /// Background color for volcano-tagged components.
   final Color volcanoTagBackground;
+
+  /// Border color for volcano-tagged components.
   final Color volcanoTagBorder;
 
+  /// Creates a new [SupaExtendedColorScheme] with all color tokens.
+  ///
+  /// All parameters are required. Each color category (status or tag) requires
+  /// three colors: text, background, and border.
   const SupaExtendedColorScheme({
     required this.warningText,
     required this.warningBackground,
@@ -154,6 +268,11 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
     required this.volcanoTagBorder,
   });
 
+  /// Creates a copy of this color scheme with the given fields replaced.
+  ///
+  /// Any parameter that is not provided will use the value from the current
+  /// instance. This is useful for creating variations of a color scheme or
+  /// updating specific colors while keeping others unchanged.
   @override
   ThemeExtension<SupaExtendedColorScheme> copyWith({
     Color? warningText,
@@ -259,6 +378,18 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
     );
   }
 
+  /// Linearly interpolates between two color schemes.
+  ///
+  /// This method is used by Flutter's theme system to animate between different
+  /// color schemes, such as when transitioning between light and dark themes.
+  ///
+  /// The interpolation factor [t] should be between 0.0 and 1.0:
+  /// - 0.0 returns this color scheme unchanged
+  /// - 1.0 returns [other] color scheme
+  /// - Values in between return interpolated colors
+  ///
+  /// If [other] is null or not a [SupaExtendedColorScheme], this instance
+  /// is returned unchanged.
   @override
   ThemeExtension<SupaExtendedColorScheme> lerp(
     covariant ThemeExtension<SupaExtendedColorScheme>? other,
@@ -377,6 +508,23 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
     );
   }
 
+  /// Retrieves a complete token group by name.
+  ///
+  /// Returns a [SupaExtendedColorTokenGroup] containing the text, background,
+  /// and border colors for the specified token group name.
+  ///
+  /// Valid names include:
+  /// - Semantic statuses: `'default'`, `'warning'`, `'information'`, `'success'`, `'error'`
+  /// - Tag colors: `'blue'`, `'cyan'`, `'geekblue'`, `'gold'`, `'green'`, `'lime'`,
+  ///   `'magenta'`, `'orange'`, `'purple'`, `'red'`, `'volcano'`
+  ///
+  /// Throws an [Exception] if an invalid token group name is provided.
+  ///
+  /// Example:
+  /// ```dart
+  /// final warningGroup = colorScheme.getTokenGroup('warning');
+  /// // Use warningGroup.text, warningGroup.background, warningGroup.border
+  /// ```
   SupaExtendedColorTokenGroup getTokenGroup(String name) {
     switch (name) {
       case _warning:
@@ -480,7 +628,24 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
     }
   }
 
-  // Helper methods to match SupaExtendedColorScheme interface
+  /// Gets the text color for a given semantic key.
+  ///
+  /// Returns the appropriate text color based on the provided [key]. Supports
+  /// both semantic status keys and tag color keys.
+  ///
+  /// Valid keys:
+  /// - Status keys: `'default'`, `'warning'`, `'information'`, `'processing'`,
+  ///   `'success'`, `'error'`, `'critical'`
+  /// - Tag keys: `'blue'`, `'cyan'`, `'geekblue'`, `'gold'`, `'green'`, `'lime'`,
+  ///   `'magenta'`, `'orange'`, `'purple'`, `'red'`, `'volcano'`
+  ///
+  /// Note: `'processing'` maps to `'information'` and `'critical'` maps to `'error'`.
+  /// If an unknown key is provided, returns the default text color.
+  ///
+  /// Example:
+  /// ```dart
+  /// final textColor = colorScheme.getTextColor('success');
+  /// ```
   Color getTextColor(String key) {
     switch (key) {
       case _warning:
@@ -524,6 +689,24 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
     }
   }
 
+  /// Gets the background color for a given semantic key.
+  ///
+  /// Returns the appropriate background color based on the provided [key].
+  /// Supports both semantic status keys and tag color keys.
+  ///
+  /// Valid keys:
+  /// - Status keys: `'default'`, `'warning'`, `'information'`, `'processing'`,
+  ///   `'success'`, `'error'`, `'critical'`
+  /// - Tag keys: `'blue'`, `'cyan'`, `'geekblue'`, `'gold'`, `'green'`, `'lime'`,
+  ///   `'magenta'`, `'orange'`, `'purple'`, `'red'`, `'volcano'`
+  ///
+  /// Note: `'processing'` maps to `'information'` and `'critical'` maps to `'error'`.
+  /// If an unknown key is provided, returns the default background color.
+  ///
+  /// Example:
+  /// ```dart
+  /// final bgColor = colorScheme.getBackgroundColor('error');
+  /// ```
   Color getBackgroundColor(String key) {
     switch (key) {
       case _warning:
@@ -539,7 +722,7 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
       case _error:
         return errorBackground;
       case _default:
-      case 'defaultColor': // keep for backward compatibility if needed
+      case 'defaultColor': // Kept for backward compatibility
         return defaultBackground;
       case _blueTag:
         return blueTagBackground;
@@ -568,6 +751,24 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
     }
   }
 
+  /// Gets the border color for a given semantic key.
+  ///
+  /// Returns the appropriate border color based on the provided [key].
+  /// Supports both semantic status keys and tag color keys.
+  ///
+  /// Valid keys:
+  /// - Status keys: `'default'`, `'warning'`, `'information'`, `'processing'`,
+  ///   `'success'`, `'error'`, `'critical'`
+  /// - Tag keys: `'blue'`, `'cyan'`, `'geekblue'`, `'gold'`, `'green'`, `'lime'`,
+  ///   `'magenta'`, `'orange'`, `'purple'`, `'red'`, `'volcano'`
+  ///
+  /// Note: `'processing'` maps to `'information'` and `'critical'` maps to `'error'`.
+  /// If an unknown key is provided, returns the default border color.
+  ///
+  /// Example:
+  /// ```dart
+  /// final borderColor = colorScheme.getBorderColor('warning');
+  /// ```
   Color getBorderColor(String key) {
     switch (key) {
       case _warning:
@@ -583,7 +784,7 @@ class SupaExtendedColorScheme extends ThemeExtension<SupaExtendedColorScheme> {
       case _error:
         return errorBorder;
       case _default:
-      case 'defaultColor': // keep for backward compatibility if needed
+      case 'defaultColor': // Kept for backward compatibility
         return defaultBorder;
       case _blueTag:
         return blueTagBorder;
