@@ -25,6 +25,9 @@
 - Enhanced form control documentation with detailed validation requirements and access patterns
 - Improved ChangePasswordForm documentation with password complexity requirements and regex pattern explanations
 - Expanded ResetPasswordForm documentation with OTP validation parameter details
+- Rewrote and enhanced documentation comments for all utility classes in `lib/utils/` directory
+- Added comprehensive documentation for PasswordFieldMixin with detailed usage examples and implementation guidance
+- Enhanced PlatformUtils documentation with platform selection logic, parameter descriptions, and multiple usage examples
 
 ## 1.13.0
 
