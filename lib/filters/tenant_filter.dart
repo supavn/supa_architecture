@@ -1,4 +1,4 @@
-import "package:supa_architecture/filters/filters.dart";
+part of "filters.dart";
 
 /// A class representing a filter for tenants.
 ///

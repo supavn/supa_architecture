@@ -5,16 +5,30 @@ import "package:supa_architecture/models/date_type.dart";
 
 part "abstract_id_filter.dart";
 part "abstract_number_filter.dart";
+part "admin_type_filter.dart";
+part "app_user_filter.dart";
 part "date_filter.dart";
 part "date_filter_mixin.dart";
+part "discussion_filter.dart";
 part "double_filter.dart";
+part "enum_model_filter.dart";
+part "file_filter.dart";
 part "filter_field.dart";
+part "gender_filter.dart";
 part "global_user_filter.dart";
 part "guid_filter.dart";
 part "id_filter.dart";
+part "image_filter.dart";
 part "int_filter.dart";
+part "language_filter.dart";
 part "number_filter.dart";
+part "period_filter.dart";
+part "request_history_filter.dart";
 part "string_filter.dart";
+part "sub_system_filter.dart";
+part "tenant_filter.dart";
+part "timezone_filter.dart";
+part "user_notification_filter.dart";
 
 /// Base class for creating data filters.
 ///

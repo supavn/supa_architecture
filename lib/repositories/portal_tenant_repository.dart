@@ -1,4 +1,5 @@
 import "package:supa_architecture/api_client/api_client.dart";
+import "package:supa_architecture/filters/filters.dart";
 import "package:supa_architecture/models/models.dart";
 import "package:supa_architecture/repositories/base_repository.dart";
 

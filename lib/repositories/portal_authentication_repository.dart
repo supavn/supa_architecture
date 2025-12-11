@@ -9,6 +9,7 @@ import "package:supa_architecture/core/app_token.dart";
 import "package:supa_architecture/core/persistent_storage/persistent_storage.dart";
 import "package:supa_architecture/core/secure_authentication_info.dart";
 import "package:supa_architecture/core/tenant_authentication.dart";
+import "package:supa_architecture/filters/filters.dart";
 import "package:supa_architecture/models/models.dart";
 import "package:supa_architecture/utils/platform_utils.dart";
 

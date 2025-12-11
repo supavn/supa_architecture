@@ -1,4 +1,4 @@
-import 'package:supa_architecture/supa_architecture.dart';
+part of "filters.dart";
 
 class DiscussionFilter extends DataFilter {
   @override

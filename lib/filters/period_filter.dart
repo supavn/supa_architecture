@@ -1,5 +1,4 @@
-import 'package:supa_architecture/filters/filters.dart';
-import 'package:supa_architecture/models/enum_model_filter.dart';
+part of "filters.dart";
 
 class PeriodFilter extends EnumModelFilter {
   @override
