@@ -1015,7 +1015,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.12.0-rc1"
+    version: "1.13.3"
   supa_carbon_icons:
     dependency: transitive
     description:

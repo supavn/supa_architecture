@@ -1,17 +1,17 @@
-import "dart:io";
+import 'dart:io';
 
-import "package:dio/dio.dart";
-import "package:flutter/foundation.dart";
-import "package:get_it/get_it.dart";
-import "package:supa_architecture/api_client/api_client.dart";
-import "package:supa_architecture/api_client/dio_interceptor.dart";
-import "package:supa_architecture/core/app_token.dart";
-import "package:supa_architecture/core/persistent_storage/persistent_storage.dart";
-import "package:supa_architecture/core/secure_authentication_info.dart";
-import "package:supa_architecture/core/tenant_authentication.dart";
-import "package:supa_architecture/filters/filters.dart";
-import "package:supa_architecture/models/models.dart";
-import "package:supa_architecture/utils/platform_utils.dart";
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:get_it/get_it.dart';
+import 'package:supa_architecture/api_client/api_client.dart';
+import 'package:supa_architecture/api_client/dio_interceptor.dart';
+import 'package:supa_architecture/core/app_token.dart';
+import 'package:supa_architecture/core/persistent_storage/persistent_storage.dart';
+import 'package:supa_architecture/core/secure_authentication_info.dart';
+import 'package:supa_architecture/core/tenant_authentication.dart';
+import 'package:supa_architecture/filters/filters.dart';
+import 'package:supa_architecture/models/models.dart';
+import 'package:supa_architecture/utils/platform_utils.dart';
 
 /// Repository for managing portal authentication operations.
 ///
@@ -19,7 +19,7 @@ import "package:supa_architecture/utils/platform_utils.dart";
 /// logout, token management, profile retrieval, and more.
 class PortalAuthenticationRepository extends ApiClient {
   Uri get authenticationUri => Uri.parse(persistentStorage.baseApiUrl)
-      .replace(path: "/rpc/portal/mobile/authentication");
+      .replace(path: '/rpc/portal/mobile/authentication');
 
   @override
   PersistentStorage get persistentStorage =>
@@ -47,7 +47,7 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<String?> createToken(Tenant tenant) async {
     return dio
         .post(
-          "/create-token",
+          '/create-token',
           data: tenant.toJson(),
         )
         .then((response) => response.data?.toString());
@@ -57,16 +57,16 @@ class PortalAuthenticationRepository extends ApiClient {
   ///
   /// **Returns:**
   /// - A [Future] that resolves to the authenticated [AppUser].
-  @Deprecated("Due to change of backend authentication")
+  @Deprecated('Due to change of backend authentication')
   Future<AppUser> getProfile() async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: "/rpc/portal/app-user-profile/get",
+          path: '/rpc/portal/app-user-profile/get',
         )
         .toString();
     return dio.post(url, data: {}).then(
       (response) {
-        response.data["id"] = response.data["userId"];
+        response.data['id'] = response.data['userId'];
         return response.body<AppUser>();
       },
     );
@@ -75,7 +75,7 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<AppUser> getProfileInfo() async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: "/rpc/portal/profile/get-info",
+          path: '/rpc/portal/profile/get-info',
         )
         .toString();
     return dio.post(url, data: {}).then(
@@ -89,12 +89,12 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<AppUser> updateProfileInfo(AppUser appUser) async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: "/rpc/portal/profile/update-info",
+          path: '/rpc/portal/profile/update-info',
         )
         .toString();
     return dio.post(url, data: appUser.toJson()).then(
       (response) {
-        response.data["id"] = response.data["userId"];
+        response.data['id'] = response.data['userId'];
         return response.body<AppUser>();
       },
     );
@@ -109,7 +109,7 @@ class PortalAuthenticationRepository extends ApiClient {
   }) async {
     return dio
         .post(
-          "/list-tenant",
+          '/list-tenant',
           data: filter?.toJson() ?? {},
         )
         .then(
@@ -123,7 +123,7 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - A [Future] that resolves to the number of tenants.
   Future<int> countTenant() async {
     return dio.post(
-      "/count-tenant",
+      '/count-tenant',
       data: {},
     ).then(
       (response) => (response.data as num).toInt(),
@@ -158,17 +158,17 @@ class PortalAuthenticationRepository extends ApiClient {
     String password,
   ) async {
     return dio.post(
-      "/login",
+      '/login',
       data: {
-        "username": username,
-        "password": password,
-        "osName": kIsWeb
-            ? "WEB"
+        'username': username,
+        'password': password,
+        'osName': kIsWeb
+            ? 'WEB'
             : PlatformUtils.select(
-                android: "Android",
-                ios: "iOS",
-                macos: "macOS",
-                fallback: "Web",
+                android: 'Android',
+                ios: 'iOS',
+                macos: 'macOS',
+                fallback: 'Web',
               ),
       },
     ).then((response) {
@@ -185,9 +185,9 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - A [Future] that resolves to a list of [Tenant].
   Future<List<Tenant>> loginWithApple(String idToken) async {
     return dio.post(
-      "/apple-login",
+      '/apple-login',
       data: {
-        "idToken": idToken,
+        'idToken': idToken,
       },
     ).then((response) => response.bodyAsList<Tenant>());
   }
@@ -210,9 +210,9 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - A [Future] that resolves to a list of [Tenant].
   Future<List<Tenant>> loginWithGoogle(String idToken) async {
     return dio.post(
-      "/google-login",
+      '/google-login',
       data: {
-        "idToken": idToken,
+        'idToken': idToken,
       },
     ).then((response) => response.bodyAsList<Tenant>());
   }
@@ -226,9 +226,9 @@ class PortalAuthenticationRepository extends ApiClient {
   /// - A [Future] that resolves to a list of [Tenant].
   Future<List<Tenant>> loginWithMicrosoft(String idToken) async {
     return dio.post(
-      "/microsoft-login",
+      '/microsoft-login',
       data: {
-        "idToken": idToken,
+        'idToken': idToken,
       },
     ).then((response) => response.bodyAsList<Tenant>());
   }
@@ -246,7 +246,7 @@ class PortalAuthenticationRepository extends ApiClient {
       }
     }
     return dio.post(
-      "/logout",
+      '/logout',
       data: {},
     ).then((response) => response.data);
   }
@@ -264,7 +264,7 @@ class PortalAuthenticationRepository extends ApiClient {
     dio.addBaseUrlInterceptor();
 
     final refreshTokenUrl = Uri.parse(persistentStorage.baseApiUrl)
-        .replace(path: "/rpc/portal/authentication/refresh-token")
+        .replace(path: '/rpc/portal/authentication/refresh-token')
         .toString();
 
     return dio
@@ -273,7 +273,7 @@ class PortalAuthenticationRepository extends ApiClient {
           data: {},
           options: Options(
             headers: refreshToken != null
-                ? {"cookie": "RefreshToken=$refreshToken"}
+                ? {'cookie': 'RefreshToken=$refreshToken'}
                 : null,
           ),
         )
@@ -326,8 +326,8 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<String> forgotPassword(
     String email,
   ) async {
-    return dio.post("/forgot-password", data: {
-      "email": email,
+    return dio.post('/forgot-password', data: {
+      'email': email,
     }).then((response) => response.data);
   }
 
@@ -345,10 +345,10 @@ class PortalAuthenticationRepository extends ApiClient {
     String password,
     String otpCode,
   ) async {
-    return dio.post("/forgot-with-otp", data: {
-      "content": content,
-      "password": password,
-      "otpCode": otpCode,
+    return dio.post('/forgot-with-otp', data: {
+      'content': content,
+      'password': password,
+      'otpCode': otpCode,
     }).then((response) => response.bodyAsList<Tenant>());
   }
 }
