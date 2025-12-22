@@ -1,4 +1,4 @@
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:supa_architecture/supa_architecture.dart';
 
@@ -36,6 +36,6 @@ Future<void> downloadAndOpenFile(String url, String filename) async {
   );
 
   if (ioFile != null) {
-    OpenFile.open(ioFile.path);
+    OpenFilex.open(ioFile.path);
   }
 }

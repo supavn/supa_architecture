@@ -410,12 +410,12 @@ void main() {
 
         // Create storage that will attempt to initialize
         final failingStorage = HivePersistentStorage();
-        
-        // The test should verify the actual behavior - in this case, 
+
+        // The test should verify the actual behavior - in this case,
         // Hive.initFlutter() recreates directories so initialization succeeds
         // Let's test that it handles the scenario gracefully
         await failingStorage.initialize();
-        
+
         // Verify it can handle the reinitialization
         expect(GetIt.instance.isRegistered<PersistentStorage>(), true);
       });
