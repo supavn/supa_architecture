@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v1.3.4
 
 ### Documentation
 
@@ -28,6 +28,7 @@
 - Rewrote and enhanced documentation comments for all utility classes in `lib/utils/` directory
 - Added comprehensive documentation for PasswordFieldMixin with detailed usage examples and implementation guidance
 - Enhanced PlatformUtils documentation with platform selection logic, parameter descriptions, and multiple usage examples
+- Update firebase packages
 
 ## 1.13.0
 
