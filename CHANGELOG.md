@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.3.5
+
+### Added
+
+- FileHandler: Add `openFile` method to open files from a file path
+  - Web platform: Opens file/URL in a new browser tab
+  - Native platforms (iOS, Android, macOS, etc.): Uses openfilex to open file with the default application
+
 ## v1.3.4
 
 ### Documentation

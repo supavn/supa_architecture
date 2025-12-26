@@ -39,3 +39,18 @@ Future<void> downloadAndOpenFile(String url, String filename) async {
     OpenFilex.open(ioFile.path);
   }
 }
+
+/// Opens a file from the given file path using the default application.
+///
+/// This is the platform-specific implementation for mobile and desktop platforms
+/// (when `dart:io` is available). The file is opened using the platform's
+/// default application for that file type via openfilex.
+///
+/// Parameters:
+/// - [filePath]: The path of the file to open
+///
+/// Throws:
+/// - May throw exceptions if the file cannot be opened.
+Future<void> openFile(String filePath) async {
+  await OpenFilex.open(filePath);
+}

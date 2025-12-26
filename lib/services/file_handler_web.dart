@@ -18,3 +18,17 @@ Future<void> downloadAndOpenFile(String url, String filename) async {
   anchor.download = filename;
   anchor.click();
 }
+
+/// Opens a file from the given path in a new browser tab.
+///
+/// This is the platform-specific implementation for web platforms.
+/// It opens the file/URL in a new browser tab using window.open.
+///
+/// Parameters:
+/// - [filePath]: The URL path of the file to open
+///
+/// Note: The file will open in a new tab. Browser pop-up blockers may
+/// prevent this from working unless called in response to a user action.
+Future<void> openFile(String filePath) async {
+  window.open(filePath, '_blank');
+}

@@ -30,4 +30,19 @@ class FileHandler {
   Future<void> downloadAndOpen(String url, String filename) async {
     await platform.downloadAndOpenFile(url, filename);
   }
+
+  /// Opens a file from the given path.
+  ///
+  /// The behavior differs by platform:
+  /// - On mobile/desktop: Opens the file using the default application via openfilex
+  /// - On web: Opens the file in a new browser tab
+  ///
+  /// Parameters:
+  /// - [filePath]: The path of the file to open (for native) or URL (for web)
+  ///
+  /// Throws:
+  /// - May throw exceptions if the file cannot be opened.
+  Future<void> openFile(String filePath) async {
+    await platform.openFile(filePath);
+  }
 }
