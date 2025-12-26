@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.3.5
+## v1.13.5
 
 ### Added
 
@@ -8,7 +8,7 @@
   - Web platform: Opens file/URL in a new browser tab
   - Native platforms (iOS, Android, macOS, etc.): Uses openfilex to open file with the default application
 
-## v1.3.4
+## v1.13.4
 
 ### Documentation
 
