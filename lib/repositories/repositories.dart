@@ -10,10 +10,15 @@ export 'utils_notification_repository.dart';
 void registerRepositories() {
   final getIt = GetIt.instance;
 
-  getIt.registerSingleton<PortalAuthenticationRepository>(
-      PortalAuthenticationRepository());
-  getIt.registerSingleton<PortalProfileRepository>(PortalProfileRepository());
-  getIt.registerSingleton<PortalTenantRepository>(PortalTenantRepository());
-  getIt.registerSingleton<UtilsNotificationRepository>(
-      UtilsNotificationRepository());
+  getIt.registerLazySingleton<PortalAuthenticationRepository>(
+      () => PortalAuthenticationRepository());
+
+  getIt.registerLazySingleton<PortalProfileRepository>(
+      () => PortalProfileRepository());
+
+  getIt.registerLazySingleton<PortalTenantRepository>(
+      () => PortalTenantRepository());
+
+  getIt.registerLazySingleton<UtilsNotificationRepository>(
+      () => UtilsNotificationRepository());
 }
