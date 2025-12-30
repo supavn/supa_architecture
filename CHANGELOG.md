@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.14.0
+
+### Deprecated
+
+- `ApiClient.uploadFileFromImagePicker`: Deprecated in favor of `uploadFile`. This method will be removed in v2.0.0. Use `uploadFile` with `filePath: file.path` (or `bytes: await file.readAsBytes()`) and `filename: file.name` instead.
+- `ApiClient.uploadFilesFromImagePicker`: Deprecated in favor of `uploadFiles`. This method will be removed in v2.0.0. Extract file paths/bytes and names from the `XFile` list and pass to `uploadFiles` instead.
+- `ApiClient.uploadFileFromFilePicker`: Deprecated in favor of `uploadFile`. This method will be removed in v2.0.0. Use `uploadFile` with `bytes: file.bytes` (or `filePath: file.path`) and `filename: file.name` instead.
+- `ApiClient.uploadFilesFromFilePicker`: Deprecated in favor of `uploadFiles`. This method will be removed in v2.0.0. Extract file bytes/paths and names from the `PlatformFile` list and pass to `uploadFiles` instead.
+
+**Reason for deprecation:** Following clean architecture principles, the package should not depend on UI/file picker packages (`image_picker` and `file_picker`). The generic `uploadFile` and `uploadFiles` methods provide the same functionality without these dependencies.
+
 ## v1.13.5
 
 ### Added

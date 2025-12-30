@@ -391,6 +391,20 @@ abstract class ApiClient {
   }
 
   /// Uploads a file using [XFile].
+  ///
+  /// **Deprecated:** This method will be removed in a future version.
+  /// Use [uploadFile] instead. Extract data from [XFile] and pass it:
+  /// ```dart
+  /// await uploadFile(
+  ///   filePath: file.path,  // or bytes: await file.readAsBytes()
+  ///   filename: file.name,
+  ///   uploadUrl: uploadUrl,
+  /// );
+  /// ```
+  @Deprecated(
+    'Use uploadFile instead. This method will be removed in v2.0.0. '
+    'Extract file.path/bytes and file.name from XFile and pass to uploadFile.',
+  )
   Future<File> uploadFileFromImagePicker(
     XFile file, {
     String uploadUrl = "/upload-file",
@@ -409,6 +423,22 @@ abstract class ApiClient {
   }
 
   /// Uploads multiple files using [XFile].
+  ///
+  /// **Deprecated:** This method will be removed in a future version.
+  /// Use [uploadFiles] instead. Extract data from [XFile] list and pass it:
+  /// ```dart
+  /// final paths = files.map((f) => f.path).toList();
+  /// final names = files.map((f) => f.name).toList();
+  /// await uploadFiles(
+  ///   filePaths: paths,  // or filesBytes: await Future.wait(files.map((f) => f.readAsBytes()))
+  ///   filenames: names,
+  ///   uploadUrl: uploadUrl,
+  /// );
+  /// ```
+  @Deprecated(
+    'Use uploadFiles instead. This method will be removed in v2.0.0. '
+    'Extract file paths/bytes and names from XFile list and pass to uploadFiles.',
+  )
   Future<List<File>> uploadFilesFromImagePicker(
     List<XFile> files, {
     String uploadUrl = "/multi-upload-file",
@@ -439,6 +469,20 @@ abstract class ApiClient {
   }
 
   /// Uploads a file using [PlatformFile].
+  ///
+  /// **Deprecated:** This method will be removed in a future version.
+  /// Use [uploadFile] instead. Extract data from [PlatformFile] and pass it:
+  /// ```dart
+  /// await uploadFile(
+  ///   bytes: file.bytes,  // or filePath: file.path
+  ///   filename: file.name,
+  ///   uploadUrl: uploadUrl,
+  /// );
+  /// ```
+  @Deprecated(
+    'Use uploadFile instead. This method will be removed in v2.0.0. '
+    'Extract file.bytes/path and file.name from PlatformFile and pass to uploadFile.',
+  )
   Future<File> uploadFileFromFilePicker(
     PlatformFile file, {
     String uploadUrl = "/upload-file",
@@ -457,6 +501,23 @@ abstract class ApiClient {
   }
 
   /// Uploads multiple files using [PlatformFile].
+  ///
+  /// **Deprecated:** This method will be removed in a future version.
+  /// Use [uploadFiles] instead. Extract data from [PlatformFile] list and pass it:
+  /// ```dart
+  /// final bytesList = files.map((f) => f.bytes).whereType<Uint8List>().toList();
+  /// final paths = files.map((f) => f.path!).toList();
+  /// final names = files.map((f) => f.name).toList();
+  /// await uploadFiles(
+  ///   filesBytes: bytesList,  // or filePaths: paths
+  ///   filenames: names,
+  ///   uploadUrl: uploadUrl,
+  /// );
+  /// ```
+  @Deprecated(
+    'Use uploadFiles instead. This method will be removed in v2.0.0. '
+    'Extract file bytes/paths and names from PlatformFile list and pass to uploadFiles.',
+  )
   Future<List<File>> uploadFilesFromFilePicker(
     List<PlatformFile> files, {
     String uploadUrl = "/multi-upload-file",
