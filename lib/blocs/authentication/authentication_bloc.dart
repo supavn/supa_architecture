@@ -299,7 +299,7 @@ class AuthenticationBloc
         },
       );
 
-      final idToken = await oauth.getAccessToken();
+      final idToken = await oauth.getIdToken();
 
       if (idToken == null) {
         Navigator.of(config.navigatorKey.currentContext!).pop();

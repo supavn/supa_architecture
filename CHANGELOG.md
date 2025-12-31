@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.14.1
+
+### Fixed
+
+- Microsoft login uses `idToken` instead of `accessToken`
+
 ## v1.14.0
 
 ### Deprecated
