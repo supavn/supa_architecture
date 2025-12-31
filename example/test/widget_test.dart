@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supa_architecture_example/main.dart';
+import 'package:supa_architecture_example/example_app.dart';
 
 void main() {
   testWidgets('Verify Platform version', (WidgetTester tester) async {

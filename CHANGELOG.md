@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.14.2
+
+### Fixed
+
+- Reversed: Microsoft login uses `accessToken` instead of `idToken`
+
 ## v1.14.1
 
 ### Fixed

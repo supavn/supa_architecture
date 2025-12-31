@@ -299,7 +299,7 @@ class AuthenticationBloc
         },
       );
 
-      final idToken = await oauth.getIdToken();
+      final idToken = await oauth.getAccessToken();
 
       if (idToken == null) {
         Navigator.of(config.navigatorKey.currentContext!).pop();
@@ -311,7 +311,6 @@ class AuthenticationBloc
         return;
       }
 
-      Navigator.of(config.navigatorKey.currentContext!).pop();
       final List<Tenant> tenants = await authRepo.loginWithMicrosoft(idToken);
       handleLoginWithTenants(tenants);
     } catch (error) {
