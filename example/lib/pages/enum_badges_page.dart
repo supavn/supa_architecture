@@ -31,6 +31,7 @@ class EnumBadgesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: const GoBackButton(),
         title: const Text('Enum Badges Demo'),
       ),
       body: ListView.separated(
