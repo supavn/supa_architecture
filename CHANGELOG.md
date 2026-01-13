@@ -1,607 +1,876 @@
 # Changelog
 
-## Unreleased
+All notable changes to this project will be documented in this file.
 
-### Added
 
-- Jekyll documentation site with just-the-docs theme in `docs/` directory
-- GitHub Actions workflow for automated deployment to GitHub Pages
-- Comprehensive documentation including:
-  - Overview and framework purpose
-  - Architecture and design patterns
-  - Core concepts and principles
-  - Authentication system documentation
-  - State management with BLoC pattern
-  - Error handling system
+## v2.0.0
 
-## v1.14.4
-
-### Updated
-
-- Update device_info_plus to ^12.0.0
+- re-init package
+- add code
+- Update color property naming in TextStatusBadge and EnumStatusBadge for consistency. Enhance legacy support in EnumStatusBadge while improving theme integration.
+- add readme
+- Merge branch 'main' of github.com:thanhtunguet/flutter_json_entity
+- chore: upgraded to v2.0.0 to avoid conflicts
+- feat: add comprehensive tests for JsonModel serialization and deserialization, including nested objects and validation metadata
+- chore: add publish_to field in pubspec.yaml for package publication
 
 ## v1.14.3
 
-### Updated
-
-- Update package_info_plus to ^9.0.0
+- feat: Update package_info_plus to ^9.0.0
 
 ## v1.14.2
 
-### Fixed
-
-- Reversed: Microsoft login uses `accessToken` instead of `idToken`
+- chore: release version 1.14.2 with fix for Microsoft login token retrieval and update changelog
 
 ## v1.14.1
 
-### Fixed
-
-- Microsoft login uses `idToken` instead of `accessToken`
+- upgrade xcode workspace
+- feat: Add environment variable support and new navigation routes for Microsoft Login and Enum Badges in the example app
+- refactor: Remove EnumBadgesPage and related navigation from the example app
+- feat: Add GoBackButton to AppBar in EnumBadgesPage and LoginScreen for improved navigation
+- chore: release version 1.14.1 with fix for Microsoft login token retrieval
 
 ## v1.14.0
 
-### Deprecated
-
-- `ApiClient.uploadFileFromImagePicker`: Deprecated in favor of `uploadFile`. This method will be removed in v2.0.0. Use `uploadFile` with `filePath: file.path` (or `bytes: await file.readAsBytes()`) and `filename: file.name` instead.
-- `ApiClient.uploadFilesFromImagePicker`: Deprecated in favor of `uploadFiles`. This method will be removed in v2.0.0. Extract file paths/bytes and names from the `XFile` list and pass to `uploadFiles` instead.
-- `ApiClient.uploadFileFromFilePicker`: Deprecated in favor of `uploadFile`. This method will be removed in v2.0.0. Use `uploadFile` with `bytes: file.bytes` (or `filePath: file.path`) and `filename: file.name` instead.
-- `ApiClient.uploadFilesFromFilePicker`: Deprecated in favor of `uploadFiles`. This method will be removed in v2.0.0. Extract file bytes/paths and names from the `PlatformFile` list and pass to `uploadFiles` instead.
-
-**Reason for deprecation:** Following clean architecture principles, the package should not depend on UI/file picker packages (`image_picker` and `file_picker`). The generic `uploadFile` and `uploadFiles` methods provide the same functionality without these dependencies.
+- chore: release version 1.14.0 with deprecations for file upload methods in favor of a cleaner API
 
 ## v1.13.5
 
-### Added
+- Remove development.md file from rules directory
+- Add logging directory to .gitignore, enhance ApiClient documentation, and improve error handling in DioException and interceptors
+- Enhance documentation across BLoC files, including detailed descriptions for authentication, error handling, and push notification functionalities. Update CHANGELOG with comprehensive documentation improvements.
+- Enhance documentation for JSON field classes, including detailed descriptions for JsonBoolean, JsonDate, JsonDouble, JsonInteger, JsonList, JsonModel, JsonNumber, JsonObject, JsonSerializable, and JsonString. Update CHANGELOG to reflect comprehensive documentation improvements across all JSON-related files.
+- Enhance documentation for SupaExtendedColorScheme and SupaExtendedColorTokenGroup, providing detailed descriptions of color tokens and their usage. Update theme.dart to include an overview of the theme package and its components.
+- Enhance documentation across services, including detailed descriptions for FileService, FileHandler, EntityDetailNavigator, and timezone services. Update CHANGELOG to reflect comprehensive documentation improvements and platform-specific behavior explanations.
+- Enhance documentation for form classes in `lib/forms/`, including detailed descriptions, usage examples, and validation requirements for LoginForm, ForgotPasswordForm, ResetPasswordForm, and ChangePasswordForm. Update CHANGELOG to reflect these comprehensive improvements.
+- Refactor filters: remove unused filter classes including AdminTypeFilter, AppUserFilter, DiscussionFilter, and others. Update filters.dart to include new filter parts and clean up models.dart by removing references to deleted filters. Ensure repository files are updated to import the necessary filters.
+- Enhance documentation for DioImageProvider in `lib/providers/dio_image_provider.dart`, detailing its functionality, usage examples, and error handling mechanisms. Update `providers.dart` to include a summary of custom image provider implementations, emphasizing advanced features and fallback handling.
+- Enhance documentation for utility classes in `lib/utils/`, including detailed comments for PasswordFieldMixin and PlatformUtils with usage examples and parameter descriptions. Update CHANGELOG to reflect these comprehensive documentation improvements.
+- Enhance documentation for various widget classes in `lib/widgets/`, including detailed descriptions, usage examples, and parameter explanations for AppImage, GoBackButton, IconPlaceholder, LoadingIndicator, TextStatusBadge, EnumStatusBadge, ConfirmationDialog, EmptyComponent, ForbiddenComponent, SearchableAppBarTitle, SectionTitle, and InfiniteListState. Update CHANGELOG to reflect these comprehensive documentation improvements.
+- refactor filters
+- Update firebase
+- update example pubspec lock
+- Using open_filex package
+- v1.3.4
+- feat: Implement `FileHandler.openFile` for native and web platforms, migrate to `open_filex`, and add internal `.serena/memories` documentation.
+- refactor: register repositories as lazy singletons.
+- chore: bump package version to 1.13.5
+- docs: Fix incorrect version numbers in CHANGELOG.
 
-- FileHandler: Add `openFile` method to open files from a file path
-  - Web platform: Opens file/URL in a new browser tab
-  - Native platforms (iOS, Android, macOS, etc.): Uses openfilex to open file with the default application
+## v1.13.3
 
-## v1.13.4
+- Update version to 1.13.3, add isAdmin field to AppUser profile, and enhance changelog.
 
-### Documentation
+## v1.13.2
 
-- Improved documentation comments across all BLoC files in `lib/blocs/` directory
-- Added comprehensive class-level, method-level, and field-level documentation
-- Enhanced authentication bloc documentation with detailed OAuth flow descriptions
-- Improved error handling bloc documentation with usage examples
-- Expanded push notification bloc documentation with initialization and lifecycle details
-- Clarified tenant bloc documentation with multi-tenant context explanations
-- Rewrote and enhanced documentation comments for all classes in `lib/json/` directory
-- Added comprehensive class-level, method-level, and field-level documentation for JSON field types
-- Improved JsonModel documentation with detailed serialization/deserialization behavior
-- Enhanced JsonField documentation with type safety and validation message handling details
-- Expanded field type documentation (JsonString, JsonInteger, JsonDouble, JsonBoolean, JsonDate, JsonNumber, JsonList, JsonObject) with usage examples and key features
-- Rewrote and enhanced documentation comments for all services in `lib/services/` directory
-- Added comprehensive documentation for FileService with detailed method descriptions and parameter documentation
-- Enhanced FileHandler documentation with platform-specific implementation details
-- Improved timezone service documentation with platform-specific behavior explanations
-- Added documentation for EntityDetailNavigator with usage examples and implementation guidance
-- Rewrote and enhanced documentation comments for all form classes in `lib/forms/` directory
-- Added comprehensive class-level documentation with usage examples for LoginForm, ForgotPasswordForm, ResetPasswordForm, and ChangePasswordForm
-- Enhanced form control documentation with detailed validation requirements and access patterns
-- Improved ChangePasswordForm documentation with password complexity requirements and regex pattern explanations
-- Expanded ResetPasswordForm documentation with OTP validation parameter details
-- Rewrote and enhanced documentation comments for all utility classes in `lib/utils/` directory
-- Added comprehensive documentation for PasswordFieldMixin with detailed usage examples and implementation guidance
-- Enhanced PlatformUtils documentation with platform selection logic, parameter descriptions, and multiple usage examples
-- Update firebase packages
+- Release version 1.13.0: Remove Image model and replace it with File, update changelog, and adjust version in pubspec.yaml.
+- v1.13.2
 
-## 1.13.0
+## v1.13.1
 
-- Remove Image model, replace by File
-- Add isAdmin to AppUser profile
+- Update version to 1.13.1 and remove GetIt registrations for CookieManager, PersistentStorage, and SecureStorage in platform interface and web implementation.
 
-## 1.12.0-rc2
+## v1.13.0
 
-### Fixed
+- Remove deprecated BottomSheetContainer widget and update exports in widgets.dart
+- add app_user_group
+- add discussion
+- Update version to 1.12.0 and remove unused import in latest_comment.dart
+- Add GetIt dependency injection for PersistentStorage, CookieManager, and SecureStorage in SupaArchitecturePlatform
+- Add Media class export, deprecate Image class, and register additional models in GetIt
+- Update version to 1.13.0 and add MediaFile class to the changelog.
 
-- EnumStatusBadge
+## v1.12.0-rc2
 
-## 1.12.0-rc1
+- add refactoring plan
+- Enhance CookieManager implementations: Add detailed documentation for methods, improve null handling for cookies, and implement token-in-URL functionality for mobile platforms. Update WebCookieManager to rely on native cookie handling without token support.
+- Enhance CookieManager functionality: Add duplicate cookie handling with logging for warnings, implement one-time migration for data consistency, and improve cookie cleanup methods. Update documentation to reflect these changes across CookieManager implementations.
+- update test code
+- Update TextStatusBadge to allow nullable backgroundColor and enhance EnumStatusBadge with calculated background and border colors based on hex input. Update pubspec.lock for version 1.12.0-rc1.
+- Update version to 1.12.0-rc2, enhance changelog with EnumStatusBadge fix, and add documentation note for code modifications in AGENTS.md.
 
-### Added
+## v1.12.0-rc1
 
-- TimezoneService
 
-## 1.11.0
+## v1.12.0
 
-### Added
+- Update dependencies in pubspec.yaml and register new models in models.dart: Set intl to any version, upgrade supa_carbon_icons to 0.2.0, and add Period, PeriodFilter, and RequestHistory models.
+- Release version 1.11.0: Add isOverdue getter to DateTime extension, introduce Period and RequestHistory models, and enhance PeriodFilter with siteId field.
+- Refactor API client and interceptors: Simplify interceptor management by removing platform-specific checks, enhance token refresh handling, and update encryption manager for Hive. Remove biometric login button widget.
+- Release version 1.12.0-rc1: Introduce TimezoneService and update dependencies, including flutter_timezone package. Update CHANGELOG and plugin registrations across platforms.
+- add refactoring plan
+- Enhance CookieManager implementations: Add detailed documentation for methods, improve null handling for cookies, and implement token-in-URL functionality for mobile platforms. Update WebCookieManager to rely on native cookie handling without token support.
+- Enhance CookieManager functionality: Add duplicate cookie handling with logging for warnings, implement one-time migration for data consistency, and improve cookie cleanup methods. Update documentation to reflect these changes across CookieManager implementations.
+- update test code
+- Update TextStatusBadge to allow nullable backgroundColor and enhance EnumStatusBadge with calculated background and border colors based on hex input. Update pubspec.lock for version 1.12.0-rc1.
+- Update version to 1.12.0-rc2, enhance changelog with EnumStatusBadge fix, and add documentation note for code modifications in AGENTS.md.
+- Remove deprecated BottomSheetContainer widget and update exports in widgets.dart
+- add app_user_group
+- add discussion
 
-- Period, RequestHistory
-- isOverdue getter check for DateTime
+## v1.10.0-rc.14
 
-## 1.10.0-rc.13
+- add sub_app
+- v1.10.0-rc.14
 
-### Added
+## v1.10.0-rc.13
 
-- globalUserId
-- handleInitialNotification
+- Update to version 1.10.0-rc.12: Add globalUserId field to AppUserInfo model and update CHANGELOG.
+- Update to version 1.10.0-rc.13: Add account linking functionality for Google, Microsoft, and Apple in PortalProfileRepository and enhance AppUserPreferences model.
+- Update to version 1.10.0-rc.13: Add handleInitialNotification method to PushNotificationBloc and enhance AppUserInfo model with additional account fields.
 
-## 1.10.0-rc.11
+## v1.10.0-rc.11
 
-### Fixed
+- Update to version 1.10.0-rc.11: Fix file uploading on web and enhance multipart file handling for both web and native platforms.
+- Update CHANGELOG and improve authentication handling for web: Fix authentication issues and ensure persistence of user and tenant data across platforms.
 
-- File uploading on web
-- Fix Authentication on web
+## v1.10.0-rc.10
 
-## 1.10.0-rc.10
+- Update to version 1.10.0-rc.10: Removed Flutter upper bound constraint in preparation for future updates.
+- Remove upper bound
 
-### Removed
+## v1.10.0-rc.9
 
-- Flutter upper bound constraint
+- Update to version 1.10.0-rc.9: Added secure encryption for persistent data and implemented fallback mechanisms in HiveCookieManager and HivePersistentStorage for handling encryption failures.
 
-## 1.10.0-rc.9
+## v1.10.0-rc.8
 
-### Added
+- Update to version 1.10.0-rc.8: Fix device name retrieval for iOS and Android by using utsname and manufacturer name respectively.
 
-- Secure encryption for persistent data
+## v1.10.0-rc.7
 
-## 1.10.0-rc.8
+- add initial message event handler
+- Update to version 1.10.0-rc.7: Added DidMountedCheckInitialMessage to PushNotificationBloc and removed deprecation annotations for backgroundColor in TextStatusBadge and EnumModel.
 
-### Fixed
+## v1.10.0-rc.6
 
-- Using utsname on iOS
-- Using manufacturer name on Android
+- v1.10.0-rc.6
 
-## 1.10.0-rc.7
+## v1.10.0-rc.5
 
-### Added
+- Merge pull request #2 from supavn/main
+- Merge commit '6d1ee42a936141c041422ccc05ae7670a4bca257' of github.com:thanhtunguet/flutter_json_entity
+- update pubspec lock
+- Update pubspec.lock to reflect the latest dependency changes and ensure compatibility with recent updates.
+- Enhance EnumBadgesPage with hex color examples and update TextStatusBadge to support background and border color keys. Refactor color key handling for improved clarity in EnumStatusBadge.
 
-- PushNotificationBloc: added DidMountedCheckInitialMessage
+## v1.10.0-rc.4
 
-### Removed
+- v1.10.0-rc.4
 
-- Deprecation annotation for backgroundColor of @TextStatusBadge and @EnumModel
+## v1.10.0-rc.3
 
-## 1.10.0-rc.6
+- Refactor TextStatusBadge and EnumStatusBadge to improve color property naming for clarity. Update variable names from resolvedBackground, resolvedText, and resolvedBorder to resolvedBackgroundColor, resolvedTextColor, and resolvedBorderColor. Maintain legacy support in EnumStatusBadge while enhancing theme integration.
+- v1.10.0-rc.3
 
-### Fixed
+## v1.10.0-rc.2
 
-- EnumStatusBadge color
+- v1.10.0-rc.2
 
-## 1.9.1+6
+## v1.10.0-rc.1
 
-### Added
+- Refactor TestNestedSerializableClass to use public fields instead of private variables for nestedObject and nestedList. Update JSON serialization methods accordingly. Improve performance test expectations to complete within 5 milliseconds.
+- Release v1.9.1
+- Update JSON serialization methods in TestNestedSerializableClass to improve performance and maintainability. Refactor nestedObject and nestedList to use public fields.
+- Refactor SupaExtendedColorScheme to use constants for color keys, improving readability and maintainability. Update switch cases to utilize these constants for color token retrieval.
+- Deprecate backgroundColor properties in EnumModel and TextStatusBadge, introducing backgroundColorKey for improved theme integration. Update EnumStatusBadge to utilize new keys while maintaining legacy support.
+- Update project configuration and dependencies: enhance .gitignore, update iOS deployment target to 13.0, add GoRouter dependency, and refactor main app structure for improved routing and theme management.
+- Enhance text styling in EnumBadgesPage by applying dynamic color to the title text based on the provided token, improving visual consistency with the theme.
+- v1.10.0-rc.1
+- Update pubspec.lock to version 1.10.0-rc.1, reflecting the latest dependency changes.
 
-- Get DeviceInfo before initializing platform
+## v1.9.1+6
 
-## 1.9.1+5
+- chore: remove prompt optimization file and update base repository constructor to include new parameters
+- chore: bump version to 1.9.1+6, add device info retrieval before platform initialization and update dependencies
+- add test and coverage
+- Enhance test coverage by running Flutter tests with coverage options for specific directories. Update CI workflow to reflect these changes.
 
-### Updated
+## v1.9.1+5
 
-- update notification handling with new data structure and error state
+- chore: bump version to 1.9.1+4, update changelog, and enhance authentication state with equatable mixin
+- chore: bump version to 1.9.1+5, update notification handling with new data structure and error state
 
-## 1.9.1+4
+## v1.9.1+3
 
-- Update authentication with equatable mixin
+- chore: bump version to 1.9.1+3 and update changelog for authentication state fix on language change
 
-## 1.9.1+3
+## v1.9.1+2
 
-### Fixed
+- v1.9.1+2
 
-- Change authentication state when language changes
+## v1.9.1+1
 
-## 1.9.1+1
 
-### Fixed
+## v1.9.1
 
-- Fix: Remove Sentry integration due to rendering issues on some Android devices, switch to using only FirebaseCrashlytics for error reporting
-- Fix: Update error handling bloc to log errors exclusively to FirebaseCrashlytics
-- Fix: Push notification BLoC improvements and documentation updates
+- feat: v1.9.1+1 - bug fixes
+- v1.9.1+2
+- chore: bump version to 1.9.1+3 and update changelog for authentication state fix on language change
+- chore: bump version to 1.9.1+4, update changelog, and enhance authentication state with equatable mixin
+- chore: bump version to 1.9.1+5, update notification handling with new data structure and error state
+- chore: remove prompt optimization file and update base repository constructor to include new parameters
+- chore: bump version to 1.9.1+6, add device info retrieval before platform initialization and update dependencies
+- add test and coverage
+- Enhance test coverage by running Flutter tests with coverage options for specific directories. Update CI workflow to reflect these changes.
+- Refactor TestNestedSerializableClass to use public fields instead of private variables for nestedObject and nestedList. Update JSON serialization methods accordingly. Improve performance test expectations to complete within 5 milliseconds.
+- Release v1.9.1
 
+## v1.9.0+1
 
-## 1.9.0+1
+- Update version to 1.8.5+1, remove Sentry integration due to rendering issues on Android, and replace it with FirebaseCrashlytics for error handling.
+- v1.9.0+1
 
-### Added
+## vv1.8.5+1
 
-- LanguageInterceptor for all repositories
+## v1.8.4+7
 
-## 1.8.5+1
+- v1.8.4+7: using file handler
 
-### Fixed
+## v1.8.4+6
 
-- Remove Sentry because of causing the rendering issue on some Android devices
-- Replace by FirebaseCrashlytics.recordError
+- Update version to 1.8.4+6, fix infinite page state, and enhance async handling in InfiniteListState methods
 
-## 1.8.4+6
+## v1.8.4+5
 
-- Fix infinite page state
+- v1.8.4+5
 
-## 1.8.4+5
+## v1.8.4+4
 
-- Use infinite_scroll_pagination v4, v5 has not been compatible yet
+- v1.8.4+4
 
-## 1.8.4+4
+## v1.8.4+3
 
-### Changed
+- v1.8.4+3
 
-- go_router to v15
-- infinite_pagination_scroll to v5
+## v1.8.4+2
 
-## 1.8.4+3
+- Add comprehensive documentation for Supa Architecture framework
+- Update version to 1.8.4+2 and correct documentation links in README.md
 
-### Added
+## v1.8.4+1
 
-- Add file handling service with platform-specific implementations for downloading and opening files
-- Add FileService utility class for file type detection and URL launching
-- Add support for various file types including office documents, images, videos, and PDFs
+- Update version to 1.8.4+1 and add open_file dependency. Enhance temporary directory cleanup in FileService to avoid issues on web platforms.
 
-### Changed
-
-- Update version to 1.8.4+3
-
-### Technical
-
-- Implement FileHandler service with conditional imports for web and IO platforms
-- Add comprehensive file type detection methods in FileService
-- Integrate open_file dependency for cross-platform file handling
-
-
-## 1.8.4+2
-
-- Update README
-- Use DeepWiki: https://deepwiki.com/supavn/supa_architecture
-
-## 1.8.3
+## v1.8.3
 
 - Enhance notification permission request in PushNotificationBloc to include additional options for better user control
 
-## 1.8.2
+## v1.8.2
 
-- Add `useSentry` and `useFirebase` options
+- Refactor ApiClient to accept an optional RefreshInterceptor and update RefreshInterceptor methods for clarity
+- Update ApiClient to allow custom RefreshInterceptor and ensure proper initialization
+- Remove Sentry integration and related dependencies from the project
+- configure firebase
+- Merge pull request #1 from supavn/remove-sentry-firebase-temporary
+- ## 1.8.2
 
-## 1.8.1
+## v1.8.1+rc3
 
-- Optimize authentication
-- Fix filter json serializable
-- Add date type
-- Add global user class
+- Update pubspec
+- v1.8.1+rc1
+- write changelog
+- v1.8.1+rc2
+- v1.8.1
 
-## 1.8.1+rc1
+## v1.8.0
 
-- Optimize authentication
+- Add portal authentication tenant filter
+- update default confirmation box
+- ignore search emptuy
+- add createdAt date filter for user notification
+- v1.7.5
+- add filter render
+- bump version to 1.8.0 and update changelog; add background color prop to EnumStatusBadge
 
-## 1.8.0
+## v1.7.4
 
-### Fixed
+- 1.7.4
 
-- EnumStatusBadge with new background color prop
+## v1.7.3
 
-## 1.7.4
+- v1.7.3
 
-### Added
+## v1.7.2
 
-- Add AppBar for Microsoft Login
+- Update pubspec
+- Remove unused methods
+- v1.7.2
 
-## 1.7.3
+## v1.7.1
 
-### Added
+- add microsoft auth
+- v1.7.1: Microsoft auth
 
-- Color prop for LoadingIndicator
+## v1.7.0
 
-## 1.7.2
+- v1.7.0
 
-### Added
+## v1.6.3
 
-- Otp validation optional
+- feat: v1.6.3 - new carbon icons
 
-## 1.7.1
+## v1.6.2
 
-### Added
+- Update change log
+- Update actions
+- Update example SDK
+- Update git workflow
+- v1.6.2
 
-- Microsoft Auth
+## v1.6.1
 
-## 1.7.0
-
-### Updated
-
-- Refactor code structure
-
-### Added
-
-- Dio exception getter check
-
-## 1.6.3
-
-### Updated
-
-- New carbon icons
-
-## 1.6.2
-
-### Fixed
-
-- Optimize theme of context call
-
-## 1.6.1
-
-### Fixed
-
-- Mobile notification via Firebase
-
-## 1.6.0
-
-### Added
-
-- Enum: Language, AdminType, Timezone, Gender
-- Default labels for ConfirmationDialog
-
-## 1.5.5
-
-### Added
-
-- Default translations for confirmation box
+- feat: v1.5.5
+- feat: add enums, default labels for confirmation dialog
+- Optimize imports
+- Update enum model
+- v1.6.1: fix the notification token
 
 ## v1.5.4
 
-### Added
-
-- Profile repository methods to change language
+- feat: language changing methods (v1.5.4)
 
 ## v1.5.3
 
-### Fixed
-- Switch receive email and receive notification lost the subsystem list in profile info
-- Centering the empty state component
+- v1.5.3
 
 ## v1.5.2
 
-### Fixed
-- Empty state default image
-- Notification duplication
-
+- v1.5.2
 
 ## v1.5.1
 
-### Added
-
-- imageUrl for empty state
+- v1.5.1: imageUrl for empty state
+- Update
 
 ## v1.5.0
 
-### Added
-
-- AppUserInfo class
-
-## v1.4.4
-
-### Fixed
-
-- GoBackButton
+- Optimize imports
+- add subsystem id filter
+- v1.4.4
+- update factor
+- v1.5.0: Added AppUserInfo class
+- Update pubspec lock
 
 ## v1.4.3
 
-### Added
-
-- Entities
+- v1.4.3
 
 ## v1.4.2
 
-### Added
-
-- EntityDetailNavigator
+- v1.4.2
 
 ## v1.4.1
 
-### Added 
-
-- Entity generation documentation
+- v1.4.1
 
 ## v1.4.0
 
-### Added
 
-- NotificationHandler
-- createdAt property for UserNotification model
+## v1.3.4
+
+- v1.4.0
+- v1.4.1
+- v1.4.2
+- v1.4.3
+- Optimize imports
+- add subsystem id filter
+- v1.4.4
+- update factor
+- v1.5.0: Added AppUserInfo class
+- Update pubspec lock
+- v1.5.1: imageUrl for empty state
+- Update
+- v1.5.2
+- v1.5.3
+- feat: language changing methods (v1.5.4)
+- feat: v1.5.5
+- feat: add enums, default labels for confirmation dialog
+- Optimize imports
+- Update enum model
+- v1.6.1: fix the notification token
+- Update change log
+- Update actions
+- Update example SDK
+- Update git workflow
+- v1.6.2
+- feat: v1.6.3 - new carbon icons
+- v1.7.0
+- add microsoft auth
+- v1.7.1: Microsoft auth
+- Update pubspec
+- Remove unused methods
+- v1.7.2
+- v1.7.3
+- 1.7.4
+- Add portal authentication tenant filter
+- update default confirmation box
+- ignore search emptuy
+- add createdAt date filter for user notification
+- v1.7.5
+- add filter render
+- bump version to 1.8.0 and update changelog; add background color prop to EnumStatusBadge
+- Update pubspec
+- v1.8.1+rc1
+- write changelog
+- v1.8.1+rc2
+- v1.8.1
+- Refactor ApiClient to accept an optional RefreshInterceptor and update RefreshInterceptor methods for clarity
+- Update ApiClient to allow custom RefreshInterceptor and ensure proper initialization
+- Remove Sentry integration and related dependencies from the project
+- configure firebase
+- Merge pull request #1 from supavn/remove-sentry-firebase-temporary
+- ## 1.8.2
+- Enhance notification permission request in PushNotificationBloc to include additional options for better user control
+- Update version to 1.8.4+1 and add open_file dependency. Enhance temporary directory cleanup in FileService to avoid issues on web platforms.
+- Add comprehensive documentation for Supa Architecture framework
+- Update version to 1.8.4+2 and correct documentation links in README.md
+- v1.8.4+3
+- v1.8.4+4
+- v1.8.4+5
+- Update version to 1.8.4+6, fix infinite page state, and enhance async handling in InfiniteListState methods
+- v1.8.4+7: using file handler
+- Update version to 1.8.5+1, remove Sentry integration due to rendering issues on Android, and replace it with FirebaseCrashlytics for error handling.
+- v1.9.0+1
+- feat: v1.9.1+1 - bug fixes
+- v1.9.1+2
+- chore: bump version to 1.9.1+3 and update changelog for authentication state fix on language change
+- chore: bump version to 1.9.1+4, update changelog, and enhance authentication state with equatable mixin
+- chore: bump version to 1.9.1+5, update notification handling with new data structure and error state
+- chore: remove prompt optimization file and update base repository constructor to include new parameters
+- chore: bump version to 1.9.1+6, add device info retrieval before platform initialization and update dependencies
+- add test and coverage
+- Enhance test coverage by running Flutter tests with coverage options for specific directories. Update CI workflow to reflect these changes.
+- Refactor TestNestedSerializableClass to use public fields instead of private variables for nestedObject and nestedList. Update JSON serialization methods accordingly. Improve performance test expectations to complete within 5 milliseconds.
+- Release v1.9.1
+- Update JSON serialization methods in TestNestedSerializableClass to improve performance and maintainability. Refactor nestedObject and nestedList to use public fields.
+- Refactor SupaExtendedColorScheme to use constants for color keys, improving readability and maintainability. Update switch cases to utilize these constants for color token retrieval.
+- Deprecate backgroundColor properties in EnumModel and TextStatusBadge, introducing backgroundColorKey for improved theme integration. Update EnumStatusBadge to utilize new keys while maintaining legacy support.
+- Update project configuration and dependencies: enhance .gitignore, update iOS deployment target to 13.0, add GoRouter dependency, and refactor main app structure for improved routing and theme management.
+- Enhance text styling in EnumBadgesPage by applying dynamic color to the title text based on the provided token, improving visual consistency with the theme.
+- v1.10.0-rc.1
+- Update pubspec.lock to version 1.10.0-rc.1, reflecting the latest dependency changes.
+- v1.10.0-rc.2
+- Refactor TextStatusBadge and EnumStatusBadge to improve color property naming for clarity. Update variable names from resolvedBackground, resolvedText, and resolvedBorder to resolvedBackgroundColor, resolvedTextColor, and resolvedBorderColor. Maintain legacy support in EnumStatusBadge while enhancing theme integration.
+- v1.10.0-rc.3
+- v1.10.0-rc.4
+- Merge pull request #2 from supavn/main
+- Merge commit '6d1ee42a936141c041422ccc05ae7670a4bca257' of github.com:thanhtunguet/flutter_json_entity
+- update pubspec lock
+- Update pubspec.lock to reflect the latest dependency changes and ensure compatibility with recent updates.
+- Enhance EnumBadgesPage with hex color examples and update TextStatusBadge to support background and border color keys. Refactor color key handling for improved clarity in EnumStatusBadge.
+- v1.10.0-rc.6
+- add initial message event handler
+- Update to version 1.10.0-rc.7: Added DidMountedCheckInitialMessage to PushNotificationBloc and removed deprecation annotations for backgroundColor in TextStatusBadge and EnumModel.
+- Update to version 1.10.0-rc.8: Fix device name retrieval for iOS and Android by using utsname and manufacturer name respectively.
+- Update to version 1.10.0-rc.9: Added secure encryption for persistent data and implemented fallback mechanisms in HiveCookieManager and HivePersistentStorage for handling encryption failures.
+- Update to version 1.10.0-rc.10: Removed Flutter upper bound constraint in preparation for future updates.
+- Remove upper bound
+- Update to version 1.10.0-rc.11: Fix file uploading on web and enhance multipart file handling for both web and native platforms.
+- Update CHANGELOG and improve authentication handling for web: Fix authentication issues and ensure persistence of user and tenant data across platforms.
+- Update to version 1.10.0-rc.12: Add globalUserId field to AppUserInfo model and update CHANGELOG.
+- Update to version 1.10.0-rc.13: Add account linking functionality for Google, Microsoft, and Apple in PortalProfileRepository and enhance AppUserPreferences model.
+- Update to version 1.10.0-rc.13: Add handleInitialNotification method to PushNotificationBloc and enhance AppUserInfo model with additional account fields.
+- add sub_app
+- v1.10.0-rc.14
+- Update dependencies in pubspec.yaml and register new models in models.dart: Set intl to any version, upgrade supa_carbon_icons to 0.2.0, and add Period, PeriodFilter, and RequestHistory models.
+- Release version 1.11.0: Add isOverdue getter to DateTime extension, introduce Period and RequestHistory models, and enhance PeriodFilter with siteId field.
+- Refactor API client and interceptors: Simplify interceptor management by removing platform-specific checks, enhance token refresh handling, and update encryption manager for Hive. Remove biometric login button widget.
+- Release version 1.12.0-rc1: Introduce TimezoneService and update dependencies, including flutter_timezone package. Update CHANGELOG and plugin registrations across platforms.
+- add refactoring plan
+- Enhance CookieManager implementations: Add detailed documentation for methods, improve null handling for cookies, and implement token-in-URL functionality for mobile platforms. Update WebCookieManager to rely on native cookie handling without token support.
+- Enhance CookieManager functionality: Add duplicate cookie handling with logging for warnings, implement one-time migration for data consistency, and improve cookie cleanup methods. Update documentation to reflect these changes across CookieManager implementations.
+- update test code
+- Update TextStatusBadge to allow nullable backgroundColor and enhance EnumStatusBadge with calculated background and border colors based on hex input. Update pubspec.lock for version 1.12.0-rc1.
+- Update version to 1.12.0-rc2, enhance changelog with EnumStatusBadge fix, and add documentation note for code modifications in AGENTS.md.
+- Remove deprecated BottomSheetContainer widget and update exports in widgets.dart
+- add app_user_group
+- add discussion
+- Release version 1.13.0: Remove Image model and replace it with File, update changelog, and adjust version in pubspec.yaml.
+- v1.13.2
+- Update version to 1.13.3, add isAdmin field to AppUser profile, and enhance changelog.
+- Remove development.md file from rules directory
+- Add logging directory to .gitignore, enhance ApiClient documentation, and improve error handling in DioException and interceptors
+- Enhance documentation across BLoC files, including detailed descriptions for authentication, error handling, and push notification functionalities. Update CHANGELOG with comprehensive documentation improvements.
+- Enhance documentation for JSON field classes, including detailed descriptions for JsonBoolean, JsonDate, JsonDouble, JsonInteger, JsonList, JsonModel, JsonNumber, JsonObject, JsonSerializable, and JsonString. Update CHANGELOG to reflect comprehensive documentation improvements across all JSON-related files.
+- Enhance documentation for SupaExtendedColorScheme and SupaExtendedColorTokenGroup, providing detailed descriptions of color tokens and their usage. Update theme.dart to include an overview of the theme package and its components.
+- Enhance documentation across services, including detailed descriptions for FileService, FileHandler, EntityDetailNavigator, and timezone services. Update CHANGELOG to reflect comprehensive documentation improvements and platform-specific behavior explanations.
+- Enhance documentation for form classes in `lib/forms/`, including detailed descriptions, usage examples, and validation requirements for LoginForm, ForgotPasswordForm, ResetPasswordForm, and ChangePasswordForm. Update CHANGELOG to reflect these comprehensive improvements.
+- Refactor filters: remove unused filter classes including AdminTypeFilter, AppUserFilter, DiscussionFilter, and others. Update filters.dart to include new filter parts and clean up models.dart by removing references to deleted filters. Ensure repository files are updated to import the necessary filters.
+- Enhance documentation for DioImageProvider in `lib/providers/dio_image_provider.dart`, detailing its functionality, usage examples, and error handling mechanisms. Update `providers.dart` to include a summary of custom image provider implementations, emphasizing advanced features and fallback handling.
+- Enhance documentation for utility classes in `lib/utils/`, including detailed comments for PasswordFieldMixin and PlatformUtils with usage examples and parameter descriptions. Update CHANGELOG to reflect these comprehensive documentation improvements.
+- Enhance documentation for various widget classes in `lib/widgets/`, including detailed descriptions, usage examples, and parameter explanations for AppImage, GoBackButton, IconPlaceholder, LoadingIndicator, TextStatusBadge, EnumStatusBadge, ConfirmationDialog, EmptyComponent, ForbiddenComponent, SearchableAppBarTitle, SectionTitle, and InfiniteListState. Update CHANGELOG to reflect these comprehensive documentation improvements.
+- refactor filters
+- Update firebase
+- update example pubspec lock
+- Using open_filex package
+- v1.3.4
 
 ## v1.3.1
 
-### Added
-
-- `showPadding` for section title
+- feat: v1.3.1
 
 ## v1.3.0
 
-### Added 
-
-- Common widgets, shared across projects
+- v1.2.1
+- v1.2.2
+- feat: new version v1.3.0 with common widgets
 
 ## v1.2.0
 
-- Add optimization
-- Add tenant subsystem mappings
+- Update pubspec
+- v1.2.0
+
+## v1.1.3
+
+- feat: v1.1.3 add getter
+
+## v1.1.2
+
+- add name field
+- Timezone integer
+- v1.1.2
+
+## v1.1.1
+
+- v1.1.0: upgrade bloc
+- v1.1.1: add otp required
+
+## v1.0.3
+
+- update authentication
+- Fix clear auth
+- Keep current json
+- ignore empty id
+- Fix map build
+- add method channel
+- request notification permission
+- Merge json property
+- Remove push noti request on macos
+- Optimize code & add widgets
+- Update change logs
+- fix: web cookie storage
+- v1.0.2: optimize code
+- Add image
+- add image id
+- Update avatar URL
+- fix: dio image provider missing cookie
+- Update to json
+- Update json double
+- Using device model instead of device name
+- v1.0.3: temporary fix
+
+## v1.0.0+1
+
+- v1.0.0: update docs & changelog
+
+## v1.0.0
+
+- v0.0.3+preview.7
+- Fix: remove web cookies
+- add set link
+- add filename
+- Remove fine-tuning code
+- Fix change password
+- Enable old password
+- Update portal profile repo
+- add extension
+- initialize v1.0
+- Update sdk deps
+- Handle authentication for web
+- Fix authentication token
+- v1.0.0: Library supports web
+
+## v0.0.3+preview.6
 
-### Fixed
+- check is web
+- add change log
 
-- Timezone: Ignore "+" sign in timezone header
+## v0.0.3+preview.5
 
-### Added
+- v0.0.3+preview.5
 
-- TextStatusBadge widget
-- EnumStatusBadge widget
-- DateTime extensions
+## v0.0.3+preview.4
 
-## 1.0.0
+- v0.0.3+preview.4
 
-### Breaking changes
+## v0.0.3+preview.3
 
-- PersistentStorage
-- CookieManager
-- SecureStorage
-- SupaArchitecturePlatform
+- check debug web
+- only email scope
+- Print console if is web
+- feat: v0.0.3+preview.3 - add upload methods
 
-## 0.0.3+preview.8
+## v0.0.3+preview.2
 
-### Added
+
+## v0.0.3
 
-- `Attachment`: add `setFile` and `setLink` methods
+- google login scope
+- Fix authentication bloc
+- fix authentication initialization
+- Fix initial authentication & change password form
+- Tối ưu auth bloc
+- update
+- add switch email & notification event
+- add switch email & notification
+- Backend authentication change
+- check debug web
+- only email scope
+- Print console if is web
+- feat: v0.0.3+preview.3 - add upload methods
+- v0.0.3+preview.4
+- v0.0.3+preview.5
+- check is web
+- add change log
+- v0.0.3+preview.7
+- Fix: remove web cookies
+- add set link
+- add filename
+- Remove fine-tuning code
+- Fix change password
+- Enable old password
+- Update portal profile repo
+- add extension
+- feat: confirm v0.0.3
+
+## v0.0.2+preview.14
+
+- add device uuid
+- update version
+
+## v0.0.2+preview.13
+
+- add to json method
+- add to json method for push notification state
+- add toJSON to push notification
+- add readme
+- change log
+
+## v0.0.2+preview.12
+
+- add operator: equality
+- feat: v0.0.2+preview.12
+
+## v0.0.2+preview.11
+
+- Fix: carbon button
+- to iso string
+- Fix Json date
+- id filter int
+- refactor dio image provider
+- json date for utc
+- add fine-tuning
+- out of memory :))
+- feat: 0.0.2+preview.11 - options to use firebase or not
+- Merge branch 'main' of github.com:thanhtunguet/supa_architecture
+
+## v0.0.2+preview.10
+
+- feat: 0.0.2+preview.10
+
+## v0.0.2+preview.9
+
+- feat: v0.0.2+preview.9
+
+## v0.0.2+preview.8
+
+- feat: v0.0.2+preview.8
+
+## v0.0.2+preview.7
+
+- feat: v0.0.2+preview.7
+
+## v0.0.2+preview.6
+
+- feat: 0.0.2+preview.6
+
+## v0.0.2+preview.5
+
+- v0.0.2+preview.5
+
+## v0.0.2+preview.4
+
+- Update test
+- Update json integer
+- add push notification bloc
+- add push notification
+- Fix authentication with google
+- Fix tests
+- add env extensions
+- fix authentication
+- FIx push notification
+- chore: v0.0.2+preview.2
+- Push notification
+- chore: v0.0.2+preview.4
+
+## v0.0.2+preview.1
+
+
+## v0.0.2
+
+- v0.0.2+preview.1
+- Update test
+- Update json integer
+- add push notification bloc
+- add push notification
+- Fix authentication with google
+- Fix tests
+- add env extensions
+- fix authentication
+- FIx push notification
+- chore: v0.0.2+preview.2
+- Push notification
+- chore: v0.0.2+preview.4
+- v0.0.2+preview.5
+- feat: 0.0.2+preview.6
+- feat: v0.0.2+preview.7
+- feat: v0.0.2+preview.8
+- feat: v0.0.2+preview.9
+- feat: 0.0.2+preview.10
+- Fix: carbon button
+- to iso string
+- Fix Json date
+- id filter int
+- refactor dio image provider
+- json date for utc
+- add fine-tuning
+- out of memory :))
+- feat: 0.0.2+preview.11 - options to use firebase or not
+- Merge branch 'main' of github.com:thanhtunguet/supa_architecture
+- add operator: equality
+- feat: v0.0.2+preview.12
+- add to json method
+- add to json method for push notification state
+- add toJSON to push notification
+- add readme
+- change log
+- add device uuid
+- update version
+- google login scope
+- Fix authentication bloc
+- fix authentication initialization
+- Fix initial authentication & change password form
+- Tối ưu auth bloc
+- update
+
+## v0.0.1+preview.13
+
+- add json double and json integer
+- Add user filters and file filters
+- v0.0.1+preview.13
+
+## v0.0.1+preview.12
+
+- v0.0.1+preview.12
+
+## v0.0.1+preview.11
+
+- Use getter to get repository
+- feat: v0.0.1+preview.10
+- Default value for json string
+- v0.0.1+preview.11
+
+## v0.0.1+preview.9
+
+- Update persistent
+- kDebugMode
+- v0.0.1+preview.9
+
+## v0.0.1+preview.8
+
+- Fix tests
+- Fix timezone
+- Upgrade recaptcha version
+- feat: v0.0.1+preview.8
+
+## v0.0.1+preview.7
+
+- Update interceptors
+- Merge branch 'main' of github.com:thanhtunguet/supa_architecture
+- Update API logs
+- using num for id_filter
+- update workflow
+- chore: 0.0.1+preview.6
+- Update version
+- Rewrite test
+- feat: v0.0.1+preview.7
+
+## v0.0.1+preview.5
+
+- Log 403 URL
+- fix: cookies
+- added example
+
+## v0.0.1+preview.4
+
+- v0.0.1+preview.4
+
+## v0.0.1+preview.3
+
+- Update license
+- add docs for api _client
+- add captcha
+- add upload image methods
+- log user
+- map user profile
+- fix image
+- add forgot password methods
+- Update notification
+- add approve id method
+- Fix google login
+- Update cookies
+- format code
+- add documentation
+- Update version
+- Update documentation
+- fix lỗi build file
+- Update deps
+
+## v0.0.1+preview.1
 
-## 0.0.3+preview.7
-
-### Added
-
-- `ApiClient`: add `filename` parameter to `uploadFiles` method
-
-## 0.0.3+preview.6
-
-### Added
-
-- `ApiClient`: add `uploadFilesFromImagePicker` and `uploadFilesFromFilePicker` methods
-- Check is web for where using cookie manager
-
-## 0.0.3+preview.5
-
-### Fixed
-
-- `ApiClient`: fixed `uploadFilesFromImagePicker` and `uploadFilesFromFilePicker` methods for web
-
-## 0.0.3+preview.4
-
-### Added
-
-- `ApiClient`: add `uploadFilesFromImagePicker` and `uploadFilesFromFilePicker` methods
-
-## 0.0.3+preview.3
-
-### Added
-
-- `ApiClient`: add `uploadFileFromImagePicker` and `uploadFileFromFilePicker` methods
-
-## 0.0.3+preview.2
-
-### Added
-
-- `AuthenticationRepository`: add `getProfileInfo` method
-
-### Deprecated
-
-- `AuthenticationRepository`: `getProfile` method
-
-## 0.0.3+preview.1
-
-### Added
-
-- `AuthenticationBloc`: add switch email and notification
-
-## 0.0.2:
-
-### Added
-
-- `AuthenticationBloc`: add Microsoft login scope
-- Optimize authentication flow
-
-## 0.0.2+preview.15
-
-### Added
-
-- `AuthenticationBloc`: add Google login scope
-
-## 0.0.2+preview.14
-
-### Added
-
-- `DeviceInfoInterceptor`: add device UUID to request headers
-
-## 0.0.2+preview.13
-
-### Added
-
-- Compatibility table in README
-- toJson for PushNotificationState and PushNotificationPayload
-
-## 0.0.2+preview.12
-
-### Added
-
-- `JsonField`: equality operator
-
-## 0.0.2+preview.11
-
-### Added
-
-- Add options to use Firebase or not
-
-## 0.0.2+preview.7
-
-### Added
-
-- `LoginForm`: a form for user login
-- `CarbonButtons`: a widget for handling buttons with safe area inset
-### Fixed
-
-- `PushNotificationBloc`: a bloc for handling push notifications
-- Remove `showLocalNotifications` from `PushNotificationBloc`
-
-## 0.0.2+preview.6
-
-### Added
-
-- `UserNotificationFilter`: unread field
-
-## 0.0.2+preview.5
-
-### Fixed
-
-- `read` -> `unread`
-
-## 0.0.2+preview.4
-
-### Added
-
-- Handle PushNotificationPayload
-
-## 0.0.2+preview.3
-
-### Added
-
-- showLocalNotification: show local notification when receive a push notification
-
-## 0.0.2+preview.2
-
-### Added
-
-- BLoC: PushNotification
-- BLoC: ErrorHandling
-
-## 0.0.1+preview.12
-
-### Added
-
-- Model: Attachment
-
-## 0.0.1+preview.5
-
-### Added
-
-- Package example
-
-### Fixed
-
-- Reformat the code
-
-## 0.0.1+preview.4
-
-### Fixed
-
-- Google disconnect
-
-## 0.0.1+preview.3
-
-### Added
-
-- Finish documentation
-- Fix: response body file
 
 ## 0.0.1+preview.2
 
-### Added
+- initial commit
+- add blocs
+- add google, apple login
+- update dependencies
+- config azure login
+- add user notification
+- add body number
+- ignore plugin files
+- add datetime formats
+- add cookies manager
+- Merge branch 'main' of github.com:thanhtunguet/supa_architecture
+- refresh token failed then logout user
+- Update tenant bloc
+- add errors
+- refactor blocs
+- update blog with biometric login
+- Update URL and biometric button
+- Fix refresh, json field default value
+- Update number & fix tenant
+- fix authentication and tenant blocs
+- Remove logger
+- add sender & recipient to user notification
+- Merge branch 'main' of github.com:thanhtunguet/supa_architecture
+- add exception, repositories
+- Update version
+- Update changelog
+- Update license
+- add docs for api _client
+- add captcha
+- add upload image methods
+- log user
+- map user profile
+- fix image
+- add forgot password methods
+- Update notification
+- add approve id method
+- Fix google login
+- Update cookies
+- format code
+- add documentation
+- Update version
 
-- Documentation for files
-
-## 0.0.1+preview.1
-
-### Added
-
-- All functions
-- Documentation preview
