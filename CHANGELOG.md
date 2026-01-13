@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Jekyll documentation site with just-the-docs theme in `docs/` directory
+- GitHub Actions workflow for automated deployment to GitHub Pages
+- Comprehensive documentation including:
+  - Overview and framework purpose
+  - Architecture and design patterns
+  - Core concepts and principles
+  - Authentication system documentation
+  - State management with BLoC pattern
+  - Error handling system
+
 ## v1.14.4
 
 ### Updated

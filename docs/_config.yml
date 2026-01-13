@@ -1,0 +1,108 @@
+title: Supa Architecture
+description: A scalable and opinionated Flutter architecture designed to boost productivity, enforce consistency, and support large-scale modular development.
+baseurl: "/supa_architecture" # the subpath of your site, e.g. /blog
+url: "https://supavn.github.io" # the base hostname & protocol for your site
+
+# Theme
+theme: just-the-docs
+
+# Enable relative links
+relative_links:
+  enabled: true
+  collections: false
+
+# Logo (uncomment and add logo file to assets/images/ to enable)
+# logo: "/assets/images/logo.png"
+
+# Aux links for the upper right navigation
+aux_links:
+  "GitHub":
+    - "https://github.com/supavn/supa_architecture"
+
+# Makes Aux links open in a new tab
+aux_links_new_tab: true
+
+# Footer content
+footer_content: "Made with ❤️ by the Supa team."
+
+# Footer last edited timestamp
+last_edit_timestamp: true
+last_edit_time_format: "%b %e %Y at %I:%M %p"
+
+# Footer "Edit this page on GitHub" link text
+gh_edit_link: true
+gh_edit_link_text: "Edit this page on GitHub"
+gh_edit_repository: "https://github.com/supavn/supa_architecture"
+gh_edit_branch: "main"
+gh_edit_source: docs
+gh_edit_view_mode: "tree"
+
+# Color scheme
+color_scheme: light
+
+# Enable copy code button
+enable_copy_code_button: true
+
+# Heading anchor links
+heading_anchors: true
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Search
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# Collections for organizing documentation
+collections:
+  docs:
+    permalink: "/:collection/:path/"
+    output: true
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "default"
+
+# Navigation structure
+nav_sort: case_sensitive
+
+# Callouts
+callouts:
+  warning:
+    title: Warning
+    color: red
+  note:
+    title: Note
+    color: blue
+  tip:
+    title: Tip
+    color: green
+
+# Build settings
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-include-cache
+  - jekyll-relative-links
