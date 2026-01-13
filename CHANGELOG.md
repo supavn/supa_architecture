@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.14.3
+
+### Updated
+
+- Update package_info_plus to ^9.0.0
+
 ## v1.14.2
 
 ### Fixed
