@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.14.4
+
+### Updated
+
+- Update device_info_plus to ^12.0.0
+
 ## v1.14.3
 
 ### Updated

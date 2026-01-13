@@ -1,6 +1,6 @@
 name: supa_architecture
 description: Architecture library for Supa Flutter applications
-version: 1.14.3
+version: 1.14.4
 homepage: https://github.supa.vn
 
 environment:
@@ -15,7 +15,7 @@ dependencies:
 
   aad_oauth: ^1.0.1
   bloc: ^9.1.0
-  device_info_plus: ^11.3.0
+  device_info_plus: ^12.0.0
   dio: ^5.7.0
   equatable: ^2.0.7
   file_picker: ^10.3.3
