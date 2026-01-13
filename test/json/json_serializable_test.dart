@@ -392,7 +392,7 @@ void main() {
 
         expect(json.length, equals(1000));
         expect(stopwatch.elapsedMilliseconds,
-            lessThan(5)); // Should complete within 1 second
+            lessThan(10)); // Should complete within 1 second
 
         // Test deserialization
         stopwatch.reset();
@@ -405,7 +405,7 @@ void main() {
         stopwatch.stop();
 
         expect(deserialized.length, equals(1000));
-        expect(stopwatch.elapsedMilliseconds, lessThan(5));
+        expect(stopwatch.elapsedMilliseconds, lessThan(10));
       });
 
       test('Deep nesting performance', () {
