@@ -1,0 +1,9 @@
+.claude/
+.github/
+.serena/
+.vscode/
+build/
+coverage/
+doc/
+example/
+test/
