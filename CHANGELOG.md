@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## v2.0.0
 
+- move JSON performance comparison to integration tests for device profiling, keeping 5-level nested models and shared test data builders
 - re-init package
 - add code
 - Update color property naming in TextStatusBadge and EnumStatusBadge for consistency. Enhance legacy support in EnumStatusBadge while improving theme integration.
