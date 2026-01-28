@@ -60,12 +60,17 @@ class PushNotificationBloc
     RemoteMessage? initialMessage,
   ) : super(
           initialMessage != null
-              ? PushNotificationOpened.fromFields(
-                  title: initialMessage.title,
-                  body: initialMessage.body,
-                  payload: initialMessage.payload,
-                  linkMobile: initialMessage.linkMobile,
-                )
+              ? (initialMessage.notification == null
+                  ? PushNotificationDataOnlyOpened(
+                      payload: initialMessage.payload,
+                      linkMobile: initialMessage.linkMobile,
+                    )
+                  : PushNotificationOpened.fromFields(
+                      title: initialMessage.title,
+                      body: initialMessage.body,
+                      payload: initialMessage.payload,
+                      linkMobile: initialMessage.linkMobile,
+                    ))
               : const PushNotificationInitial(),
         ) {
     _onEvents();
@@ -74,6 +79,10 @@ class PushNotificationBloc
   void _onEvents() {
     on<DidReceivedNotificationEvent>(_onDidNotificationReceived);
     on<DidUserOpenedNotificationEvent>(_onDidUserOpenedNotification);
+    on<DidReceivedDataOnlyNotificationEvent>(
+        _onDidDataOnlyNotificationReceived);
+    on<DidUserOpenedDataOnlyNotificationEvent>(
+        _onDidUserOpenedDataOnlyNotification);
     on<DidResetNotificationEvent>(_onDidResetNotification);
     on<DidMountedCheckInitialMessage>(_onDidMountedCheckInitialMessage);
   }
@@ -194,6 +203,14 @@ class PushNotificationBloc
 
   /// Handle incoming foreground notifications.
   void _handleNotification(RemoteMessage message) {
+    if (message.notification == null) {
+      add(DidReceivedDataOnlyNotificationEvent(
+        payload: message.payload,
+        linkMobile: message.linkMobile,
+      ));
+      return;
+    }
+
     add(DidReceivedNotificationEvent(
       title: message.title,
       body: message.body,
@@ -204,6 +221,14 @@ class PushNotificationBloc
 
   /// Handle notifications opened from the background.
   void _handleOpenedNotification(RemoteMessage message) {
+    if (message.notification == null) {
+      add(DidUserOpenedDataOnlyNotificationEvent(
+        payload: message.payload,
+        linkMobile: message.linkMobile,
+      ));
+      return;
+    }
+
     add(DidUserOpenedNotificationEvent(
       title: message.title,
       body: message.body,
@@ -291,6 +316,16 @@ class PushNotificationBloc
     ));
   }
 
+  void _onDidDataOnlyNotificationReceived(
+    DidReceivedDataOnlyNotificationEvent event,
+    Emitter<PushNotificationState> emit,
+  ) {
+    emit(PushNotificationDataOnlyReceived(
+      payload: event.payload,
+      linkMobile: event.linkMobile,
+    ));
+  }
+
   void _onDidUserOpenedNotification(
     DidUserOpenedNotificationEvent event,
     Emitter<PushNotificationState> emit,
@@ -298,6 +333,16 @@ class PushNotificationBloc
     emit(PushNotificationOpened.fromFields(
       title: event.title,
       body: event.body,
+      payload: event.payload,
+      linkMobile: event.linkMobile,
+    ));
+  }
+
+  void _onDidUserOpenedDataOnlyNotification(
+    DidUserOpenedDataOnlyNotificationEvent event,
+    Emitter<PushNotificationState> emit,
+  ) {
+    emit(PushNotificationDataOnlyOpened(
       payload: event.payload,
       linkMobile: event.linkMobile,
     ));
@@ -317,12 +362,19 @@ class PushNotificationBloc
     try {
       final initialMessage = await _firebaseMessaging.getInitialMessage();
       if (initialMessage != null) {
-        add(DidUserOpenedNotificationEvent(
-          title: initialMessage.title,
-          body: initialMessage.body,
-          payload: initialMessage.payload,
-          linkMobile: initialMessage.linkMobile,
-        ));
+        if (initialMessage.notification == null) {
+          add(DidUserOpenedDataOnlyNotificationEvent(
+            payload: initialMessage.payload,
+            linkMobile: initialMessage.linkMobile,
+          ));
+        } else {
+          add(DidUserOpenedNotificationEvent(
+            title: initialMessage.title,
+            body: initialMessage.body,
+            payload: initialMessage.payload,
+            linkMobile: initialMessage.linkMobile,
+          ));
+        }
       }
     } catch (error) {
       debugPrint("Failed to get initial message: ${error.toString()}");

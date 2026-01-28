@@ -8,6 +8,31 @@ sealed class PushNotificationEvent extends Equatable {
       ];
 }
 
+/// Event triggered when a data-only FCM message is received in the foreground.
+///
+/// This is fired for RemoteMessage instances that do **not** contain a
+/// `notification` object, and only provide `data` payload.
+final class DidReceivedDataOnlyNotificationEvent extends PushNotificationEvent {
+  /// Additional notification data payload
+  final PushNotificationPayload payload;
+
+  /// Optional deep link URL for mobile navigation
+  final String? linkMobile;
+
+  @override
+  List<Object?> get props => [
+        "DidReceivedDataOnlyNotificationEvent",
+        payload,
+        linkMobile,
+      ];
+
+  /// Creates a data-only notification received event.
+  DidReceivedDataOnlyNotificationEvent({
+    required this.payload,
+    this.linkMobile,
+  });
+}
+
 /// Event triggered when a push notification is received in the foreground.
 ///
 /// This event is fired when the app is open and actively running, and
@@ -38,6 +63,32 @@ final class DidReceivedNotificationEvent extends PushNotificationEvent {
   DidReceivedNotificationEvent({
     required this.title,
     required this.body,
+    required this.payload,
+    this.linkMobile,
+  });
+}
+
+/// Event triggered when user opens a data-only FCM message.
+///
+/// This is fired for RemoteMessage instances that do **not** contain a
+/// `notification` object, and only provide `data` payload.
+final class DidUserOpenedDataOnlyNotificationEvent
+    extends PushNotificationEvent {
+  /// Additional notification data payload
+  final PushNotificationPayload payload;
+
+  /// Optional deep link URL for mobile navigation
+  final String? linkMobile;
+
+  @override
+  List<Object?> get props => [
+        "DidUserOpenedDataOnlyNotificationEvent",
+        payload,
+        linkMobile,
+      ];
+
+  /// Creates a data-only notification opened event.
+  DidUserOpenedDataOnlyNotificationEvent({
     required this.payload,
     this.linkMobile,
   });

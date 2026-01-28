@@ -108,6 +108,41 @@ final class PushNotificationInitial extends PushNotificationState {
   }
 }
 
+/// Push notification received state for data-only messages.
+///
+/// Represents a RemoteMessage that does **not** contain a `notification`
+/// object, and only provides `data` payload.
+final class PushNotificationDataOnlyReceived extends PushNotificationState {
+  /// Parsed notification payload data
+  final PushNotificationPayload payload;
+
+  /// Optional deep link URL for mobile navigation
+  final String? linkMobile;
+
+  /// Push notification received state for data-only messages
+  const PushNotificationDataOnlyReceived({
+    required this.payload,
+    this.linkMobile,
+  });
+
+  /// Converts to opened data-only notification event
+  DidUserOpenedDataOnlyNotificationEvent toOpenedEvent() {
+    return DidUserOpenedDataOnlyNotificationEvent(
+      payload: payload,
+      linkMobile: linkMobile,
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": "data_only_received",
+      "payload": payload.toJson(),
+      "linkMobile": linkMobile,
+    };
+  }
+}
+
 /// Push notification received state
 final class PushNotificationReceived extends PushNotificationState {
   /// Notification data
@@ -150,6 +185,33 @@ final class PushNotificationReceived extends PushNotificationState {
     return {
       "type": "received",
       "data": data.toJson(),
+    };
+  }
+}
+
+/// Push notification opened state for data-only messages.
+///
+/// Represents a RemoteMessage that does **not** contain a `notification`
+/// object, and only provides `data` payload.
+final class PushNotificationDataOnlyOpened extends PushNotificationState {
+  /// Parsed notification payload data
+  final PushNotificationPayload payload;
+
+  /// Optional deep link URL for mobile navigation
+  final String? linkMobile;
+
+  /// Push notification opened state for data-only messages
+  const PushNotificationDataOnlyOpened({
+    required this.payload,
+    this.linkMobile,
+  });
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "type": "data_only_opened",
+      "payload": payload.toJson(),
+      "linkMobile": linkMobile,
     };
   }
 }

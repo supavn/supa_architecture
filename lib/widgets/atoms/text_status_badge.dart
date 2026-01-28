@@ -191,7 +191,7 @@ class TextStatusBadge extends StatelessWidget {
       decoration: ShapeDecoration(
         color: effectiveBackgroundColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(8),
           side: BorderSide(
             color: effectiveBorderColor,
             width: 1,

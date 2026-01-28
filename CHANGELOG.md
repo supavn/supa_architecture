@@ -3,11 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 
-## v2.0.0
+## v1.15.0
 
 - move JSON performance comparison to integration tests for device profiling, keeping 5-level nested models and shared test data builders
 - re-init package
 - add code
+- feat: Add payload-only push notification states for data-only FCM messages (no `notification` object)
 - Update color property naming in TextStatusBadge and EnumStatusBadge for consistency. Enhance legacy support in EnumStatusBadge while improving theme integration.
 - add readme
 - Merge branch 'main' of github.com:thanhtunguet/flutter_json_entity
