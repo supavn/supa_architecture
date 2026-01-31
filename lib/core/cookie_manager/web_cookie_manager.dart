@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:supa_architecture/core/cookie_manager/cookie_manager.dart';
 import 'package:web/web.dart' hide Response;
 
@@ -9,6 +10,17 @@ import 'package:web/web.dart' hide Response;
 /// This implementation leverages the browser's native cookie handling and does not
 /// support token-in-URL functionality, relying instead on automatic cookie transmission.
 class WebCookieManager implements CookieManager {
+  /// Factory method to create and register a [WebCookieManager] instance.
+  static WebCookieManager create() {
+    final manager = WebCookieManager();
+    final getIt = GetIt.instance;
+    if (getIt.isRegistered<CookieManager>()) {
+      getIt.unregister<CookieManager>();
+    }
+    getIt.registerSingleton<CookieManager>(manager);
+    return manager;
+  }
+
   @override
   bool get supportsTokenInUrl => false;
 

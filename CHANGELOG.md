@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## v1.15.0
 
+- fix: register WebCookieManager in GetIt and add ApiClient fallback to platform cookie manager for web stability
 - move JSON performance comparison to integration tests for device profiling, keeping 5-level nested models and shared test data builders
 - re-init package
 - add code
@@ -875,4 +876,3 @@ All notable changes to this project will be documented in this file.
 - format code
 - add documentation
 - Update version
-

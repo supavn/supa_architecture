@@ -45,7 +45,7 @@ class SupaArchitectureWeb extends SupaArchitecturePlatform {
     super.initialize(
       useFirebase: useFirebase,
     );
-    cookieStorage = WebCookieManager();
+    cookieStorage = WebCookieManager.create();
     secureStorage.initialize();
     await persistentStorage.initialize();
   }

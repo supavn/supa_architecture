@@ -18,6 +18,7 @@ import "package:supa_architecture/core/persistent_storage/persistent_storage.dar
 import "package:supa_architecture/core/secure_storage/secure_storage.dart";
 import "package:supa_architecture/json/json.dart";
 import "package:supa_architecture/models/models.dart";
+import "package:supa_architecture/supa_architecture_platform_interface.dart";
 
 part "dio_exception.dart";
 part "http_response.dart";
@@ -60,7 +61,14 @@ part "http_response.dart";
 /// final bytes = await client.downloadBytes('https://example.com/image.png');
 /// ```
 abstract class ApiClient {
-  CookieManager get cookieStorage => GetIt.instance.get<CookieManager>();
+  CookieManager get cookieStorage {
+    final getIt = GetIt.instance;
+    if (getIt.isRegistered<CookieManager>()) {
+      return getIt.get<CookieManager>();
+    }
+    return SupaArchitecturePlatform.instance.cookieStorage;
+  }
+
   PersistentStorage get persistentStorage =>
       GetIt.instance.get<PersistentStorage>();
   SecureStorage get secureStorage => GetIt.instance.get<SecureStorage>();
