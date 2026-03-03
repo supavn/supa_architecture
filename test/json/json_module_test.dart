@@ -760,20 +760,30 @@ void main() {
         final stopwatch = Stopwatch()..start();
         final json = model.toJson();
         stopwatch.stop();
+        final serializationMs = stopwatch.elapsedMilliseconds;
 
         expect(json['items'].length, equals(1000));
-        expect(stopwatch.elapsedMilliseconds,
-            lessThan(1000)); // Should complete within 1 second
+        expect(serializationMs,
+            lessThan(100)); // Should complete well within 100ms
 
         // Test deserialization
-        stopwatch.reset();
-        stopwatch.start();
+        stopwatch
+          ..reset()
+          ..start();
         final newModel = TestListOperatorModel.create();
         newModel.fromJson(json);
         stopwatch.stop();
+        final deserializationMs = stopwatch.elapsedMilliseconds;
 
         expect(newModel.items.value.length, equals(1000));
-        expect(stopwatch.elapsedMilliseconds, lessThan(1000));
+        expect(deserializationMs, lessThan(100));
+
+        // ignore: avoid_print
+        print(
+          'JsonModel Large list - '
+          'serialization: ${serializationMs}ms, '
+          'deserialization: ${deserializationMs}ms',
+        );
       });
 
       test('Deep nesting handling', () {
@@ -795,12 +805,21 @@ void main() {
           currentLevel = subCompany;
         }
 
+        final stopwatch = Stopwatch()..start();
         final json = model.toJson();
-        expect(json['companyName'], equals('Tech Corp'));
-
         final newModel = TestCompanyModel.create();
         newModel.fromJson(json);
+        stopwatch.stop();
+        final elapsedMs = stopwatch.elapsedMilliseconds;
+
+        expect(json['companyName'], equals('Tech Corp'));
         expect(newModel.companyName.value, equals('Tech Corp'));
+        expect(elapsedMs, lessThan(50));
+
+        // ignore: avoid_print
+        print(
+          'JsonModel Deep nesting handling: ${elapsedMs}ms',
+        );
       });
     });
   });

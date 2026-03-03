@@ -389,23 +389,34 @@ void main() {
         final stopwatch = Stopwatch()..start();
         final json = largeList.map((item) => item.toJson()).toList();
         stopwatch.stop();
+        final serializationMs = stopwatch.elapsedMilliseconds;
 
         expect(json.length, equals(1000));
-        expect(stopwatch.elapsedMilliseconds,
-            lessThan(10)); // Should complete within 1 second
+        expect(
+            serializationMs, lessThan(10)); // Should complete within 1 second
 
         // Test deserialization
-        stopwatch.reset();
-        stopwatch.start();
+        stopwatch
+          ..reset()
+          ..start();
         final deserialized = largeList.map((item) {
           final newItem = TestSerializableClass();
           newItem.fromJson(item.toJson());
           return newItem;
         }).toList();
         stopwatch.stop();
+        final deserializationMs = stopwatch.elapsedMilliseconds;
 
         expect(deserialized.length, equals(1000));
-        expect(stopwatch.elapsedMilliseconds, lessThan(10));
+        expect(deserializationMs, lessThan(10));
+
+        // Log timings for inspection
+        // ignore: avoid_print
+        print(
+          'JsonSerializable Large data - '
+          'serialization: ${serializationMs}ms, '
+          'deserialization: ${deserializationMs}ms',
+        );
       });
 
       test('Deep nesting performance', () {
@@ -424,8 +435,14 @@ void main() {
         final stopwatch = Stopwatch()..start();
         currentLevel.toString();
         stopwatch.stop();
+        final elapsedMs = stopwatch.elapsedMilliseconds;
 
-        expect(stopwatch.elapsedMilliseconds, lessThan(5));
+        expect(elapsedMs, lessThan(5));
+
+        // ignore: avoid_print
+        print(
+          'JsonSerializable Deep nesting toString: ${elapsedMs}ms',
+        );
       });
     });
   });
