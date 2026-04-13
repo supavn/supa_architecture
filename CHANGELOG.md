@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 
 
+## v1.15.3
+
+- Update portal authentication API paths from `/rpc/portal/authentication` to `/rpc/portal/auth`
+
 ## v1.15.2
 
 - Update version to 1.15.2
