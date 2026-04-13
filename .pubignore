@@ -7,3 +7,4 @@ coverage/
 doc/
 example/
 test/
+.docs_site/

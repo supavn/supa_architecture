@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 
+## v1.15.2
+
+- Update version to 1.15.2
+- Specify version constraint for `intl` dependency to satisfy `pub` publishing requirements
+- Maintenance and documentation improvements
+
 ## v1.15.0
 
 - move JSON performance comparison to integration tests for device profiling, keeping 5-level nested models and shared test data builders

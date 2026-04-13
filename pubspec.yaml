@@ -1,6 +1,6 @@
 name: supa_architecture
 description: Architecture library for Supa Flutter applications
-version: 1.15.0
+version: 1.15.2
 homepage: https://github.supa.vn
 
 environment:
@@ -33,7 +33,7 @@ dependencies:
   image_picker: ^1.2.0
   infinite_scroll_pagination: ^4.1.0
   injectable: ^2.5.1
-  intl: any
+  intl: ^0.20.2
   local_auth: ^2.3.0
   open_filex: ^4.7.0
   package_info_plus: ^9.0.0
