@@ -75,7 +75,7 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<AppUser> getProfileInfo() async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: '/rpc/portal/profile/get-info',
+          path: '/rpc/portal/authentication/get-info',
         )
         .toString();
     return dio.post(url, data: {}).then(
@@ -89,7 +89,7 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<AppUser> updateProfileInfo(AppUser appUser) async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: '/rpc/portal/profile/update-info',
+          path: '/rpc/portal/authentication/update-info',
         )
         .toString();
     return dio.post(url, data: appUser.toJson()).then(
