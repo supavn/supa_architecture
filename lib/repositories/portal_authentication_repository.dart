@@ -18,8 +18,8 @@ import 'package:supa_architecture/utils/platform_utils.dart';
 /// This class extends [ApiClient] and provides methods for user login,
 /// logout, token management, profile retrieval, and more.
 class PortalAuthenticationRepository extends ApiClient {
-  Uri get authenticationUri => Uri.parse(persistentStorage.baseApiUrl)
-      .replace(path: '/rpc/portal/mobile/authentication');
+  Uri get authenticationUri =>
+      Uri.parse(persistentStorage.baseApiUrl).replace(path: '/rpc/portal/auth');
 
   @override
   PersistentStorage get persistentStorage =>

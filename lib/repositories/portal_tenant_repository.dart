@@ -10,7 +10,7 @@ import "package:supa_architecture/repositories/base_repository.dart";
 class PortalTenantRepository extends BaseRepository<Tenant, TenantFilter> {
   @override
   String get baseUrl => Uri.parse(persistentStorage.baseApiUrl)
-      .replace(path: "/rpc/portal/mobile/authentication")
+      .replace(path: "/rpc/portal/auth")
       .toString();
 
   /// Lists tenants based on the provided filter.

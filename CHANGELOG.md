@@ -3,9 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## v1.15.5
+
+- Đổi api auth
+
 ## v1.15.4
 
-- Update version to 1.15.4
+- Đổi api auth
 
 ## v1.15.3
 

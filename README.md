@@ -34,7 +34,7 @@ flutter pub get
 
 ## 📜 Latest Changelog
 
-### `v1.7.4` – 2025-03-20
+### `v1.15.5` – 2026-04-14
 - ✅ Added support for custom bottom sheet theming
 - 🧩 Refactored localization manager integration
 - 🛠 Fixed null-safe handling in persistent storage
