@@ -18,8 +18,8 @@ import 'package:supa_architecture/utils/platform_utils.dart';
 /// This class extends [ApiClient] and provides methods for user login,
 /// logout, token management, profile retrieval, and more.
 class PortalAuthenticationRepository extends ApiClient {
-  Uri get authenticationUri =>
-      Uri.parse(persistentStorage.baseApiUrl).replace(path: '/rpc/portal/auth');
+  Uri get authenticationUri => Uri.parse(persistentStorage.baseApiUrl)
+      .replace(path: '/rpc/auth/authentication');
 
   @override
   PersistentStorage get persistentStorage =>
@@ -75,7 +75,7 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<AppUser> getProfileInfo() async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: '/rpc/portal/auth/get-info',
+          path: '/rpc/auth/profile/get-info',
         )
         .toString();
     return dio.post(url, data: {}).then(
@@ -89,7 +89,7 @@ class PortalAuthenticationRepository extends ApiClient {
   Future<AppUser> updateProfileInfo(AppUser appUser) async {
     final url = Uri.parse(baseUrl)
         .replace(
-          path: '/rpc/portal/auth/update-info',
+          path: '/rpc/auth/authentication/update-info',
         )
         .toString();
     return dio.post(url, data: appUser.toJson()).then(
@@ -264,7 +264,7 @@ class PortalAuthenticationRepository extends ApiClient {
     dio.addBaseUrlInterceptor();
 
     final refreshTokenUrl = Uri.parse(persistentStorage.baseApiUrl)
-        .replace(path: '/rpc/portal/auth/refresh-token')
+        .replace(path: '/rpc/portal/authentication/refresh-token')
         .toString();
 
     return dio
