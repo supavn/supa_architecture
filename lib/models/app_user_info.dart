@@ -89,6 +89,7 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
       ..globalUserId.value = globalUserId.value
       ..googleAccount.value = googleAccount.value
       ..appleAccount.value = appleAccount.value
+      ..groupTimeZone.value = groupTimeZone.value
       ..microsoftAccount.value = microsoftAccount.value;
   }
 }
