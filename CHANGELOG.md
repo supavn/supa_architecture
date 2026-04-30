@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 
+## v1.15.13
+
+- Thêm `groupTimeZone` vào `AppUserPreferences`
+- Cập nhật dependency `intl`
+
 ## v1.15.5
 
 - Đổi api auth

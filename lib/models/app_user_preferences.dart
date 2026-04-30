@@ -17,6 +17,7 @@ mixin AppUserPreferences {
         microsoftAccount,
         appleAccount,
         isAdmin,
+        groupTimeZone,
       ];
 
   /// The user's admin type as an [EnumModel].
@@ -46,6 +47,8 @@ mixin AppUserPreferences {
 
   /// The user's timezone as an [EnumModel].
   JsonObject<Timezone> timezone = JsonObject<Timezone>("timezone");
+
+  JsonObject<Timezone> groupTimeZone = JsonObject<Timezone>("groupTimeZone");
 
   /// The ID of the user's timezone.
   JsonInteger timezoneId = JsonInteger("timezoneId");
