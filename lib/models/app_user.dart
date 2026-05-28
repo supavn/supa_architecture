@@ -1,5 +1,6 @@
 import "package:supa_architecture/json/json.dart";
 import "package:supa_architecture/models/app_user_preferences.dart";
+import "package:supa_architecture/models/app_user_site.dart";
 import "package:supa_architecture/models/app_user_sub_system_mapping.dart";
 import "package:supa_architecture/models/current_tenant.dart";
 import "package:supa_architecture/models/tenant.dart";
@@ -31,6 +32,7 @@ class AppUser extends JsonModel with AppUserPreferences {
         name,
         appUserSubSystemMappings,
         currentTenant,
+        sites,
         ...preferenceFields,
       ];
 
@@ -76,6 +78,9 @@ class AppUser extends JsonModel with AppUserPreferences {
   /// The current tenant that this user is using.
   JsonObject<CurrentTenant> currentTenant =
       JsonObject<CurrentTenant>("currentTenant");
+
+  /// The sites available to the user.
+  JsonList<AppUserSite> sites = JsonList<AppUserSite>("sites");
 
   /// List of mappings between the user and subsystems.
   JsonList<AppUserSubSystemMapping> appUserSubSystemMappings =

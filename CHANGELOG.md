@@ -2,8 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## v1.15.17
+## v1.15.18
 
+- Expose `sites` from profile get-info responses on saved `AppUser` data.
 - Simplify password validation in change/reset password forms to require only a minimum of 8 characters.
 - Keep OTP validation at exactly 6 digits and preserve password confirmation must-match validation.
 

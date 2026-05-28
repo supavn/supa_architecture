@@ -8,6 +8,7 @@ export 'app_user.dart';
 export 'app_user_group.dart';
 export 'app_user_group_filter.dart';
 export 'app_user_info.dart';
+export 'app_user_site.dart';
 export 'app_user_sub_system_mapping.dart';
 export 'attachment.dart';
 export 'comment_reaction.dart';
@@ -39,6 +40,7 @@ void registerModels() {
   getIt.registerFactory<Discussion>(Discussion.new);
   getIt.registerFactory<AppUserGroup>(AppUserGroup.new);
   getIt.registerFactory<AppUserInfo>(AppUserInfo.new);
+  getIt.registerFactory<AppUserSite>(AppUserSite.new);
   getIt.registerFactory<AppUserSubSystemMapping>(AppUserSubSystemMapping.new);
   getIt.registerFactory<CurrentTenant>(CurrentTenant.new);
   getIt.registerFactory<DateType>(DateType.new);
