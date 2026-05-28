@@ -224,8 +224,15 @@ class AuthenticationBloc
           AuthenticationAction.loginWithGoogle));
 
       final bool isSignedIn = await googleSignIn.isSignedIn();
+      // if (isSignedIn) {
+      //   await googleSignIn.disconnect();
+      // }
       if (isSignedIn) {
-        await googleSignIn.disconnect();
+        try {
+          await googleSignIn.signOut();
+        } catch (e) {
+          debugPrint('Error signing out from Google: $e');
+        }
       }
 
       final GoogleSignInAccount? account = await googleSignIn.signIn();
