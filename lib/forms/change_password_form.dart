@@ -4,49 +4,37 @@ import "package:reactive_forms/reactive_forms.dart";
 ///
 /// This form is used when an authenticated user wants to change their existing
 /// password. It requires the current password, a new password that meets
-/// security requirements, and optionally an OTP code for additional verification.
+/// the minimum length requirement, and optionally an OTP code for additional
+/// verification.
 ///
 /// The form enforces the following validations:
 /// - Current password is required
-/// - New password must meet complexity requirements (see [passwordRegex])
+/// - New password must be at least [minPasswordLength] characters
 /// - New password and verification must match
 /// - If OTP validation is enabled, OTP code must be a 6-digit number
 ///
 /// **Password requirements:**
-/// The new password must contain:
-/// - At least one uppercase letter (A-Z)
-/// - At least one lowercase letter (a-z)
-/// - At least one digit (0-9)
-/// - At least one special character (#?!@$%^&*-)
-/// - Minimum length of 10 characters
+/// The new password must contain at least [minPasswordLength] characters.
 ///
 /// **Example usage:**
 /// ```dart
 /// final form = ChangePasswordForm(enableOtpValidation: true);
 /// form.password.value = 'currentPassword';
-/// form.newPassword.value = 'NewSecurePass123!';
-/// form.verifyNewPassword.value = 'NewSecurePass123!';
+/// form.newPassword.value = 'newpassw';
+/// form.verifyNewPassword.value = 'newpassw';
 /// form.otpCode.value = '123456';
 /// if (form.valid) {
 ///   // Submit password change
 /// }
 /// ```
 class ChangePasswordForm extends FormGroup {
+  /// Minimum length required for new passwords.
+  static const minPasswordLength = 8;
+
   /// Regular expression pattern for validating OTP codes.
   ///
   /// Matches exactly 6 digits: `^[0-9]{6}$`
   static const otpRegex = r"^[0-9]{6}$";
-
-  /// Regular expression pattern for validating password strength.
-  ///
-  /// Requires:
-  /// - At least one uppercase letter: `(?=.*?[A-Z])`
-  /// - At least one lowercase letter: `(?=.*?[a-z])`
-  /// - At least one digit: `(?=.*?[0-9])`
-  /// - At least one special character: `(?=.*?[#?!@$%^&*-])`
-  /// - Minimum 10 characters: `.{10,}`
-  static const passwordRegex =
-      r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$";
 
   /// Creates a [ChangePasswordForm] with optional OTP validation.
   ///
@@ -57,7 +45,7 @@ class ChangePasswordForm extends FormGroup {
   ///
   /// The form includes cross-field validation to ensure that the new password
   /// and verify new password fields match. The new password must also meet
-  /// the complexity requirements defined by [passwordRegex].
+  /// the minimum length requirement defined by [minPasswordLength].
   ChangePasswordForm({
     bool enableOtpValidation = false,
   }) : super({
@@ -71,14 +59,14 @@ class ChangePasswordForm extends FormGroup {
             value: "",
             validators: [
               Validators.required,
-              Validators.pattern(passwordRegex),
+              Validators.minLength(minPasswordLength),
             ],
           ),
           "verifyNewPassword": FormControl<String>(
             value: "",
             validators: [
               Validators.required,
-              Validators.pattern(passwordRegex),
+              Validators.minLength(minPasswordLength),
             ],
           ),
           "otpCode": FormControl<String>(
@@ -108,7 +96,7 @@ class ChangePasswordForm extends FormGroup {
   ///
   /// This control validates that the new password field:
   /// - Is not empty (required)
-  /// - Matches the password complexity requirements (see [passwordRegex])
+  /// - Contains at least [minPasswordLength] characters
   /// - Matches the verify new password field (via cross-field validation)
   ///
   /// Access the value via `newPassword.value` and check validity via `newPassword.valid`.
@@ -119,7 +107,7 @@ class ChangePasswordForm extends FormGroup {
   ///
   /// This control validates that the verify new password field:
   /// - Is not empty (required)
-  /// - Matches the password complexity requirements (see [passwordRegex])
+  /// - Contains at least [minPasswordLength] characters
   /// - Matches the new password field (via cross-field validation)
   ///
   /// Access the value via `verifyNewPassword.value` and check validity via `verifyNewPassword.valid`.

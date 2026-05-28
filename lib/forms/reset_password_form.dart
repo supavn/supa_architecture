@@ -9,20 +9,24 @@ import "package:reactive_forms/reactive_forms.dart";
 ///
 /// The form ensures that:
 /// - Both password fields are required
+/// - Passwords must be at least [minPasswordLength] characters
 /// - The password and confirm password fields match
 /// - If OTP validation is enabled, the OTP code is a required 6-digit number
 ///
 /// **Example usage:**
 /// ```dart
 /// final form = ResetPasswordForm(enableOtpValidation: true);
-/// form.password.value = 'newPassword123';
-/// form.confirmPassword.value = 'newPassword123';
+/// form.password.value = 'newpassw';
+/// form.confirmPassword.value = 'newpassw';
 /// form.otpCode.value = '123456';
 /// if (form.valid) {
 ///   // Submit password reset
 /// }
 /// ```
 class ResetPasswordForm extends FormGroup {
+  /// Minimum length required for new passwords.
+  static const minPasswordLength = 8;
+
   /// Creates a [ResetPasswordForm] with optional OTP validation.
   ///
   /// **Parameters:**
@@ -31,7 +35,8 @@ class ResetPasswordForm extends FormGroup {
   ///   Defaults to `false`.
   ///
   /// The form includes cross-field validation to ensure that the password
-  /// and confirm password fields match.
+  /// and confirm password fields match. Passwords must also meet the minimum
+  /// length requirement defined by [minPasswordLength].
   ResetPasswordForm({
     bool enableOtpValidation = false,
   }) : super(
@@ -40,12 +45,14 @@ class ResetPasswordForm extends FormGroup {
               value: "",
               validators: [
                 Validators.required,
+                Validators.minLength(minPasswordLength),
               ],
             ),
             "confirmPassword": FormControl<String>(
               value: "",
               validators: [
                 Validators.required,
+                Validators.minLength(minPasswordLength),
               ],
             ),
             "otpCode": FormControl<String>(
@@ -68,15 +75,17 @@ class ResetPasswordForm extends FormGroup {
 
   /// The new password form control.
   ///
-  /// This control validates that the password field is not empty.
+  /// This control validates that the password field is not empty and contains
+  /// at least [minPasswordLength] characters.
   /// Access the value via `password.value` and check validity via `password.valid`.
   FormControl<String> get password =>
       control("password") as FormControl<String>;
 
   /// The password confirmation form control.
   ///
-  /// This control validates that the confirm password field is not empty
-  /// and matches the password field (via cross-field validation).
+  /// This control validates that the confirm password field is not empty,
+  /// contains at least [minPasswordLength] characters, and matches the password
+  /// field (via cross-field validation).
   /// Access the value via `confirmPassword.value` and check validity via `confirmPassword.valid`.
   FormControl<String> get confirmPassword =>
       control("confirmPassword") as FormControl<String>;
