@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.15.19
+
+- Fix Microsoft login on mobile: send OAuth `id_token` (via `getIdToken()`) to `/microsoft-login` instead of `access_token`, and return early when Azure AD login fails.
+
 ## v1.15.18
 
 - Expose `sites` from profile get-info responses on saved `AppUser` data.

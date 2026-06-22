@@ -80,7 +80,6 @@ class AuthenticationBloc
         leading: const GoBackButton(),
       ),
     );
-
     oauth = AadOAuth(config);
     return oauth;
   }
@@ -293,22 +292,18 @@ class AuthenticationBloc
 
       final result = await oauth.login();
 
-      result.fold(
-        (failure) {
-          add(AuthenticationErrorEvent(
-            title: "Đăng nhập Microsoft lỗi",
-            message: "Đã xảy ra lỗi khi đăng nhập với Microsoft",
-            error: failure,
-          ));
-        },
-        (token) {
-          debugPrint('MICROSOFT TOKEN: $token');
-        },
-      );
+      if (result.isLeft()) {
+        add(AuthenticationErrorEvent(
+          title: "Đăng nhập Microsoft lỗi",
+          message: "Đã xảy ra lỗi khi đăng nhập với Microsoft",
+          error: result.fold((failure) => failure, (_) => null),
+        ));
+        return;
+      }
 
-      final idToken = await oauth.getAccessToken();
+      final idToken = await oauth.getIdToken();
 
-      if (idToken == null) {
+      if (idToken == null || idToken.isEmpty) {
         Navigator.of(config.navigatorKey.currentContext!).pop();
         emit(const AuthenticationErrorState(
           title: 'Không thể đăng nhập',
