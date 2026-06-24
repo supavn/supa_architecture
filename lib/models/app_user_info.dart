@@ -4,26 +4,26 @@ import 'package:supa_architecture/supa_architecture.dart';
 class AppUserInfo extends JsonModel with AppUserPreferences {
   @override
   List<JsonField> get fields => [
-        appUserAccountId,
-        avatarId,
-        avatarUrl,
-        username,
-        displayName,
-        email,
-        defaultTenantId,
-        isAlreadyGettingStarted,
-        currentTenantId,
-        appUserId,
-        birthday,
-        phone,
-        address,
-        defaultUrl,
-        tenants,
-        currentTenant,
-        ...preferenceFields,
-        globalUserId,
-        sites,
-      ];
+    appUserAccountId,
+    avatarId,
+    avatarUrl,
+    username,
+    displayName,
+    email,
+    defaultTenantId,
+    isAlreadyGettingStarted,
+    currentTenantId,
+    appUserId,
+    birthday,
+    phone,
+    address,
+    defaultUrl,
+    tenants,
+    currentTenant,
+    ...preferenceFields,
+    globalUserId,
+    sites,
+  ];
 
   JsonInteger appUserAccountId = JsonInteger("appUserAccountId");
 
@@ -55,8 +55,9 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
 
   JsonList<Tenant> tenants = JsonList<Tenant>("tenants");
 
-  JsonObject<CurrentTenant> currentTenant =
-      JsonObject<CurrentTenant>("currentTenant");
+  JsonObject<CurrentTenant> currentTenant = JsonObject<CurrentTenant>(
+    "currentTenant",
+  );
 
   /// The global user ID.
   JsonInteger globalUserId = JsonInteger("globalUserId");
@@ -95,6 +96,7 @@ class AppUserInfo extends JsonModel with AppUserPreferences {
       ..googleAccount.value = googleAccount.value
       ..appleAccount.value = appleAccount.value
       ..groupTimeZone.value = groupTimeZone.value
-      ..microsoftAccount.value = microsoftAccount.value;
+      ..microsoftAccount.value = microsoftAccount.value
+      ..isAdmin.value = isAdmin.value;
   }
 }
